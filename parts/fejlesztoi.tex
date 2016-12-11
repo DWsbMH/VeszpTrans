@@ -1,0 +1,156 @@
+Az elkészült rendszer szerver-kliens architektúrára épült. 
+Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
+A szerver felelõs az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
+Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
+Jelenleg kétféle kliens tartozik a rendszerhez, egy adminisztrációs feladatokat betöltõ weboldal, és egy Android alkalmazás, amely a felhasználók részére készült. 
+Az adminisztrációs weboldalon az adatok a Twig sablonkezelõ segítségével jelennek meg. 
+Az Android-os kliens a kért adatokat JSON formrmátumban kapja meg. 
+A továbbiakban részletesen bemutatásra kerül a szerver és a kliensek felépítése, mûködése. 
+
+\section{A szerver felépítése}
+\label{szerverfelepites}
+
+A szerver a Symfony keretrendszer 2.8-as verziójára épült. 
+A beérkezõ kérés áthalad a Symfony tûzfalán, ami elindítja az autentikációt. 
+Ha sikeres volt az autentikáció, a kérés a megfelelõ kontroller osztályhoz kerül feldolgozás után. 
+
+\Picture{Az autentikáció folyamata}{5/authenticationprocess}{width=14cm}
+% tûzfal, autentikáció, ilyesmi...
+
+A kontroller osztályban a beírt URL-hez tartozó metódus hívódik meg. 
+Alapesetben ezek az osztályok a \Highlight{AppBundle\textbackslash Controller} névtérben találhatóak. 
+Az URL-címek metódusokra való leképzése kétféleképp valósítható meg a Symfony keretrendszer használatával. 
+
+\begin{itemize}
+	\item routing.yml fájlban való definiálás
+	\item kontroller osztályokban annotációként
+\end{itemize}
+
+Az elsõ opció akkor elõnyös, ha útvonal alapján akarjuk meghatározni, hogy mely kódrészlet fog végrehajtódni a kontrollerek megfelelõ kialakításával és az annotációk jó elhelyezésével. 
+Másrészrõl a második megoldás itt elõnyösebb lehet, mert ilyenkor a kódot látva a fájl elhagyása nélkül meg tudjuk állapítani, hogy milyen esetekben fog a kódrészlet meghívásra kerülni. 
+A metódusok annotációi között megszabhatunk különbözõ paramétereket is, melyet az alábbi kódrészlet demonstrál:
+
+\begin{lstlisting}
+    /**
+    * @Route("/{id}/edit", name="line_edit")
+    * @Method({"GET", "POST"})
+    */
+    public function editAction(Request $request, Line $line)
+    {
+        // ...
+    }
+\end{lstlisting}
+
+\subsection*{Autentikáció}
+\label{authentication}
+
+Az autentikáció a Symfony tûzfal moduljával történik. 
+Az ehhez szükséges beállítások a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfigurációs fájljában találhatóak. 
+A szerverhez jelenleg két fajta felhasználó van rendelve, ezek bele vannak égetve ebbe a fájlba. 
+A szerver feladatkörébõl kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, mivel szükség újabb felhasználók hozzáadására. 
+Ez azt jelenti, hogy a felhasználókhoz tartozó jelszavakat is ebben a fájlban tároljuk. 
+Biztonsági szempontokból kritikus tényezõ, hogy ezek a jelszavak valamilyen módon titkosítva legyenek. 
+A titkosításhoz a bcrypt algoritmust használtam fel. 
+A Symfony segítségével parancssorból lehetséges bármilyen jelszót titkosítani a bcrypt algoritmussal. 
+
+\begin{lstlisting}
+php bin/console security:encode-password
+\end{lstlisting}
+
+A parancs futása közben bekéri, mi az a jelszó, amit titkosítani kell. 
+Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot. 
+Ezt a szót megadva a fájlban jelszóként, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
+
+\subsection*{Autorizáció}
+\label{authorization}
+
+Az autorizáció folyamata szintén a Symfony tûzfal moduljának segítségével valósult meg. 
+Ez a sikeres bejelentkezést követõen hajtódik végre. 
+A folyamat célja, hogy a bejelentkezett felhasználó csak a számára kijelölt szolgáltatásokat, oldalakat érje el. 
+Az elõzõ pontban említett két felhasználóhoz tehát az alábbi két szerepkör tartozik:
+
+\begin{itemize}
+	\item Látogató
+	\item Adminisztrátor
+\end{itemize}
+
+A látogató szerepkörhöz tartozó felhasználónak csak az adatbázis-entitások lekérdezéséhez van jogosultsága. 
+Az adminisztrátori engedéllyel rendelkezõ viszont a weboldal minden szolgáltatásához hozzáfér. 
+
+A szerepkörökhöz hozzá lettek rendelve meghatározott formájú URL címek. 
+
+\begin{lstlisting}
+access_control:
+    - { path: /json$, roles: ROLE_USER }
+    - { path: ^/, roles: ROLE_ADMIN }
+\end{lstlisting}
+
+Az alábbi kódrészlet azt mutatja be, hogy a felhasználói jogkör csak a \Highlight{\/json} végû URL-címekhez ad elérést, míg egy adminisztrátor minden címet elér. 
+Ugyanezt a funkcionalitást meg lehet valósítani szintén annotációkkal is, de a weboldal kialakítása miatt célszerûbb volt ezt a megoldást választani, hisz így egyetlen fájlban elegendõ meghatározni a hozzáférési szabályokat, annotációk használatával viszont minden kontroller osztályban egyenként kellett volna meghatározni ugyanazokat a szabályokat.
+
+\subsection*{Adatbázis kapcsolat}
+\label{adatbazis}
+
+Az adatbázist a Doctrine keretrendszert használva éri el a szerver. 
+Az alkalmazáshoz tartozó entitások helye a \Highlight{AppBundle\textbackslash Entity} névtér. 
+Ezek mindegyike egyszerû PHP osztályok, a felhasznált keretrendszer alakítja ezeket az adatbázis tábláivá. 
+Az osztályban szereplõ adatmezõkhöz meg kell adni az annotációkat, hogy az átalakítás milyen módon történjen meg. 
+Az entitások egymás közti kapcsolatait a következõ annotációk jelzik:
+
+\begin{itemize}
+	\item OneToOne
+	\item OneToMany
+	\item ManyToOne
+\end{itemize}
+
+Az adatbázisban található adatok lekérdezés és objektumba való alakítása a \Highlight{Repository} osztályok segítségével történik. 
+Ezek az osztályok a Doctrine \Highlight{EntityRepository} osztályából származnak, mely már rendelkezik a legalapvetõbb lekérdezésekkel, mint az azonosító vagy valamilyen tulajdonság alapján történõ adatlekérés. 
+Az összetettebb lekérdezésekhez a DQL nyelvet használtam fel, mely az entitások kapcsolatait az entitáshoz tartozó osztályban megadott annotációk alapján kezeli. 
+
+Amennyiben az adatbázisból lekérdezett adatok módosultak, ahhoz, hogy ez a változás megmaradjon el kell menteni az adatbázisba. 
+Szerencsére a Doctrine keretrendszernek van erre automatikus eszköze, mégpedig az EntityManager osztály, mely érzékeli a változást és elmenti a \Highlight{flush()} metódus használatával. 
+Ha új adatot akarunk az adatbázishoz adni, azt is az EntitiyManager osztállyal tehetjük meg. 
+Az elkészült új objektumot paraméterként átadva az osztály \Highlight{persist()} metódusának, a Doctrine keretrendszer úgy kezeli a továbbiakban az objektumot, mintha az az adatbázisból lekérdezett lenne, és így a \Highlight{flush()} metódussal az adatbázisba tudja írni. 
+
+\section{Szerver feladatai}
+\label{serverjob}
+
+A alábbiakban bemutatásra kerülnek a szerver fõbb feladatai.
+
+\subsection*{Járatok}
+\label{lineinfodetails}
+
+A városban közlekedõ buszok más-más végpontok között közlekednek. 
+Elõfordulhat, hogy ugyanolyan számmal ellátott busz ugyanazon végpontok között közlekedik, de a köztes megállók között eltérhet, vagy a köztes megállók ugyanazok, de a végpontok mások. 
+Olyan helyzet is elõfordulhat, hogy a két végpont megegyezik. 
+Ezeknek az információk összefogására létrehozott \Highlight{LineInfio} entitás felelõs. 
+Ez az entitás tárolja a két végpontot, a közöttük közlekedõ buszjáratot, és a járat típusát. 
+A végpont és a buszjáratok szintén entitások, az ezek között fennálló kapcsolat az \ref{fig_5/lineinfo}. ábrán látható. 
+
+\Picture{A járat entitás kapcsolatai}{5/lineinfo}{width=14cm}
+
+\subsection*{Útvonalak}
+\label{linehasstationsdetails}
+
+A buszjáratok útvonaluk bejárása során több, köztes megállót is érintenek. 
+Meg kell határoznunk, hogy egy adott busz milyen irányban haladva mely köztes megállókban áll meg. 
+Ezt a feladatot a \Highlight{LineHasStations} entitás végzi. 
+Az entitás segítségével meg tudjuk határozni, hogy az elõzõ pontban vázolt járat egy példányának a végpontjain kívül milyen más állomásai vannak. 
+Továbbá tároljuk a köztes megálló útvonalon belüli sorszámát, melybõl megállapítható az útvonalon található állomások helyes sorrendje. 
+Minden egyes objektum esetén tárolásra kerül még, hogy az elõzõ megállóból milyen gyorsan tudunk eljutni. 
+Természetesen a busz indulópontjának ezen attribútuma nulla. 
+
+Az \ref{fig_5/linehasstations}. ábrán megtekinthetõ milyen kapcsolatokat tartalmaz az útvonal entitás. 
+
+\Picture{A járathoz kapcsolatai}{5/linehasstations}{width=14cm}
+
+\subsection*{Indulási idõk, különleges idõpontok}
+\label{starttimes}
+
+Útvonaltervezés szempontjából fontos információ továbbá, hogy az adott járat az útvonalán található megállóiba milyen idõpontban érkezik meg, továbbá különleges alkalmak esetén ezek hogyan változnak meg. 
+Az indulási idõpontot egy Starttime nevû entitás tartalmazza, melyben tárolódik továbbá az is, hogy ez az indulás mely járatra vonatkozik, valamint milyen típusú dátum esetén értetendõ. 
+A különbözõ típusú dátumokat külön entitás tartalmazza. 
+Az alkalmazáshoz tovább tartozik egy Holidays entitás is, melyben az olyan, elõre nem tervezett idõpontokat tartalmazza amelyek befolyásolják bizonyos járatok indulási rendjét és esetleges útvonalát is. 
+Az elõbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/starttimes}. ábra mutatja be. 
+
+\Picture{Különleges és indulási idõpontok közötti kapcsolat}{5/starttimes}{width=14cm}
