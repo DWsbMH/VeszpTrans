@@ -1,23 +1,34 @@
 %3. fejezet
 
+A fejezetben bemutatásra kerülnek a a funkciókövetelmények, amelyeket a fejlesztés előtt és közben figyelembe kellett venni, hogy az utazóközönség számára optimális alkalmazást készüljön el. 
+Továbbá a rendszer másik szereplői, az adminisztrátorok számára is könnyen kezelhető, felhasználóbarát felület készüljön el. 
+A .képen láthatóak a rendszer szereplői és a hozzájuk tartozó használati esetek. 
+
 
 %3.1
 \section{Követelmények}
 \label{kovetelmeny}
 
-Az alkalmazás elkészítése előtt felállított követelmények, amiket a fejlesztés során figyelembe kellett venni, hogy az utazóközönség számára optimális alkalmazást készüljön el. 
-
+Az alábbi követelmények tartalmazzák azokat a tulajdonságokat, amik az elkészült alkalmazás jellemzői között kell
 
 \begin{itemize}
-	\item Alacsony erőforrás felhasználás:
+	\item Sebesség
+	\\
+	Válaszidő lecsökkentése minél alacsonyabb szintre. 
+	A felhasználóknak fontos, hogy az alkalmazás segítségével gyorsan és megbízhatóan tudjanak információhoz jutni. 
+	\item Alacsony erőforrás felhasználás
 	\\
 	Az egyik legfontosabb követelmény, hogy az alkalmazás kevés erőforrás igénybevételével is megfelelően működjön. 
-	Ehhez szükség van arra, hogy a telefonon egy lokális adatbázis üzemeljen. 
+	Ehhez szükség volt arra, hogy a telefonon egy lokális adatbázis üzemeljen. 
 	Így az alkalmazás használatakor nem kell internetkapcsolatot biztosítani az adatok elérhetőek lesznek a telefon adatbázisából.	
-	\item -	Megbízható:
+	\item Megbízhatóság
 	\\
-	Létre kell hozni egy olyan webes felületet, ahol az adatbázis kezelhető, változások esetén pedig módosíthatóak az adatok. 
+	Létre kellett hozni egy olyan webes felületet, ahol az adatbázis kezelhető, változások esetén pedig módosíthatóak az adatok. 
 	Ebből kifolyólag az alkalmazás mindig naprakészen szolgálja az információt a felhasználóknak.
+	\item Könnyű kezelhetőség
+	\\
+	A felhasználók számára fontos, ha nincsenek bonyolult akciók, hanem lehetőleg az összes funkció használata egyértelmű, ezzel is gyorsítva az alkalmazás használatát. 
+	Ha bizonyos jelölések, rövidítések igénylik, akkor súgót kell hozzáadni az alkalmazáshoz.
 	
 \end{itemize}
 
@@ -26,10 +37,73 @@ Az alkalmazás elkészítése előtt felállított követelmények, amiket a fej
 \section{Funkcionális követelmények}
 \label{funkckov}
 
-Az alábbi követelmények tartalmazzák az alkalmazással, illetve a weboldallal szemben támasztott funkcionális elvárásokat.
+A .ábrán láthatóak a felhasználóval és az adminisztrátorral kapcsolatos használati esetek, amelyeket a következőekben fogok részletesen kifejteni.
+
+\section*{Android alkalmazás}
+\begin{itemize}
+	\item \textbf{Útvonaltervezés}
+	\\
+	Az útvonaltervezés az alkalmazás fő funkciója, ezért nagy hangsúlyt kellett a megvalósítására fektetni. 
+	Könnyű kezelőfelületet kívánt, egyértelmű jelöléseket amik bárki számára egyszerűvé teszik a használatát. 
+	Ez a menüpont azokat az utasokat célozza meg elsődlegesen, akik számára Veszprém ismeretlen terület. 
+	Fontos volt, hogy különböző utazási módozatok is elérhetőek legyenek, például azoknak akik buszjegyet váltanak, azok minél kevesebb átszállással kínálja az alkalmazás az útvonalat. 
+	Továbbá, mivel ez egy térképet integráló funkció, ezért megfelelő módon kellett megjeleníteni a térképet. 	
+	\item \textbf{Menetrend}
+	\\
+	A menetrend funkció akkor kap szerepet egy felhasználónál elsősorban, amikor nincs elérhető internetkapcsolat a mobilkészülékén. 
+	Ezen kívül azoknál akik rendelkeznek a tömegközlekedésről legalább alapszintű ismerettel, így jártasak a menetrendben és az indulási időkről szeretnének informálódni. 
+	Megjelenésénél figyelni kellett arra, hogy felülete letisztult legyen, mégis a keresett információ könnyen megtalálható legyen. 	
+	\item \textbf{Megállók}
+	\\
+	Az alkalmazásban szükség volt egy olyan szolgálatásra is, ahol a felhasználók tájékozódni tudnak a városban a megállókról. 
+	Mivel előfordulhat olyan eset, hogy valaki tisztában van a megálló elhelyezkedésével, viszont meg szeretné tudni, hogy milyen járatok érintik anélkül hogy az egész menetrendet át kéne olvasnia, ezért fontos volt implementálni egy ilyen funkciót az alkalmazásba. 
+\end{itemize}
+\section*{Weboldal}
+\begin{itemize}
+	\item Buszjáratok kezelése
+	\item Menetidők kezelése
+	\item Megállók kezelése
+	\item Ideiglenes járatmodosulások kezelése
+\end{itemize}
+	
+	
 
 %3.3
 \section{Felhasznált technológiák}
-\label{resz3_2}
+\label{felhaszntech}
+\section*{Térkép}
+Egy útvonaltervező alkalmazás nagyon fontos tulajdonsága a megjelenés. 
+Egy ilyen alkalmazásnál alapvető elvárás, hogy a térképen megjelenő információ könnyen kiolvasható legyen, hogy a felhasználók könnyedén el tudják választani a lényeges információt azoktól, amelyek nem szükségesek a tájékozódástól. 
+Emiatt szükségem volt egy olyan térképes szolgáltatásra, ami az előbbi céloknak megfelel. 
+Mielőtt megkezdtem a fejlesztést, több ilyen szolgáltatást is megvizsgáltam, abból a célból, hogy a legmegfelelőbbet tudjam kiválasztani a tapasztalatok alapján a szakdolgozatomhoz. 
+Az egyik legfontosabb szempont a kiválasztásnál az volt, hogy ingyenesen elérhető legyen a szolgáltatás. 
+A kutatás során két fő jelöltre sikerült leszűkítenem a listát, a Google Maps-re illetve az OpenStreetMap-re. 
+Mivel az általam készített programot Android platformra terveztem elkészíteni, ezért olyan térképes API-ra volt szükségem, amit be lehet építeni Android applikációba, és ennek a célnak mind a kettő szolgáltatás megfelelt. 
+Mindezek mellett fontos volt számomra, hogy olyan térkép alkalmazást válasszak, ami felhasználói körökben jól ismert. 
+Emiatt megvizsgáltam, hogy az alkalmazásoknak mekkora a felhasználói köre. 
+Az OpenStreetMap Android alkalmazása körülbelül 5 millió  felhasználóval rendelkezik, míg a Google Maps letöltése meghaladja az 1 milliárd felhasználót. 
+Ezekből az adatokból következtetni tudtam arra, hogy a felhasználók szélesebb köre miatt a Google Maps felülete sokkal szélesebb körben ismert az emberek között.
+
+\Picture{A Google Maps és az OSM összehasonlítása}{3/terkeposszehas}{width=10cm}
+
+A \ref{fig_3/terkeposszehas}.ábrán látható szempontok figyelembe vételével végül a Google Maps-re esett a választásom, mint integrálható térképes szolgáltatás.
+
+\section*{Android, Java}
+
+\section*{Symfony}
+\section*{MySQL}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
