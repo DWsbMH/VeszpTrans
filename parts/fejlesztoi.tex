@@ -1,34 +1,34 @@
-Az elkészült rendszer szerver-kliens architektúrára épült. 
-Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
-A szerver felelõs az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
-Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
-Jelenleg kétféle kliens tartozik a rendszerhez, egy adminisztrációs feladatokat betöltõ weboldal, és egy Android alkalmazás, amely a felhasználók részére készült. 
-Az adminisztrációs weboldalon az adatok a Twig sablonkezelõ segítségével jelennek meg. 
-Az Android-os kliens a kért adatokat JSON formrmátumban kapja meg. 
-A továbbiakban részletesen bemutatásra kerül a szerver és a kliensek felépítése, mûködése. 
+ï»¿Az elkÃ©szÃ¼lt rendszer szerver-kliens architektÃºrÃ¡ra Ã©pÃ¼lt. 
+Az architektÃºra modellje a \ref{fig_5/architektura}. Ã¡brÃ¡n lÃ¡thatÃ³. 
+A szerver felelÅ‘s az adatok kezelÃ©sÃ©Ã©rt, mely a Symfony keretrendszerrel lett megvalÃ³sÃ­tva. 
+Az adatokat a Doctrine keretrendszer segÃ­tsÃ©gÃ©vel Ã©ri el az adatbÃ¡zisbÃ³l. 
+Jelenleg kÃ©tfÃ©le kliens tartozik a rendszerhez, egy adminisztrÃ¡ciÃ³s feladatokat betÃ¶ltÅ‘ weboldal, Ã©s egy Android alkalmazÃ¡s, amely a felhasznÃ¡lÃ³k rÃ©szÃ©re kÃ©szÃ¼lt. 
+Az adminisztrÃ¡ciÃ³s weboldalon az adatok a Twig sablonkezelÅ‘ segÃ­tsÃ©gÃ©vel jelennek meg. 
+Az Android-os kliens a kÃ©rt adatokat JSON formrmÃ¡tumban kapja meg. 
+A tovÃ¡bbiakban rÃ©szletesen bemutatÃ¡sra kerÃ¼l a szerver Ã©s a kliensek felÃ©pÃ­tÃ©se, mÅ±kÃ¶dÃ©se. 
 
-\section{A szerver felépítése}
+\section{A szerver felÃ©pÃ­tÃ©se}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer 2.8-as verziójára épült. 
-A beérkezõ kérés áthalad a Symfony tûzfalán, ami elindítja az autentikációt. 
-Ha sikeres volt az autentikáció, a kérés a megfelelõ kontroller osztályhoz kerül feldolgozás után. 
+A szerver a Symfony keretrendszer 2.8-as verziÃ³jÃ¡ra Ã©pÃ¼lt. 
+A beÃ©rkezÅ‘ kÃ©rÃ©s Ã¡thalad a Symfony tÅ±zfalÃ¡n, ami elindÃ­tja az autentikÃ¡ciÃ³t. 
+Ha sikeres volt az autentikÃ¡ciÃ³, a kÃ©rÃ©s a megfelelÅ‘ kontroller osztÃ¡lyhoz kerÃ¼l feldolgozÃ¡s utÃ¡n. 
 
-\Picture{Az autentikáció folyamata}{5/authenticationprocess}{width=14cm}
-% tûzfal, autentikáció, ilyesmi...
+\Picture{Az autentikÃ¡ciÃ³ folyamata}{5/authenticationprocess}{width=14cm}
+% tÅ±zfal, autentikÃ¡ciÃ³, ilyesmi...
 
-A kontroller osztályban a beírt URL-hez tartozó metódus hívódik meg. 
-Alapesetben ezek az osztályok a \Highlight{AppBundle\textbackslash Controller} névtérben találhatóak. 
-Az URL-címek metódusokra való leképzése kétféleképp valósítható meg a Symfony keretrendszer használatával. 
+A kontroller osztÃ¡lyban a beÃ­rt URL-hez tartozÃ³ metÃ³dus hÃ­vÃ³dik meg. 
+Alapesetben ezek az osztÃ¡lyok a \Highlight{AppBundle\textbackslash Controller} nÃ©vtÃ©rben talÃ¡lhatÃ³ak. 
+Az URL-cÃ­mek metÃ³dusokra valÃ³ lekÃ©pzÃ©se kÃ©tfÃ©lekÃ©pp valÃ³sÃ­thatÃ³ meg a Symfony keretrendszer hasznÃ¡latÃ¡val. 
 
 \begin{itemize}
-	\item routing.yml fájlban való definiálás
-	\item kontroller osztályokban annotációként
+	\item routing.yml fÃ¡jlban valÃ³ definiÃ¡lÃ¡s
+	\item kontroller osztÃ¡lyokban annotÃ¡ciÃ³kÃ©nt
 \end{itemize}
 
-Az elsõ opció akkor elõnyös, ha útvonal alapján akarjuk meghatározni, hogy mely kódrészlet fog végrehajtódni a kontrollerek megfelelõ kialakításával és az annotációk jó elhelyezésével. 
-Másrészrõl a második megoldás itt elõnyösebb lehet, mert ilyenkor a kódot látva a fájl elhagyása nélkül meg tudjuk állapítani, hogy milyen esetekben fog a kódrészlet meghívásra kerülni. 
-A metódusok annotációi között megszabhatunk különbözõ paramétereket is, melyet az alábbi kódrészlet demonstrál:
+Az elsÅ‘ opciÃ³ akkor elÅ‘nyÃ¶s, ha Ãºtvonal alapjÃ¡n akarjuk meghatÃ¡rozni, hogy mely kÃ³drÃ©szlet fog vÃ©grehajtÃ³dni a kontrollerek megfelelÅ‘ kialakÃ­tÃ¡sÃ¡val Ã©s az annotÃ¡ciÃ³k jÃ³ elhelyezÃ©sÃ©vel. 
+MÃ¡srÃ©szrÅ‘l a mÃ¡sodik megoldÃ¡s itt elÅ‘nyÃ¶sebb lehet, mert ilyenkor a kÃ³dot lÃ¡tva a fÃ¡jl elhagyÃ¡sa nÃ©lkÃ¼l meg tudjuk Ã¡llapÃ­tani, hogy milyen esetekben fog a kÃ³drÃ©szlet meghÃ­vÃ¡sra kerÃ¼lni. 
+A metÃ³dusok annotÃ¡ciÃ³i kÃ¶zÃ¶tt megszabhatunk kÃ¼lÃ¶nbÃ¶zÅ‘ paramÃ©tereket is, melyet az alÃ¡bbi kÃ³drÃ©szlet demonstrÃ¡l:
 
 \begin{lstlisting}
     /**
@@ -41,43 +41,43 @@ A metódusok annotációi között megszabhatunk különbözõ paramétereket is, melyet a
     }
 \end{lstlisting}
 
-\subsection*{Autentikáció}
+\subsection*{AutentikÃ¡ciÃ³}
 \label{authentication}
 
-Az autentikáció a Symfony tûzfal moduljával történik. 
-Az ehhez szükséges beállítások a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfigurációs fájljában találhatóak. 
-A szerverhez jelenleg két fajta felhasználó van rendelve, ezek bele vannak égetve ebbe a fájlba. 
-A szerver feladatkörébõl kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, mivel szükség újabb felhasználók hozzáadására. 
-Ez azt jelenti, hogy a felhasználókhoz tartozó jelszavakat is ebben a fájlban tároljuk. 
-Biztonsági szempontokból kritikus tényezõ, hogy ezek a jelszavak valamilyen módon titkosítva legyenek. 
-A titkosításhoz a bcrypt algoritmust használtam fel. 
-A Symfony segítségével parancssorból lehetséges bármilyen jelszót titkosítani a bcrypt algoritmussal. 
+Az autentikÃ¡ciÃ³ a Symfony tÅ±zfal moduljÃ¡val tÃ¶rtÃ©nik. 
+Az ehhez szÃ¼ksÃ©ges beÃ¡llÃ­tÃ¡sok a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfigurÃ¡ciÃ³s fÃ¡jljÃ¡ban talÃ¡lhatÃ³ak. 
+A szerverhez jelenleg kÃ©t fajta felhasznÃ¡lÃ³ van rendelve, ezek bele vannak Ã©getve ebbe a fÃ¡jlba. 
+A szerver feladatkÃ¶rÃ©bÅ‘l kiindulva a jelenlegi igÃ©nyeket ez a kÃ©t felhasznÃ¡lÃ³ kielÃ©gÃ­ti, mivel szÃ¼ksÃ©g Ãºjabb felhasznÃ¡lÃ³k hozzÃ¡adÃ¡sÃ¡ra. 
+Ez azt jelenti, hogy a felhasznÃ¡lÃ³khoz tartozÃ³ jelszavakat is ebben a fÃ¡jlban tÃ¡roljuk. 
+BiztonsÃ¡gi szempontokbÃ³l kritikus tÃ©nyezÅ‘, hogy ezek a jelszavak valamilyen mÃ³don titkosÃ­tva legyenek. 
+A titkosÃ­tÃ¡shoz a bcrypt algoritmust hasznÃ¡ltam fel. 
+A Symfony segÃ­tsÃ©gÃ©vel parancssorbÃ³l lehetsÃ©ges bÃ¡rmilyen jelszÃ³t titkosÃ­tani a bcrypt algoritmussal. 
 
 \begin{lstlisting}
 php bin/console security:encode-password
 \end{lstlisting}
 
-A parancs futása közben bekéri, mi az a jelszó, amit titkosítani kell. 
-Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot. 
-Ezt a szót megadva a fájlban jelszóként, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
+A parancs futÃ¡sa kÃ¶zben bekÃ©ri, mi az a jelszÃ³, amit titkosÃ­tani kell. 
+MiutÃ¡n megadtuk a jelszÃ³t, a bemeneten lefuttatja az algoritmust Ã©s vÃ©gÃ¼l kiÃ­rja a titkosÃ­tott karaktersorozatot. 
+Ezt a szÃ³t megadva a fÃ¡jlban jelszÃ³kÃ©nt, tovÃ¡bbra is a titkosÃ­tatlan jelszÃ³val be tud lÃ©pni a felhasznÃ¡lÃ³ az oldalra, viszont nem Ã¡ll fent tovÃ¡bb a veszÃ©ly, hogy illetÃ©ktelenek kezÃ©be jutna a jelszÃ³. 
 
-\subsection*{Autorizáció}
+\subsection*{AutorizÃ¡ciÃ³}
 \label{authorization}
 
-Az autorizáció folyamata szintén a Symfony tûzfal moduljának segítségével valósult meg. 
-Ez a sikeres bejelentkezést követõen hajtódik végre. 
-A folyamat célja, hogy a bejelentkezett felhasználó csak a számára kijelölt szolgáltatásokat, oldalakat érje el. 
-Az elõzõ pontban említett két felhasználóhoz tehát az alábbi két szerepkör tartozik:
+Az autorizÃ¡ciÃ³ folyamata szintÃ©n a Symfony tÅ±zfal moduljÃ¡nak segÃ­tsÃ©gÃ©vel valÃ³sult meg. 
+Ez a sikeres bejelentkezÃ©st kÃ¶vetÅ‘en hajtÃ³dik vÃ©gre. 
+A folyamat cÃ©lja, hogy a bejelentkezett felhasznÃ¡lÃ³ csak a szÃ¡mÃ¡ra kijelÃ¶lt szolgÃ¡ltatÃ¡sokat, oldalakat Ã©rje el. 
+Az elÅ‘zÅ‘ pontban emlÃ­tett kÃ©t felhasznÃ¡lÃ³hoz tehÃ¡t az alÃ¡bbi kÃ©t szerepkÃ¶r tartozik:
 
 \begin{itemize}
-	\item Látogató
-	\item Adminisztrátor
+	\item LÃ¡togatÃ³
+	\item AdminisztrÃ¡tor
 \end{itemize}
 
-A látogató szerepkörhöz tartozó felhasználónak csak az adatbázis-entitások lekérdezéséhez van jogosultsága. 
-Az adminisztrátori engedéllyel rendelkezõ viszont a weboldal minden szolgáltatásához hozzáfér. 
+A lÃ¡togatÃ³ szerepkÃ¶rhÃ¶z tartozÃ³ felhasznÃ¡lÃ³nak csak az adatbÃ¡zis-entitÃ¡sok lekÃ©rdezÃ©sÃ©hez van jogosultsÃ¡ga. 
+Az adminisztrÃ¡tori engedÃ©llyel rendelkezÅ‘ viszont a weboldal minden szolgÃ¡ltatÃ¡sÃ¡hoz hozzÃ¡fÃ©r. 
 
-A szerepkörökhöz hozzá lettek rendelve meghatározott formájú URL címek. 
+A szerepkÃ¶rÃ¶khÃ¶z hozzÃ¡ lettek rendelve meghatÃ¡rozott formÃ¡jÃº URL cÃ­mek. 
 
 \begin{lstlisting}
 access_control:
@@ -85,17 +85,17 @@ access_control:
     - { path: ^/, roles: ROLE_ADMIN }
 \end{lstlisting}
 
-Az alábbi kódrészlet azt mutatja be, hogy a felhasználói jogkör csak a \Highlight{\/json} végû URL-címekhez ad elérést, míg egy adminisztrátor minden címet elér. 
-Ugyanezt a funkcionalitást meg lehet valósítani szintén annotációkkal is, de a weboldal kialakítása miatt célszerûbb volt ezt a megoldást választani, hisz így egyetlen fájlban elegendõ meghatározni a hozzáférési szabályokat, annotációk használatával viszont minden kontroller osztályban egyenként kellett volna meghatározni ugyanazokat a szabályokat.
+Az alÃ¡bbi kÃ³drÃ©szlet azt mutatja be, hogy a felhasznÃ¡lÃ³i jogkÃ¶r csak a \Highlight{\/json} vÃ©gÅ± URL-cÃ­mekhez ad elÃ©rÃ©st, mÃ­g egy adminisztrÃ¡tor minden cÃ­met elÃ©r. 
+Ugyanezt a funkcionalitÃ¡st meg lehet valÃ³sÃ­tani szintÃ©n annotÃ¡ciÃ³kkal is, de a weboldal kialakÃ­tÃ¡sa miatt cÃ©lszerÅ±bb volt ezt a megoldÃ¡st vÃ¡lasztani, hisz Ã­gy egyetlen fÃ¡jlban elegendÅ‘ meghatÃ¡rozni a hozzÃ¡fÃ©rÃ©si szabÃ¡lyokat, annotÃ¡ciÃ³k hasznÃ¡latÃ¡val viszont minden kontroller osztÃ¡lyban egyenkÃ©nt kellett volna meghatÃ¡rozni ugyanazokat a szabÃ¡lyokat.
 
-\subsection*{Adatbázis kapcsolat}
+\subsection*{AdatbÃ¡zis kapcsolat}
 \label{adatbazis}
 
-Az adatbázist a Doctrine keretrendszert használva éri el a szerver. 
-Az alkalmazáshoz tartozó entitások helye a \Highlight{AppBundle\textbackslash Entity} névtér. 
-Ezek mindegyike egyszerû PHP osztályok, a felhasznált keretrendszer alakítja ezeket az adatbázis tábláivá. 
-Az osztályban szereplõ adatmezõkhöz meg kell adni az annotációkat, hogy az átalakítás milyen módon történjen meg. 
-Az entitások egymás közti kapcsolatait a következõ annotációk jelzik:
+Az adatbÃ¡zist a Doctrine keretrendszert hasznÃ¡lva Ã©ri el a szerver. 
+Az alkalmazÃ¡shoz tartozÃ³ entitÃ¡sok helye a \Highlight{AppBundle\textbackslash Entity} nÃ©vtÃ©r. 
+Ezek mindegyike egyszerÅ± PHP osztÃ¡lyok, a felhasznÃ¡lt keretrendszer alakÃ­tja ezeket az adatbÃ¡zis tÃ¡blÃ¡ivÃ¡. 
+Az osztÃ¡lyban szereplÅ‘ adatmezÅ‘khÃ¶z meg kell adni az annotÃ¡ciÃ³kat, hogy az Ã¡talakÃ­tÃ¡s milyen mÃ³don tÃ¶rtÃ©njen meg. 
+Az entitÃ¡sok egymÃ¡s kÃ¶zti kapcsolatait a kÃ¶vetkezÅ‘ annotÃ¡ciÃ³k jelzik:
 
 \begin{itemize}
 	\item OneToOne
@@ -103,54 +103,54 @@ Az entitások egymás közti kapcsolatait a következõ annotációk jelzik:
 	\item ManyToOne
 \end{itemize}
 
-Az adatbázisban található adatok lekérdezés és objektumba való alakítása a \Highlight{Repository} osztályok segítségével történik. 
-Ezek az osztályok a Doctrine \Highlight{EntityRepository} osztályából származnak, mely már rendelkezik a legalapvetõbb lekérdezésekkel, mint az azonosító vagy valamilyen tulajdonság alapján történõ adatlekérés. 
-Az összetettebb lekérdezésekhez a DQL nyelvet használtam fel, mely az entitások kapcsolatait az entitáshoz tartozó osztályban megadott annotációk alapján kezeli. 
+Az adatbÃ¡zisban talÃ¡lhatÃ³ adatok lekÃ©rdezÃ©s Ã©s objektumba valÃ³ alakÃ­tÃ¡sa a \Highlight{Repository} osztÃ¡lyok segÃ­tsÃ©gÃ©vel tÃ¶rtÃ©nik. 
+Ezek az osztÃ¡lyok a Doctrine \Highlight{EntityRepository} osztÃ¡lyÃ¡bÃ³l szÃ¡rmaznak, mely mÃ¡r rendelkezik a legalapvetÅ‘bb lekÃ©rdezÃ©sekkel, mint az azonosÃ­tÃ³ vagy valamilyen tulajdonsÃ¡g alapjÃ¡n tÃ¶rtÃ©nÅ‘ adatlekÃ©rÃ©s. 
+Az Ã¶sszetettebb lekÃ©rdezÃ©sekhez a DQL nyelvet hasznÃ¡ltam fel, mely az entitÃ¡sok kapcsolatait az entitÃ¡shoz tartozÃ³ osztÃ¡lyban megadott annotÃ¡ciÃ³k alapjÃ¡n kezeli. 
 
-Amennyiben az adatbázisból lekérdezett adatok módosultak, ahhoz, hogy ez a változás megmaradjon el kell menteni az adatbázisba. 
-Szerencsére a Doctrine keretrendszernek van erre automatikus eszköze, mégpedig az EntityManager osztály, mely érzékeli a változást és elmenti a \Highlight{flush()} metódus használatával. 
-Ha új adatot akarunk az adatbázishoz adni, azt is az EntitiyManager osztállyal tehetjük meg. 
-Az elkészült új objektumot paraméterként átadva az osztály \Highlight{persist()} metódusának, a Doctrine keretrendszer úgy kezeli a továbbiakban az objektumot, mintha az az adatbázisból lekérdezett lenne, és így a \Highlight{flush()} metódussal az adatbázisba tudja írni. 
+Amennyiben az adatbÃ¡zisbÃ³l lekÃ©rdezett adatok mÃ³dosultak, ahhoz, hogy ez a vÃ¡ltozÃ¡s megmaradjon el kell menteni az adatbÃ¡zisba. 
+SzerencsÃ©re a Doctrine keretrendszernek van erre automatikus eszkÃ¶ze, mÃ©gpedig az EntityManager osztÃ¡ly, mely Ã©rzÃ©keli a vÃ¡ltozÃ¡st Ã©s elmenti a \Highlight{flush()} metÃ³dus hasznÃ¡latÃ¡val. 
+Ha Ãºj adatot akarunk az adatbÃ¡zishoz adni, azt is az EntitiyManager osztÃ¡llyal tehetjÃ¼k meg. 
+Az elkÃ©szÃ¼lt Ãºj objektumot paramÃ©terkÃ©nt Ã¡tadva az osztÃ¡ly \Highlight{persist()} metÃ³dusÃ¡nak, a Doctrine keretrendszer Ãºgy kezeli a tovÃ¡bbiakban az objektumot, mintha az az adatbÃ¡zisbÃ³l lekÃ©rdezett lenne, Ã©s Ã­gy a \Highlight{flush()} metÃ³dussal az adatbÃ¡zisba tudja Ã­rni. 
 
 \section{Szerver feladatai}
 \label{serverjob}
 
-A alábbiakban bemutatásra kerülnek a szerver fõbb feladatai.
+A alÃ¡bbiakban bemutatÃ¡sra kerÃ¼lnek a szerver fÅ‘bb feladatai.
 
-\subsection*{Járatok}
+\subsection*{JÃ¡ratok}
 \label{lineinfodetails}
 
-A városban közlekedõ buszok más-más végpontok között közlekednek. 
-Elõfordulhat, hogy ugyanolyan számmal ellátott busz ugyanazon végpontok között közlekedik, de a köztes megállók között eltérhet, vagy a köztes megállók ugyanazok, de a végpontok mások. 
-Olyan helyzet is elõfordulhat, hogy a két végpont megegyezik. 
-Ezeknek az információk összefogására létrehozott \Highlight{LineInfio} entitás felelõs. 
-Ez az entitás tárolja a két végpontot, a közöttük közlekedõ buszjáratot, és a járat típusát. 
-A végpont és a buszjáratok szintén entitások, az ezek között fennálló kapcsolat az \ref{fig_5/lineinfo}. ábrán látható. 
+A vÃ¡rosban kÃ¶zlekedÅ‘ buszok mÃ¡s-mÃ¡s vÃ©gpontok kÃ¶zÃ¶tt kÃ¶zlekednek. 
+ElÅ‘fordulhat, hogy ugyanolyan szÃ¡mmal ellÃ¡tott busz ugyanazon vÃ©gpontok kÃ¶zÃ¶tt kÃ¶zlekedik, de a kÃ¶ztes megÃ¡llÃ³k kÃ¶zÃ¶tt eltÃ©rhet, vagy a kÃ¶ztes megÃ¡llÃ³k ugyanazok, de a vÃ©gpontok mÃ¡sok. 
+Olyan helyzet is elÅ‘fordulhat, hogy a kÃ©t vÃ©gpont megegyezik. 
+Ezeknek az informÃ¡ciÃ³k Ã¶sszefogÃ¡sÃ¡ra lÃ©trehozott \Highlight{LineInfio} entitÃ¡s felelÅ‘s. 
+Ez az entitÃ¡s tÃ¡rolja a kÃ©t vÃ©gpontot, a kÃ¶zÃ¶ttÃ¼k kÃ¶zlekedÅ‘ buszjÃ¡ratot, Ã©s a jÃ¡rat tÃ­pusÃ¡t. 
+A vÃ©gpont Ã©s a buszjÃ¡ratok szintÃ©n entitÃ¡sok, az ezek kÃ¶zÃ¶tt fennÃ¡llÃ³ kapcsolat az \ref{fig_5/lineinfo}. Ã¡brÃ¡n lÃ¡thatÃ³. 
 
-\Picture{A járat entitás kapcsolatai}{5/lineinfo}{width=14cm}
+\Picture{A jÃ¡rat entitÃ¡s kapcsolatai}{5/lineinfo}{width=14cm}
 
-\subsection*{Útvonalak}
+\subsection*{Ãštvonalak}
 \label{linehasstationsdetails}
 
-A buszjáratok útvonaluk bejárása során több, köztes megállót is érintenek. 
-Meg kell határoznunk, hogy egy adott busz milyen irányban haladva mely köztes megállókban áll meg. 
-Ezt a feladatot a \Highlight{LineHasStations} entitás végzi. 
-Az entitás segítségével meg tudjuk határozni, hogy az elõzõ pontban vázolt járat egy példányának a végpontjain kívül milyen más állomásai vannak. 
-Továbbá tároljuk a köztes megálló útvonalon belüli sorszámát, melybõl megállapítható az útvonalon található állomások helyes sorrendje. 
-Minden egyes objektum esetén tárolásra kerül még, hogy az elõzõ megállóból milyen gyorsan tudunk eljutni. 
-Természetesen a busz indulópontjának ezen attribútuma nulla. 
+A buszjÃ¡ratok Ãºtvonaluk bejÃ¡rÃ¡sa sorÃ¡n tÃ¶bb, kÃ¶ztes megÃ¡llÃ³t is Ã©rintenek. 
+Meg kell hatÃ¡roznunk, hogy egy adott busz milyen irÃ¡nyban haladva mely kÃ¶ztes megÃ¡llÃ³kban Ã¡ll meg. 
+Ezt a feladatot a \Highlight{LineHasStations} entitÃ¡s vÃ©gzi. 
+Az entitÃ¡s segÃ­tsÃ©gÃ©vel meg tudjuk hatÃ¡rozni, hogy az elÅ‘zÅ‘ pontban vÃ¡zolt jÃ¡rat egy pÃ©ldÃ¡nyÃ¡nak a vÃ©gpontjain kÃ­vÃ¼l milyen mÃ¡s Ã¡llomÃ¡sai vannak. 
+TovÃ¡bbÃ¡ tÃ¡roljuk a kÃ¶ztes megÃ¡llÃ³ Ãºtvonalon belÃ¼li sorszÃ¡mÃ¡t, melybÅ‘l megÃ¡llapÃ­thatÃ³ az Ãºtvonalon talÃ¡lhatÃ³ Ã¡llomÃ¡sok helyes sorrendje. 
+Minden egyes objektum esetÃ©n tÃ¡rolÃ¡sra kerÃ¼l mÃ©g, hogy az elÅ‘zÅ‘ megÃ¡llÃ³bÃ³l milyen gyorsan tudunk eljutni. 
+TermÃ©szetesen a busz indulÃ³pontjÃ¡nak ezen attribÃºtuma nulla. 
 
-Az \ref{fig_5/linehasstations}. ábrán megtekinthetõ milyen kapcsolatokat tartalmaz az útvonal entitás. 
+Az \ref{fig_5/linehasstations}. Ã¡brÃ¡n megtekinthetÅ‘ milyen kapcsolatokat tartalmaz az Ãºtvonal entitÃ¡s. 
 
-\Picture{A járathoz kapcsolatai}{5/linehasstations}{width=14cm}
+\Picture{A jÃ¡rathoz kapcsolatai}{5/linehasstations}{width=14cm}
 
-\subsection*{Indulási idõk, különleges idõpontok}
+\subsection*{IndulÃ¡si idÅ‘k, kÃ¼lÃ¶nleges idÅ‘pontok}
 \label{starttimes}
 
-Útvonaltervezés szempontjából fontos információ továbbá, hogy az adott járat az útvonalán található megállóiba milyen idõpontban érkezik meg, továbbá különleges alkalmak esetén ezek hogyan változnak meg. 
-Az indulási idõpontot egy Starttime nevû entitás tartalmazza, melyben tárolódik továbbá az is, hogy ez az indulás mely járatra vonatkozik, valamint milyen típusú dátum esetén értetendõ. 
-A különbözõ típusú dátumokat külön entitás tartalmazza. 
-Az alkalmazáshoz tovább tartozik egy Holidays entitás is, melyben az olyan, elõre nem tervezett idõpontokat tartalmazza amelyek befolyásolják bizonyos járatok indulási rendjét és esetleges útvonalát is. 
-Az elõbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/starttimes}. ábra mutatja be. 
+ÃštvonaltervezÃ©s szempontjÃ¡bÃ³l fontos informÃ¡ciÃ³ tovÃ¡bbÃ¡, hogy az adott jÃ¡rat az ÃºtvonalÃ¡n talÃ¡lhatÃ³ megÃ¡llÃ³iba milyen idÅ‘pontban Ã©rkezik meg, tovÃ¡bbÃ¡ kÃ¼lÃ¶nleges alkalmak esetÃ©n ezek hogyan vÃ¡ltoznak meg. 
+Az indulÃ¡si idÅ‘pontot egy Starttime nevÅ± entitÃ¡s tartalmazza, melyben tÃ¡rolÃ³dik tovÃ¡bbÃ¡ az is, hogy ez az indulÃ¡s mely jÃ¡ratra vonatkozik, valamint milyen tÃ­pusÃº dÃ¡tum esetÃ©n Ã©rtetendÅ‘. 
+A kÃ¼lÃ¶nbÃ¶zÅ‘ tÃ­pusÃº dÃ¡tumokat kÃ¼lÃ¶n entitÃ¡s tartalmazza. 
+Az alkalmazÃ¡shoz tovÃ¡bb tartozik egy Holidays entitÃ¡s is, melyben az olyan, elÅ‘re nem tervezett idÅ‘pontokat tartalmazza amelyek befolyÃ¡soljÃ¡k bizonyos jÃ¡ratok indulÃ¡si rendjÃ©t Ã©s esetleges ÃºtvonalÃ¡t is. 
+Az elÅ‘bbiekben bemutatott entitÃ¡sok kÃ¶zÃ¶tti kapcsolatot a \ref{fig_5/starttimes}. Ã¡bra mutatja be. 
 
-\Picture{Különleges és indulási idõpontok közötti kapcsolat}{5/starttimes}{width=14cm}
+\Picture{KÃ¼lÃ¶nleges Ã©s indulÃ¡si idÅ‘pontok kÃ¶zÃ¶tti kapcsolat}{5/starttimes}{width=14cm}
