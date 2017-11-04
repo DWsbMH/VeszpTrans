@@ -1,7 +1,7 @@
 %3. fejezet
 
-A fejezetben bemutatásra kerülnek a a funkciókövetelmények, amelyeket a fejlesztés előtt és közben figyelembe kellett venni, hogy az utazóközönség számára optimális alkalmazást készüljön el. 
-Továbbá a rendszer másik szereplői, az adminisztrátorok számára is könnyen kezelhető, felhasználóbarát felület készüljön el. 
+A fejezetben bemutatásra kerülnek a funkciókövetelmények, amelyeket a fejlesztés előtt és közben figyelembe kellett venni, hogy az utazóközönség számára optimális alkalmazás készüljön el. 
+Továbbá a rendszer másik szereplői, az adminisztrátorok számára is könnyen kezelhető, felhasználóbarát felület valósuljon meg. 
 A .képen láthatóak a rendszer szereplői és a hozzájuk tartozó használati esetek. 
 
 
@@ -9,7 +9,7 @@ A .képen láthatóak a rendszer szereplői és a hozzájuk tartozó használati
 \section{Követelmények}
 \label{kovetelmeny}
 
-Az alábbi követelmények tartalmazzák azokat a tulajdonságokat, amik az elkészült alkalmazás jellemzői között kell
+Az alábbi követelmények tartalmazzák azokat a tulajdonságokat, amiket az elkészült alkalmazásnak tartalmaznia kell.
 
 \begin{itemize}
 	\item Sebesség
@@ -19,7 +19,7 @@ Az alábbi követelmények tartalmazzák azokat a tulajdonságokat, amik az elk�
 	\item Alacsony erőforrás felhasználás
 	\\
 	Az egyik legfontosabb követelmény, hogy az alkalmazás kevés erőforrás igénybevételével is megfelelően működjön. 
-	Ehhez szükség volt arra, hogy a telefonon egy lokális adatbázis üzemeljen. 
+	Ehhez szükség volt arra, hogy a telefon egy lokális adatbázist üzemeltessen. 
 	Így az alkalmazás használatakor nem kell internetkapcsolatot biztosítani az adatok elérhetőek lesznek a telefon adatbázisából.	
 	\item Megbízhatóság
 	\\
@@ -73,7 +73,7 @@ A .ábrán láthatóak a felhasználóval és az adminisztrátorral kapcsolatos 
 \label{felhaszntech}
 \section*{Térkép}
 Egy útvonaltervező alkalmazás nagyon fontos tulajdonsága a megjelenés. 
-Egy ilyen alkalmazásnál alapvető elvárás, hogy a térképen megjelenő információ könnyen kiolvasható legyen, hogy a felhasználók könnyedén el tudják választani a lényeges információt azoktól, amelyek nem szükségesek a tájékozódástól. 
+Egy ilyen alkalmazásnál alapvető elvárás, hogy a térképen megjelenő információ könnyen kiolvasható legyen, hogy a felhasználók könnyedén el tudják választani a lényeges információt azoktól, amelyek nem szükségesek a tájékozódáshoz. 
 Emiatt szükségem volt egy olyan térképes szolgáltatásra, ami az előbbi céloknak megfelel. 
 Mielőtt megkezdtem a fejlesztést, több ilyen szolgáltatást is megvizsgáltam, abból a célból, hogy a legmegfelelőbbet tudjam kiválasztani a tapasztalatok alapján a szakdolgozatomhoz. 
 Az egyik legfontosabb szempont a kiválasztásnál az volt, hogy ingyenesen elérhető legyen a szolgáltatás. 
@@ -89,11 +89,36 @@ Ezekből az adatokból következtetni tudtam arra, hogy a felhasználók széles
 A \ref{fig_3/terkeposszehas}.ábrán látható szempontok figyelembe vételével végül a Google Maps-re esett a választásom, mint integrálható térképes szolgáltatás.
 
 \section*{Android, Java}
+Az Android platformon futó alkalmazások elsődleges programozási nyelve a Java.
+A Java platformfüggetlen és széles körben elterjedt, a Sun Microsystems által fejlesztett nyelvet az 1990-es évek óta folyamatosan fejlesztik.
+Az Android egy Linux alapú operációs rendszer, amely több pozitívummal is rendelkezik, ilyen például a hordozhatóság és a biztonság.
+Futtatási sebessége a Java-hoz képes javult, hiszen a kibővített Java programozási nyelvet Android esetén egy olyan virtuális gépen futtatják, amely szerves részét képezi az Android operációs rendszernek.
 
 \section*{Symfony}
+A Symfony-val készült webes alkalmazások könnyen karbantarthatóak és jól skálázhatóak, mivel a keretrendszer az MVC tervezési mintára épül.
+A Symfony felépítése moduláris, ennek köszönhetően könnyen bővíthető.
+Továbbá a Symfony egy-egy komponensét más keretrendszerrel készült alkalmazásban külön is használhatjuk, amit szintén a moduláris szerkezet tesz lehetővé.
+Minden beérkező kérést a keretrendszer dolgoz fel, melyek az útvonalválasztás után meghívják a megfelelő kontrollerek metódusát.
+Továbbá a kontrollerek hozzáférnek a services.yml fájlban definiált szolgáltatásokhoz is.
+Az itt definiált szolgáltatások példányait, a Symfony dependency injection segítségével juttatja el a kontrollerekhez.
+A Symfony segítségével a dinamikus tartalom is könnyen átalakítható a benne található template nyelvek egyikének köszönhetően.
+Az általam választott nyel a twig, amellyel a megjelenítés elválasztható az üzleti logikától. 
+
 \section*{MySQL}
+A MySQL  egy SQL (Structured Query Language, vagyis struktúrált lekérdező nyelv) alapú relációs adatbázis-kezelő szerver.
+Teljesen nyílt forráskodú, feltételezhetően emiatt terjedt el széles körben.
+Egyszerűen használható és költséghatékony megoldást nyújt dinamikus webhelyek számára.
+Az adatbázis kezelésére a phpMyAdmin adminisztrációs eszközt használtam, amely segítségével Interneten keresztül menedzselhettem az adatokat.
 
-
+\section*{Doctrine}
+A Doctrine keretrendszer az adatbázisban található adatok elérésére alkalmas.
+A segítségével PHP osztályok képezhetőek le relációs adatbázis táblákká.
+A keretrendszer lehetőséget ad arra, hogy az alkalmazás adatbázisa különösebb ráfordítás nélkül lecserélhető legyen.
+A DQL, vagyis a Doctrine lekérdező nyelv használatával lehet az adatokat elérni.
+A Doctrine véd továbbá az SQL injektálásos támadásokkal szemben is.
+A Doctrine úgynevezett Repository-kat használ az adatok lekérdezésére, amelyek lehetővé teszik, hogy alkalmazás logikája és a lekérdezés megvalósítása elvonatkoztatható legyen egymástól.
+Továbbá azért esett a választásom a Doctrine-ra, mert a keretrendszer integrálva van a Symfony-ba, illetve szolgáltatásként elérhető a Doctrine EntityManager objektuma.
+Új entitások generálásában és az adatbázis tábláinak frissítésében is segítséget nyújt a Symfony parancssoros eszköze.
 
 
 
