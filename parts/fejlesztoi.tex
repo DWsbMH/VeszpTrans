@@ -1,16 +1,18 @@
-﻿Az elkészült rendszer szerver-kliens architektúrára épült. 
+﻿Az elkészült rendszer szerver-kliens architektúrára épül. 
 Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
 A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
 Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
-Jelenleg kétféle kliens tartozik a rendszerhez, egy adminisztrációs feladatokat betöltő weboldal, és egy Android alkalmazás, amely a felhasználók részére készült. 
+A rendszerben található a szerver, ami egy adminisztrációs feladatokat betöltő weboldal, és a kliens, egy Android alkalmazás, amely a felhasználók részére készült. 
 Az adminisztrációs weboldalon az adatok a Twig sablonkezelő segítségével jelennek meg. 
 Az Android-os kliens a kért adatokat JSON formrmátumban kapja meg. 
-A továbbiakban részletesen bemutatásra kerül a szerver és a kliensek felépítése, működése. 
+A továbbiakban részletesen bemutatásra kerül a szerver és a kliens felépítése, működése. 
+
+% kell architektúra kép meg megtalálni az authenticationprocess képet
 
 \section{A szerver felépítése}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer 2.8-as verziójára épült. 
+A szerver a Symfony keretrendszer ???-as verziójára épült. 
 A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt. 
 Ha sikeres volt az autentikáció, a kérés a megfelelő kontroller osztályhoz kerül feldolgozás után. 
 
@@ -46,8 +48,8 @@ A metódusok annotációi között megszabhatunk különböző paramétereket is
 
 Az autentikáció a Symfony tűzfal moduljával történik. 
 Az ehhez szükséges beállítások a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfigurációs fájljában találhatóak. 
-A szerverhez jelenleg két fajta felhasználó van rendelve, ezek bele vannak égetve ebbe a fájlba. 
-A szerver feladatköréből kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, mivel szükség újabb felhasználók hozzáadására. 
+A szerverhez jelenleg két fajta felhasználó van rendelve, melyek az előbbiekben említett fájlban vannak definiálva.
+A szerver feladatköréből kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, ezért nincs szükség újabb felhasználók hozzáadására. 
 Ez azt jelenti, hogy a felhasználókhoz tartozó jelszavakat is ebben a fájlban tároljuk. 
 Biztonsági szempontokból kritikus tényező, hogy ezek a jelszavak valamilyen módon titkosítva legyenek. 
 A titkosításhoz a bcrypt algoritmust használtam fel. 
@@ -85,7 +87,7 @@ access_control:
     - { path: ^/, roles: ROLE_ADMIN }
 \end{lstlisting}
 
-Az alábbi kódrészlet azt mutatja be, hogy a felhasználói jogkör csak a \Highlight{\/json} végű URL-címekhez ad elérést, míg egy adminisztrátor minden címet elér. 
+Az alábbi kódrészlet azt mutatja be, hogy a látogatói jogkör csak a \Highlight{\/json} végű URL-címekhez ad elérést, míg egy adminisztrátor minden címet elér. 
 Ugyanezt a funkcionalitást meg lehet valósítani szintén annotációkkal is, de a weboldal kialakítása miatt célszerűbb volt ezt a megoldást választani, hisz így egyetlen fájlban elegendő meghatározni a hozzáférési szabályokat, annotációk használatával viszont minden kontroller osztályban egyenként kellett volna meghatározni ugyanazokat a szabályokat.
 
 \subsection*{Adatbázis kapcsolat}
@@ -108,22 +110,21 @@ Ezek az osztályok a Doctrine \Highlight{EntityRepository} osztályából szárm
 Az összetettebb lekérdezésekhez a DQL nyelvet használtam fel, mely az entitások kapcsolatait az entitáshoz tartozó osztályban megadott annotációk alapján kezeli. 
 
 Amennyiben az adatbázisból lekérdezett adatok módosultak, ahhoz, hogy ez a változás megmaradjon el kell menteni az adatbázisba. 
-Szerencsére a Doctrine keretrendszernek van erre automatikus eszköze, mégpedig az EntityManager osztály, mely érzékeli a változást és elmenti a \Highlight{flush()} metódus használatával. 
+A Doctrine keretrendszerben található automatikus megoldás, mégpedig az EntityManager osztály, amely érzékeli a változást és elmenti a \Highlight{flush()} metódus használatával. 
 Ha új adatot akarunk az adatbázishoz adni, azt is az EntitiyManager osztállyal tehetjük meg. 
 Az elkészült új objektumot paraméterként átadva az osztály \Highlight{persist()} metódusának, a Doctrine keretrendszer úgy kezeli a továbbiakban az objektumot, mintha az az adatbázisból lekérdezett lenne, és így a \Highlight{flush()} metódussal az adatbázisba tudja írni. 
 
 \section{Szerver feladatai}
 \label{serverjob}
 
-A alábbiakban bemutatásra kerülnek a szerver főbb feladatai.
+Az alábbiakban bemutatásra kerülnek a szerver főbb feladatai.
 
 \subsection*{Járatok}
 \label{lineinfodetails}
 
 A városban közlekedő buszok más-más végpontok között közlekednek. 
-Előfordulhat, hogy ugyanolyan számmal ellátott busz ugyanazon végpontok között közlekedik, de a köztes megállók között eltérhet, vagy a köztes megállók ugyanazok, de a végpontok mások. 
-Olyan helyzet is előfordulhat, hogy a két végpont megegyezik. 
-Ezeknek az információk összefogására létrehozott \Highlight{LineInfio} entitás felelős. 
+Előfordulhat, hogy ugyanolyan számmal ellátott busz ugyanazon végpontok között közlekedik, de a köztes megállók eltérhetnek, vagy a köztes megállók ugyanazok, de a végpontok mások. 
+Ezeknek az információk összefogására létrehozott \Highlight{LineInfo} entitás felelős. 
 Ez az entitás tárolja a két végpontot, a közöttük közlekedő buszjáratot, és a járat típusát. 
 A végpont és a buszjáratok szintén entitások, az ezek között fennálló kapcsolat az \ref{fig_5/lineinfo}. ábrán látható. 
 
@@ -154,3 +155,4 @@ Az alkalmazáshoz tovább tartozik egy Holidays entitás is, melyben az olyan, e
 Az előbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/starttimes}. ábra mutatja be. 
 
 \Picture{Különleges és indulási időpontok közötti kapcsolat}{5/starttimes}{width=14cm}
+
