@@ -1,4 +1,4 @@
-﻿Az elkészült rendszer szerver-kliens architektúrára épül. 
+Az elkészült rendszer szerver-kliens architekturára épül.
 Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
 A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
 Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
@@ -158,7 +158,94 @@ Az előbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/startti
 
 
 \section{Az Android kliens}
-\label{szerverfelepites}
+\label{androidclient}
+Az alkalmazás fejlesztéséhez az Android Studio fejlesztői környezetet használtam.
+Az Android Studio a Gradle rendszerre épül, amelynek számos funkciója megkönnyíti az Androidos alkalmazások fordítását.
+A Gradle Androidos bővítményében található több Android specifikus parancs, amelyek közül az \Highlight{assemble} paranccsal készíthetjük el a futtatható és telepíthető állományt.
+A futtatható fájl elkészítéséhez szükséges információkat a build.gradle fájlban adhatjük meg.
+Ebben találhatóak a szükséges függőségek, amiket a Gradle bővítménye letölt, és belecsomagol az .apk-ba.
+Továbbá itt található az applikáció által támogatott Android verziók száma.
+Az általam készített alkalmazás futtatásához legalább a \Highlight{minSdkVersion 14} verzió szükséges, ami az Android operációs rendszer 4.0 verziójának felel meg.
+
+Az \Highlight{AndroidManifest.xml} fájl az alkalmazás alapvető jellemzőit tartalmazza.
+Ilyen jellemzők többek között a szükséges engedélyek és a Google Maps-hez tartozó metainformáció.
+Az alkalmazás telepítéséhez és futtatásához szükség van engedélyekre a felhasználó részéről.
+Ezek az engedélyek a következők:
+\begin{lstlisting}
+<uses-permission android:name="android.permission.INTERNET" /> 
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+\end{lstlisting}
+Az első hozzáférés az Internettel való kommunikációhoz szükséges.
+Szükségünk van továbbá olyan engedélyre amivel a Saját pozíció lekérhető és engedélyezhető a GPS a telefonon.
+Mivel az alkalmazásnak szüksége van Internet hozzáférésre az adatok letöltéséhez, ezért az alkalmazás engedélyt kér a telefon hálózati állapotának lekéréséhez is.
+
+\subsection*{Helyi adatbázis}
+\label{localdatabase}
+Fontos szempont volt helyi adatbázist létrehozni, mivel túl sok erőforrást fogyasztott volna minden alkalommal a szerverhez fordulni adatokért, merítette volna a telefont meg ha nincs net akkor használhatatlan az app, offline üzemmód is kellett. 
+Megvizsgáltam több android platformhoz létező ORM framework-öt, tüzetesebben az ORMLite-ot. 
+Jó lett volna, de előnye akkor lett volna ha nincs már meglévő adatbázis séma (szerver oldali kialakítás) amihez alkalmazkodnia kellett volna
+A használata így nehézkes volt és egy idő után nem is volt célszerű tovább próbálkozni vele.
+% azóta csinált az Android saját adatbázis absztrakciós framework-öt, ezt nem próbáltam semennyire, mennyire említsem meg a szakdogában?
+Ezután a natív sql utasítások használata mellett döntöttem. Ugyan egy framework ezektől kímélt volna meg, de ebben a kontextusban szükséges volt hogy manuálisan finomhangolhassam a helyi adatbázis sémáját.
+Android-ban előre szállítva van(nem kell külön lib vagy telepítés hozzá, a gyári új telókon is ott van) az SQLite adatbázis (wikiről: "Az SQLite önálló, kisméretű (kb. 500 KiB), C forrású programkönyvtárként (library) megvalósított ACID-kompatibilis relációs adatbázis-kezelő rendszer, illetve adatbázismotor.", valami random szöveg róla)
+Ezzal az adatbázissal szimpla sql utasításokkal lehet kommunikálni, (select * from..., insert into ...)
+Ahhoz hogy tudjunk ténylegesen dolgozni vele kell egy olyan osztály ami a SQLiteOpenHelper osztályból öröklődik. Ebben az új osztályban kell megadni az adatbázis nevét, verzióját és kötelezően meg kell valósítania az ősosztály onCreate és onUpgrade metódusait.
+Az onCreate metódusban ("Called when the database is created for the first time.") van lehetőség létrehozni az éppen elkészült adatbázisba a táblákat. 
+\begin{lstlisting}
+@Override
+public void onCreate(SQLiteDatabase sqLiteDatabase) {
+	try {
+		sqLiteDatabase.execSQL(DateTypeEntry.CREATETABLE);
+		/* Create other tables similar to the above one. */
+	} catch (SQLiteException e) { /*...*/ }
+}
+\end{lstlisting}
+Az onUpgrade metódus akkor hívódik meg ha megnöveltük az adatbázis verzióját, ami azt jelzi hogy visszafele nem kompatibilis változás történt az adatbázisban és valamilyen transzformáció szükséges a régi és az új séma között amit manuálisan itt tehetünk meg.
+"Transactions are used to make sure the database is always in a sensible state." Egy tranzakció tartalmazhat több sql utasítást is amik egyszerre fognak végrehajtódni, így nem kell minden egyes utasítással külön-külön foglalkoznia. Ha bármelyik nem sikerül az előzőek is vissza lesznek vonva a tranzakcióban. 
+Minden adatbázis táblához létrehoztam egy statikus osztályt, melyeket egy DatabaseContract nevű osztályban gyűjtöttem össze. Minden belső osztály implementálja a BaseColumns osztályt, melynek köszönhetően out-of-box megkapják az egyedi azonosításra használatos  \_id mezőt. Minden más attribútumot felvettem a szükséges osztályokhoz és elkészítettem a mezők alapján a tábla létrehozásához szükséges SQL parancsot.
+\begin{lstlisting}
+static class DateTypeEntry implements BaseColumns{
+	static final String TABLE_NAME = "date_type";
+	static final String COLUMN_NAME_TYPE_NAME = "type_name";
+	static final String COLUMN_NAME_ENABLED = "enabled";
+	static final String CREATETABLE = "CREATE TABLE IF NOT EXISTS "+ TABLE_NAME+"( `"+_ID+"` INTEGER PRIMARY KEY NOT NULL, `"+COLUMN_NAME_TYPE_NAME+"` TEXT NOT NULL, `"+COLUMN_NAME_ENABLED+"` INTEGER DEFAULT 1);";
+}
+\end{lstlisting}
+A helyi adatbázisban szereplő adatok az androidos alkalmazásban POJO-kban tároltam. Minden táblához tartozik egy hozzá tartozo POJO.
+Ahhoz hogy az alacsonyabb szintű SQL utasítások elkülönítsük az üzleti logikától létrehoztam egy DataManager nevű absztrakt osztályt, mely típuskéntt vár egy POJO-t. Mivel az osztály absztrakt - így nem példányosítható - ezért ebben az osztályban kaptak helyet olyan metódusok, melyek minden típusú POJO-ra általános érvényességűek. 
+\begin{lstlisting}
+public abstract class DataManager<T> {	
+    DatabaseHelper helper;
+	
+	/* ... */
+
+    public abstract void createOrUpdate(T data);
+    public abstract List<T> queryForAll();
+}
+\end{lstlisting}
+Ebből az osztályból származtattam a specifikus osztályokat, melyeken keresztül adott típusú POJO-t tudunk lementeni vagy visszakérdezni a helyi adatbázisból. Az ősosztályban található metódusokat mindenképp implementálnia kell minden osztálynak. Amennyiben szükség volt olyan funkcionalitásra, mely a többi POJO esetén nem értelmezhetőek, azok csak a specifikus osztályban lettek definiálva.
+Az alkalmazáson belül ahol az adatbázissal való interakció szükséges mindenhol ezeket a manager osztályokat használjuk. 
+
+\subsection*{Szerver-kliens kapcsolat}
+\label{serverclient}
+A helyi adatbázisban található adatok csak egy adott idő-intervallumban valid-ok, a menetrend változásával nem lesznek helyesek. Ezért bizonyos időközönként frissíteni kell a benne szereplő információkat. Jelenleg az adatok aktualizálása akkor történik amikor elindul az alkalmazás.
+Erre szolgál a korábban bemutatott szerver, ahonnan megkaphatjuk az aktuális információkat.
+A kliens REST hívásokkal képes beszerezni az új adatokat. 
+A kommunikációt a Retrofit nevű REST klienssel oldottam meg. Segítségével könnyen lehet a szerver felé elküldeni a kéréseket. 
+Elkészítettem egy NetworkManager osztály, mely felelős a Retrofit konfigurálásáért és egyéb hálozattal kapcsolatos feladatokért.
+Képes lekérdezni, hogy az adott eszköz rendelkezik-e az adott időpontban bármilyen internet-eléréssel. Amennyiben nem, akkor csak a helyi adatbázist használja. Ha van, akkor elkezdődik az adatok frissítése.
+A minél kisebb adathasználat érdekében a kliens tárolja, hogy mikor történt a legutolsó frissítés. A következő frissítés során elküldi a legutolsó frissítési dátumot a szervernek, a szerver pedig csak azokat az adatokat küldi vissza, amelyek újabbak, mint a kapott időpont.
+Miután a frissítés sikeresen megtörtént, az időpont frisssítésre kerül a helyi adatbázisban.
+Elkészült egy BaseDownloader nevű absztrakt osztály, mely implementálja az IDownloader interfészt.
+Az osztály konstruktorában kerülnek inicializálásra a Retrofit számára szükséges osztályok.
+Lehetőségünk van minden kérést személyre szabnunk. Ezt felhaszn
+Az IDownloader interfész egyetlen metódus-definíciót tartalmaz:
+\begin{lstlisting}
+public interface IDownloader {
+    void download();
+}
+\end{lstlisting}
 
 
 
@@ -172,12 +259,4 @@ Az előbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/startti
 
 
 
-
-
-
-
-
-
-
-
-
+\newpage

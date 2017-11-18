@@ -18,13 +18,9 @@ Amint az adatok aktualizálása befejeződött, a felugró ablak eltűnik, átad
 A főmenü az alkalmazás nevét és négy almenüt foglal magába:
 \begin{itemize}
 	\item Útvonaltervezés
-	\\
 	\item Menetrendek
-	\\
 	\item Megállók
-	\\
 	\item Kedvencek
-	\\
 \end{itemize}
 
 A . ábrán látható az alkalmazás főmenüjének kiosztása. 
@@ -51,16 +47,48 @@ Ez a funkció azoknak a felhasználóknak nyújt segítséget, akik számára Ve
 %kép: Saját pozíció, dupla mezős útvonaltervezés
 A jobb alsó gombra kattintva a felhasználó átkerül az Útvonaltervezés oldalra, ahol a felső beviteli mező mellé egy újabb mező kerül.
 Ha az előző oldalon a mezőbe került már földrajzi hely, az alkalmazás automatikusan az alsó mezőt, az Utazás célját tölti fel vele.
-
-
+Az új képernyőn megjelenő ablakban is lehetőség van a saját pozíció lekérésére, ebben az esetben az alkalmazás a paramétereket a Kiindulási pont mezőbe tölti be.
+Abban az esetben, ha mind a kettő mezőt kitöltötte a felhasználó, akkor az Útvonaltervezés gomb ismételt megnyomásával átkerül a találati listára.
+%találati képernyő, kiválasztás utáni térkép
+Az alkalmazás az . ábrán látható módon jeleníti meg a találatokat.
+A képernyő felső részén a beállított indulási és érkezési helyszín van feltüntetve, alul pedig három féle szempont alapján a megoldás:
+\begin{itemize}
+	\item Legkevesebb utazási idő
+	\\Ennél a lehetőségnél az alkalmazás kiszámolja a lehetséges útvonalakban a gyaloglással és utazással töltött idejét, és ezek közül a legrövidebbet jeleníti meg.
+	\item Legkevesebb gyaloglás
+	\\A második opció azt a találatot listázza ki, amelynél a gyaloglással töltött idő a legrövidebb.
+	\item Legkevesebb átszállás
+	\\Az utolsó alternatíva a jeggyel utazóknak kínál utazási megoldást, hiszen a legkevesebb átszállással járó utazást jeleníti meg.
+\end{itemize}
+A felhasználó az egyik megoldásra kattintva választhatja ki a számára optimális útvonalat.
+Az alkalmazás a következő képernyőn az útvonalat térképen jeleníti meg, ahogy az a .ábrán is látszik.
+A kezdő és a végpont jelölője piros színű, a busz útvonalát az eltérő színnel (jelen esetben lilával) jelölt megállók mutatják.
+Ha az útvonalban több busz is szerepel, akkor azok útvonalát egy harmadik színnel jelöli az alkalmazás.
+A gyalogos útvonalat az applikáció színes vonallal jelöli a térképen a piros jelölők és az első/utolsó buszmegállók között.
+Ha a választott megoldás mégsem felel meg a felhasználó igényeinek, a képernyő felső részén elhelyezkedő Útvonaltervezés gomb ismételt megnyomásával visszajut az utazási lehetőséget listázó oldalra.
 \section {Menetrendek}}
 \label {menetrendek}
+A Menetrendek a főmenü második menüpontja.
+Ez az opció azokat a felhasználókat segíti, akik már ismerik Veszprém városát, illetve tömegközlekedését legalább alap szinten.
+A menüpontra kattintva az alkalmazás kilistázza a buszjáratok számait.
+Amint kiválasztott a megtekinteni kívánt járatot, az applikáció bekéri a járat irányát is, majd kilistázza az indulási időket az . ábrán látható módon.
+Az megnyíló ablak fejléce tartalmazza az előbbi felhasználói akciók során bekért adatokat, illetve a Kedvencekhez adás funkciót egy szív ikon formájában.
+A képernyő bal oldalán a járat megállói láthatóak, a választott iránytól függő sorrendben.
+Az időpontok jobb oldalon, munkanapokra és szabadnapokra felosztva láthatóak.
 
 \section {Megállók}
 \label {megallok}
+A Megallók menüpont alatt egy Google Maps térkép jelenik meg rajta Veszprém város buszmegállóival.
+A megállók pontos helyét piros színű jelölők jelzik a térképen, amely a közelítés mértékével arányosan csoportosítja a jelölőket.
+A felhasználó megkeresi a térképen azt a megállót amelyikre kíváncsi, az alkalmazás pedig kilistázza az ott megálló járatok számát, ahogy az . ábrán is látszik.
 
 \section {Kedvencek}
 \label {kedvencek}
+A menüpontban a Menetrendek alatt Kedvencnek jelölt járatokat lehet elérni.
+Az alkalmazás kilistázza azokat az adott menetirányhoz tartozó járatokat, amelyeket a felhasználó kedvencnek jelölt.
+A funkció egy szív ikon formájában jelenik minden menetrend adatlapján.
+Alapérmezetten a szív üres, rájuk kattintva tudja a felhasználó a Kedvencek menüpont alá rakni, ekkor a szív pirosra színeződik.
+A listából eltávolítani hasonló módszerrel lehet, a telt szívre rákattintva kikerül a Kedvencekből.
 
 %4.2
 \section{Admin oldal}

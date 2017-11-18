@@ -2,21 +2,22 @@
 \select@language {magyar} \contentsline {chapter}{\numberline {2}Veszpr\IeC {\'e}m t\IeC {\"o}megk\IeC {\"o}zleked\IeC {\'e}se}{8}{chapter.2}
 \select@language {magyar} \contentsline {section}{\numberline {2.1}Az \IeC {\'u}tvonaltervez\IeC {\'e}s \IeC {\'e}s a Google Maps}{8}{section.2.1}
 \select@language {magyar} \contentsline {section}{\numberline {2.2}Veszpr\IeC {\'e}m t\IeC {\"o}megk\IeC {\"o}zleked\IeC {\'e}se}{9}{section.2.2}
-\select@language {magyar} \contentsline {section}{\numberline {2.3}Jelenlegi megold\IeC {\'a}sok}{9}{section.2.3}
-\select@language {magyar} \contentsline {chapter}{\numberline {3}K\IeC {\"o}vetelm\IeC {\'e}nyek, technol\IeC {\'o}gi\IeC {\'a}k}{15}{chapter.3}
-\select@language {magyar} \contentsline {section}{\numberline {3.1}K\IeC {\"o}vetelm\IeC {\'e}nyek}{15}{section.3.1}
-\select@language {magyar} \contentsline {section}{\numberline {3.2}Funkcion\IeC {\'a}lis k\IeC {\"o}vetelm\IeC {\'e}nyek}{16}{section.3.2}
-\select@language {magyar} \contentsline {section}{\numberline {3.3}Felhaszn\IeC {\'a}lt technol\IeC {\'o}gi\IeC {\'a}k}{17}{section.3.3}
-\select@language {magyar} \contentsline {chapter}{\numberline {4}Felhaszn\IeC {\'a}l\IeC {\'o}i k\IeC {\'e}zik\IeC {\"o}nyv}{20}{chapter.4}
-\select@language {magyar} \contentsline {section}{\numberline {4.1}Android alkalmaz\IeC {\'a}s}{20}{section.4.1}
-\select@language {magyar} \contentsline {section}{\numberline {4.2}F\IeC {\H o}men\IeC {\"u}}{20}{section.4.2}
-\select@language {magyar} \contentsline {section}{\numberline {4.3}\IeC {\'U}tvonaltervez\IeC {\'e}s}{21}{section.4.3}
-\select@language {magyar} \contentsline {section}{\numberline {4.4}Menetrendek}{22}{section.4.4}
-\select@language {magyar} \contentsline {section}{\numberline {4.5}Meg\IeC {\'a}ll\IeC {\'o}k}{22}{section.4.5}
-\select@language {magyar} \contentsline {section}{\numberline {4.6}Kedvencek}{22}{section.4.6}
-\select@language {magyar} \contentsline {section}{\numberline {4.7}Admin oldal}{22}{section.4.7}
-\select@language {magyar} \contentsline {chapter}{\numberline {5}Fejleszt\IeC {\H o}i dokument\IeC {\'a}ci\IeC {\'o}}{23}{chapter.5}
-\select@language {magyar} \contentsline {section}{\numberline {5.1}A szerver fel\IeC {\'e}p\IeC {\'\i }t\IeC {\'e}se}{23}{section.5.1}
-\select@language {magyar} \contentsline {section}{\numberline {5.2}Szerver feladatai}{26}{section.5.2}
-\select@language {magyar} \contentsline {chapter}{\numberline {6}Tov\IeC {\'a}bbfejleszt\IeC {\'e}si lehet\IeC {\H o}s\IeC {\'e}gek}{29}{chapter.6}
+\select@language {magyar} \contentsline {section}{\numberline {2.3}Jelenlegi megold\IeC {\'a}sok}{11}{section.2.3}
+\select@language {magyar} \contentsline {chapter}{\numberline {3}K\IeC {\"o}vetelm\IeC {\'e}nyek, technol\IeC {\'o}gi\IeC {\'a}k}{17}{chapter.3}
+\select@language {magyar} \contentsline {section}{\numberline {3.1}K\IeC {\"o}vetelm\IeC {\'e}nyek}{17}{section.3.1}
+\select@language {magyar} \contentsline {section}{\numberline {3.2}Funkcion\IeC {\'a}lis k\IeC {\"o}vetelm\IeC {\'e}nyek}{18}{section.3.2}
+\select@language {magyar} \contentsline {section}{\numberline {3.3}Felhaszn\IeC {\'a}lt technol\IeC {\'o}gi\IeC {\'a}k}{19}{section.3.3}
+\select@language {magyar} \contentsline {chapter}{\numberline {4}Felhaszn\IeC {\'a}l\IeC {\'o}i k\IeC {\'e}zik\IeC {\"o}nyv}{22}{chapter.4}
+\select@language {magyar} \contentsline {section}{\numberline {4.1}Android alkalmaz\IeC {\'a}s}{22}{section.4.1}
+\select@language {magyar} \contentsline {section}{\numberline {4.2}F\IeC {\H o}men\IeC {\"u}}{22}{section.4.2}
+\select@language {magyar} \contentsline {section}{\numberline {4.3}\IeC {\'U}tvonaltervez\IeC {\'e}s}{23}{section.4.3}
+\select@language {magyar} \contentsline {section}{\numberline {4.4}Menetrendek}{24}{section.4.4}
+\select@language {magyar} \contentsline {section}{\numberline {4.5}Meg\IeC {\'a}ll\IeC {\'o}k}{24}{section.4.5}
+\select@language {magyar} \contentsline {section}{\numberline {4.6}Kedvencek}{24}{section.4.6}
+\select@language {magyar} \contentsline {section}{\numberline {4.7}Admin oldal}{25}{section.4.7}
+\select@language {magyar} \contentsline {chapter}{\numberline {5}Fejleszt\IeC {\H o}i dokument\IeC {\'a}ci\IeC {\'o}}{26}{chapter.5}
+\select@language {magyar} \contentsline {section}{\numberline {5.1}A szerver}{26}{section.5.1}
+\select@language {magyar} \contentsline {section}{\numberline {5.2}Szerver feladatai}{29}{section.5.2}
+\select@language {magyar} \contentsline {section}{\numberline {5.3}Az Android kliens}{31}{section.5.3}
+\select@language {magyar} \contentsline {chapter}{\numberline {6}Tov\IeC {\'a}bbfejleszt\IeC {\'e}si lehet\IeC {\H o}s\IeC {\'e}gek}{35}{chapter.6}
 \select@language {magyar} \vspace *{\baselineskip }
