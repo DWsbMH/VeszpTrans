@@ -6,7 +6,7 @@ Továbbá ismertetem az adatok menedzselésére szolgáló weboldal felületét 
 
 %4.1
 \section{Android alkalmazás}
-\label{androidapp}}
+\label{androidapp}
 %képek: applogo, főmenü
 Az applikáció ikonja egy Veszprémben járműparkjában is szereplő autóbusz, az Ikarus 280.
 Az alkalmazás indítása után az alkalmazás lekéri az adatbázisból azokat az adatokat, amik módosítási dátuma későbbi, mint az utolsó letöltés ideje.
@@ -26,7 +26,7 @@ A főmenü az alkalmazás nevét és négy almenüt foglal magába:
 A . ábrán látható az alkalmazás főmenüjének kiosztása. 
 Az applikáció témája a lila szín és annak árnyalatai, amely lehetővé teszi a felhasználók figyelmének felkeltését, mégis letisztult külsőt kölcsönöz.
 
-\section {Útvonaltervezés}}
+\section {Útvonaltervezés}
 \label {utvonalterv}
 Az Útvonaltervezés menüpontot kiválasztva egy Google Maps térkép jelenik meg Veszprém városára fókuszálva.
 A képernyőn ezen kívül egy beviteli mező és három gomb található.
@@ -66,7 +66,7 @@ A kezdő és a végpont jelölője piros színű, a busz útvonalát az eltérő
 Ha az útvonalban több busz is szerepel, akkor azok útvonalát egy harmadik színnel jelöli az alkalmazás.
 A gyalogos útvonalat az applikáció színes vonallal jelöli a térképen a piros jelölők és az első/utolsó buszmegállók között.
 Ha a választott megoldás mégsem felel meg a felhasználó igényeinek, a képernyő felső részén elhelyezkedő Útvonaltervezés gomb ismételt megnyomásával visszajut az utazási lehetőséget listázó oldalra.
-\section {Menetrendek}}
+\section {Menetrendek}
 \label {menetrendek}
 A Menetrendek a főmenü második menüpontja.
 Ez az opció azokat a felhasználókat segíti, akik már ismerik Veszprém városát, illetve tömegközlekedését legalább alap szinten.
@@ -92,7 +92,45 @@ A listából eltávolítani hasonló módszerrel lehet, a telt szívre rákattin
 
 %4.2
 \section{Admin oldal}
-\label{admin}}
+\label{admin}
+Az alkalmazás létrehozásakor szükség volt egy olyan kezelőfelület létrehozására is, amelyen keresztül könnyen kezelhetőek az adatbázisba feltöltött adatok.
+Mivel az adatok közérdekűek és sok embert érintenek, fontos szempont volt, hogy csak azok férhessenek hozzá akiknek van jogosultságuk.
+Az oldal eléréséhez a felhasználónak igazolnia kell magát egy felhasználónév-jelszó párossal, ahogy az a .ábrán is látszik.
+Az . ábrán látható admin oldal jelenik meg a sikeres bejelentkezés után.
+%admin bejelentkezés, főoldal
+Bal oldalon található a menü, amiből a felhasználó kiválaszthatja azt az elemet, amit menedzselni szeretne.
+Alapértelmezetten a Járat menüpont jelenik meg, ez az adatbázis architektúrájának alapja.
+A másik alapvető entitás a Megállók, amelyek a buszmegállók pontos földrajzi helyzetét tárolják.
+Egy megálló felviteléhez hosszúsági és szélességi koordinátákra van szükség, amelynek felvitelét egy beágyazott Google Maps térkép segíti a weboldalon.
+A felhasználó kijelöli a térképen a megálló pontos helyét, aminek a koordinátái megjelennek a térkép mellett és az adminisztrátornak már csak nevet kell hozzárendelnie az új rekordhoz.
+Hasonló kezelőfelület található a megállók útvonalakhoz való rendelését kezelő menüpontban.
+Egy új útvonal létrehozása esetén az adminisztrátor a Google Maps-en elhelyezkedő jelölők közül kiválasztja a megfelelőt.
+Ezek a jelölők az adatbázisban található megállókat jelölik a térképen elhelyezve a könnyebb kezelés érdekében.
+Ha egy útvonal módosul (például egy felújítás miatt), akkor az egy új útvonalként felvezetésre kerül, az alapvető útvonal állapota pedig inaktívvá válik.
+Amint az adminisztrátor sikeresen az adatbázishoz adott egy buszjáratot, a megfelelő útvonalhoz és járathoz indulási időket rendel.
+Ezeket az időket előre definiált kategóriákba menthetjük el, ilyen kategória például a szabadnap, a munkanap vagy a tanszüneti munkanap.
+Mindemellett előfordulhatnak olyan időpontok a naptárban, amikor nem az alapértelmezett közlekedési rend a mérvadó, például hétköznapra eső ünnepnapokon.
+Mivel ezek évről évre változnak, így az adminisztrátor feladata, hogy megfelelően felvezesse ezeket a napokat az adatbázisba.
+Erre szolgál az Eltérő közlekedési rendek menüpont, ahol a megadott időintervallumra vonatkozóan felülírhatjuk az alapértelmezett rendet.
+
+Az adatok átláthatóságának érdekében táblázatban jelennek meg az adatbázisból lekért rekordok.
+Az adminisztrátor a keresés funkció segítségével kereshet az adatok attribútumai között, illetve sorba rendezheti azokat a gyorsabb kezelés érdekében.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
