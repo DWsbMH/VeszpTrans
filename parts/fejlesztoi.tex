@@ -175,7 +175,7 @@ Ebben a kontextusban szükséges volt, hogy manuálisan személyre szabhassam a 
 
 A helyi adatbázis-kezelő rendszer az SQLite, amely az Android operációs rendszerbe gyárilag beépített adatabázis-kezelő motor.
 Mivel az SQLite relációs adatbázis, ezért a kommunikáció szimpla SQL utasításokkal történik.
-Az applikáció sikeres működéséhez szükséges egy /Highlight{SQLiteOpenHelper} osztályból örököltetett osztály, amelyben az adatbázis nevét, verzióját és az adatbázis létrejöttekor végrehajtandó utasításokat tároljuk.
+Az applikáció sikeres működéséhez szükséges egy \Highlight{SQLiteOpenHelper} osztályból örököltetett osztály, amelyben az adatbázis nevét, verzióját és az adatbázis létrejöttekor végrehajtandó utasításokat tároljuk.
 Az ősosztályból kettő metódust kötelező implementálni, az onCreate és az onUpgrade metódust.
 Az onCreate metódus segítségével van lehetőség táblákat létrehozni az éppen elkészült adatbázisba, amit az alábbi kódrészlet szemléltet.
 \begin{lstlisting}
@@ -189,7 +189,7 @@ public void onCreate(SQLiteDatabase sqLiteDatabase) {
 \end{lstlisting}
 Ugyanakkor az onUpgrade metódus abban az esetben fut le, ha megnöveltük az adatbázis verzióját.
 Ez a verziószám növekedés azt jelzi, hogy olyan változás történt az adatbázisban, amely visszafele nem kompatibilis, és egy transzformáció szükséges a régi és az új séma között.
-Az /Highlight{SQLiteOpenHelper} osztály az SQL utasításokat tranzakcionálisan hatja végre.
+Az \Highlight{SQLiteOpenHelper} osztály az SQL utasításokat tranzakcionálisan hatja végre.
 Egy tranzakció tartalmazhat több SQL utasítást is, amelyek végrehajtása egyszerre történik.
 Ha egy SQL utasítás sikertelen, akkor az összes utasítás visszavonásra kerül.
 
@@ -209,8 +209,9 @@ static class DateTypeEntry implements BaseColumns{
 Az applikáció lokális adatbázisában lévő adatok POJO-ban tárolódnak, minden táblához külön POJO tartozik.
 A POJO egy olyan Java objektum, amely nem rendelkezik speciális tulajdonsággal.
 
-Ahhoz, hogy az alacsonyabb szintű SQL utasítások elkülönüljenek az üzleti logikától, létrehoztam egy /Highlight{DataManager} nevű absztrakt osztályt, melynek típus paramétere egy POJO objektum. 
+Ahhoz, hogy az alacsonyabb szintű SQL utasítások elkülönüljenek az üzleti logikától, létrehoztam egy \Highlight{DataManager} nevű absztrakt osztályt, melynek típus paramétere egy POJO objektum. 
 Mivel az osztály absztrakt - így nem példányosítható - ezért ebben az osztályban kaptak helyet az olyan metódusok, melyek minden típusú POJO-ra általános érvényességűek. 
+Az alábbi kódrészletben a DataManager osztály implementációja látható, ahol a createOrUpdate és a queryForAll metódusok az adatbázis tábláinak kezeléséért felelősek.
 \begin{lstlisting}
 public abstract class DataManager<T> {	
     DatabaseHelper helper;
@@ -219,26 +220,72 @@ public abstract class DataManager<T> {
     public abstract void createOrUpdate(T data);
     public abstract List<T> queryForAll();
 }
-\end{lstlisting}
-Ebből az osztályból származtattam a specifikus osztályokat, melyeken keresztül adott típusú POJO-t tudunk lementeni vagy visszakérdezni a helyi adatbázisból. Az ősosztályban található metódusokat mindenképp implementálnia kell minden osztálynak. Amennyiben szükség volt olyan funkcionalitásra, mely a többi POJO esetén nem értelmezhetőek, azok csak a specifikus osztályban lettek definiálva.
-Az alkalmazáson belül ahol az adatbázissal való interakció szükséges mindenhol ezeket a manager osztályokat használjuk. 
+\end{lstlisting} 
+Ebből az osztályból származnak a specifikus osztályok, melyeken keresztül adott típusú POJO-k kerülnek lementésre vagy visszakérdezésre a helyi adatbázisból.
+Az ősosztályban található metódusokat mindenképp implementálnia kell minden származtatott osztálynak. 
+Az olyan funkcionalitások esetén - amelyek nem minden POJO esetén voltak értelmezhetőek - a specifikus osztályban kerültek definiálásra.
+Az alkalmazás mindenhol ezeket a manager osztályokat használja, ahol az adatbázissal való interakció szükséges.
+
 \subsection*{Szerver-kliens kapcsolat}
 \label{serverclient}
-A helyi adatbázisban található adatok csak egy adott idő-intervallumban valid-ok, a menetrend változásával nem lesznek helyesek. Ezért bizonyos időközönként frissíteni kell a benne szereplő információkat. Jelenleg az adatok aktualizálása akkor történik amikor elindul az alkalmazás.
-Erre szolgál a korábban bemutatott szerver, ahonnan megkaphatjuk az aktuális információkat.
-A kliens REST hívásokkal képes beszerezni az új adatokat. 
-A kommunikációt a Retrofit nevű REST klienssel oldottam meg. Segítségével könnyen lehet a szerver felé elküldeni a kéréseket. 
-Elkészítettem egy NetworkManager osztály, mely felelős a Retrofit konfigurálásáért és egyéb hálozattal kapcsolatos feladatokért.
-Képes lekérdezni, hogy az adott eszköz rendelkezik-e az adott időpontban bármilyen internet-eléréssel. Amennyiben nem, akkor csak a helyi adatbázist használja. Ha van, akkor elkezdődik az adatok frissítése.
-A minél kisebb adathasználat érdekében a kliens tárolja, hogy mikor történt a legutolsó frissítés. A következő frissítés során elküldi a legutolsó frissítési dátumot a szervernek, a szerver pedig csak azokat az adatokat küldi vissza, amelyek újabbak, mint a kapott időpont.
-Miután a frissítés sikeresen megtörtént, az időpont frisssítésre kerül a helyi adatbázisban.
-Elkészült egy BaseDownloader nevű absztrakt osztály, mely implementálja az IDownloader interfészt.
-Az osztály konstruktorában kerülnek inicializálásra a Retrofit számára szükséges osztályok.
-Lehetőségünk van minden kérést személyre szabnunk. Ezt felhaszn
+A helyi adatbázisban található adatok csak egy adott idő-intervallumban érvényesek, a menetrend változtatásával érvényüket vesztik. 
+Ezért bizonyos időközönként frissíteni kell a benne szereplő információkat. 
+Az adatok aktualizálása az alkalmazás indításakor történik, erre szolgál a korábban bemutatott szerver, ahonnan az alkalmazás az aktuális információkat kapja.
+A szerver REST üzenetekkel válaszol a beérkező kérésekre.
+A kommunikációt a Retrofit nevű REST klienssel oldottam meg, melynek segítségével könnyű a szervernek kéréseket küldeni.
+A \Highlight{NetworkManager} osztály képes lekérdezni, hogy az adott eszköz rendelkezik-e jelenleg bármilyen internet eléréssel. 
+Ha a készülék nem rendelkezik internet eléréssel, akkor csak a helyi adatbázist használja.
+Ellenkező esetben pedig elkezdődik az adatok frissítése az applikáció elindításával.
+A minél kisebb adathasználat érdekében a kliens tárolja, hogy mikor történt az utolsó frissítés. 
+Az applikáció indításkor elküldi a legutolsó frissítési dátumot a szervernek, a szerver pedig csak azokat az adatokat küldi vissza, amelyek újabbak, mint a kapott időpont.
+Miután az adatok aktualizálása sikeresen megtörtént, a frissítés időponja felülírásra kerül a helyi adatbázisban.
+Az IDownloader interfészt a A \Highlight{BaseDownloader} absztrakt osztály implementálja, melynek konstruktorában kerülnek inicializálásra a Retrofit számára szükséges osztályok.
+Lehetőségünk van minden kérést személyre szabni. 
+Ezt felhasználva juttatjuk el a szerver számára a felhasználó azonosítására szolgáló adatokat és a legutolsó frissítési időpontot.
 Az IDownloader interfész egyetlen metódus-definíciót tartalmaz:
 \begin{lstlisting}
 public interface IDownloader {
     void download();
 }
 \end{lstlisting}
+
+A \Highlight{BaseDownloader} osztály tartalmaz még egy saveToDatabase metódust, amely az adatok helyi adatbázisba történő lementésére alkalmas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
