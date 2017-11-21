@@ -248,14 +248,36 @@ public interface IDownloader {
     void download();
 }
 \end{lstlisting}
-
 A \Highlight{BaseDownloader} osztály tartalmaz még egy saveToDatabase metódust, amely az adatok helyi adatbázisba történő lementésére alkalmas.
+A \Highlight{BaseDownloader} osztályból származtatott gyerekosztályok implementálják az előzőekben említett két metódust.
 
+A Retrofit konfigurálása során egy interfész került megvalósításra, amelyben metódus-definíció formájában felsorolásra kerülnek azok a hívások, amelyeket a Retrofit képes végrehajtani.
+\begin{lstlisting}
+public interface MyApiEndpointInterface {
+	/* ... */
+	@GET("stations/json")
+    Call<List<Stations>> getStations();
+}
+\end{lstlisting}
+A fenti példán látható, hogy a megállók eléréséhez annotáció formájában megadásra került az elérési útvonal.
+Ennek visszatérési értéke egy olyan lista lesz, amely megállókat tartalmaz.
+A listában található megállókat a Retrofit automatikusan szerializálta ki a szervertől kapott JSON válaszból.
+A szerializáláshoz az alábbi entitásban található annotációs konfigurációt veszi alapul.
+\begin{lstlisting}
+public class Stations {
+	/* ... */
+	@SerializedName("lat")
+	@Expose
+	private double lat;
+}
+\end{lstlisting}
 
-
-
-
-
+\subsection*{A felhasználó felület kialakítása}
+\label{layout}
+A kód karbantarthatóságának érdekében a felhasználó felület kialakítása az MVP (Modell-View-Presenter) szoftvertervezési mintára épül.
+Előnye, hogy az üzleti logika elhatárolódik a felhasználó felülettől, melynek köszönhetően a kezelőfelület módosítható a logika megváltoztatása nélkül.
+Az alkalmazás minden képernyő-nézetéhez tartozik egy úgynevezett activity.
+Az activity a felhasználók és az applikáció közötti legfőbb alapelem.
 
 
 
