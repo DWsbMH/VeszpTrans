@@ -12,7 +12,7 @@ Végül pedig bemutatom a jelenleg is a piacon lévő megoldásokat, amik a vár
 \label{utvonalterv}
 
 Útvonaltervezőnek nevezzük az olyan szoftvereket, amelyek két földrajzi pont között keresnek optimális útvonalat egy keresőmotor segítségével. 
-Ezen motorok feladata, hogy megtalálja az otpimális útvonalat a két pont között, gyakran intermodális működésűek. 
+Ezen motorok gyakran intermodális működésűek. 
 Már az 1970-es évektől használják a támogatás ezen fajtáját. 
 Akkoriban ez annyit jelentett, hogy egy terminálos felhasználói interfészen keresztül csatlakozott a hívóközponthoz, és onnan érdeklődték meg a tömegközlekedéssel kapcsolatos információkat. 
 Miután elterjedt az a szokás az emberek között, hogy maguknak tervezték meg a nyaralásokat, és nem vették igénybe az utazási irodák ügynökeit, elkezdtek fejlődni az interneten elérhető útvonaltervezők. 
@@ -25,26 +25,26 @@ Magyarországon 2011 óta kizárólag Budapesten érhető el a funkció.
 
 \Picture{Google Maps útvonaltervezés}{2/googlemaps}{width=10cm}
 
-Ahogy a \ref{fig_2/googlemaps}. ábrán is látszik, tervezéskor beállíthatjuk a közlekedési formát, hogy éppen gyalogosan vagy tömegközlekedéssel szeretnénk igénybe venni. 
+Ahogy \aref{fig_2/googlemaps}.\ ábrán is látszik, tervezéskor beállíthatjuk a közlekedési formát, hogy éppen gyalogosan vagy tömegközlekedéssel szeretnénk igénybe venni. 
 Gyalogos és autós közlekedéskor az elérhető járdákat és autóutakat veszi figyelembe az alkalmazás, majd az eredményt kirajzolja a térképre, esetlegesen több elérhető opció esetén a többit szaggatott vonallal jelöli. 
 Tömegközlekedés esetén is több lehetőséget kínál fel, ezekből több szempont alapján tudjuk kiválasztani a számunkra optimálisat. 
 Ilyen szempont lehet a legkevesebb átszállállás, illetve legkevesebb gyaloglás. 
-A Google Maps továbbá indulási időket is rendel a járatokhoz, így képesek vagyunk tervezni mostani időpillanathoz illetve ha később szeretnénk csak utazni azt is beállíthatjuk. 
-Továbbá rendelkezik élő menetrendinformációval, amit a Budapesti Közlekedési Központ hivatalos oldaláról szerez be. 
-Itt láthatjuk ha felújítás, útlezárás miatt nem közlekednek járatok, vagy más útvonalon járnak emiatt más megállókat érintenek, ezt láthatjuk a \ref{fig_2/elojaratinfo}. ábrán is. 
+A Google Maps továbbá indulási időket is rendel a járatokhoz, így képesek vagyunk tervezni mostani időpillanathoz, illetve ha később szeretnénk csak utazni, azt is beállíthatjuk. 
+Mindemellett rendelkezik élő menetrendinformációval, amit a Budapesti Közlekedési Központ hivatalos oldaláról szerez be. 
+Itt láthatjuk ha felújítás, útlezárás miatt nem közlekednek járatok, vagy más útvonalon járnak, emiatt más megállókat érintenek, ezt láthatjuk \aref{fig_2/elojaratinfo}.\ ábrán is. 
 
 %túl nagy
-\Picture{Élő útvonalinformáció}{2/elojaratinfo}{width=10cm}
+\Picture{Élő útvonalinformáció}{2/elojaratinfo}{width=6cm}
 
 
 \section{Veszprém tömegközlekedése}
 \label{veszpremtomeg}
 
-Veszprém tömegközlekedését jelenleg a város méretéből és rendelkező álló infrastruktúrájából adódóan autóbuszok adják. 
+Veszprém tömegközlekedését jelenleg a város méretéből és rendelkezésre álló infrastruktúrájából adódóan autóbuszok adják. 
 A buszokat a Balaton Volán Zrt. biztosítja az 1960-as évek óta. 
-Veszprém tömegközlekedésének gondolata azonban már 1884-ben megfogalmazódott Czollenstein Ferenc által, aki omnibuszokat indított Veszprém-Balatonalmádi között. 
+Veszprém tömegközlekedésének gondolata azonban már 1884-ben megfogalmazódott Czollenstein Ferenc által, aki omnibuszokat indított Veszprém és Balatonalmádi között. 
 A jelenlegi közlekedési forma 28 vonalat foglal magában, és a város belterületén kívül közlekedik a közigazgatásilag a városhoz tartozó településekhez is, úgymint  Szabadságpuszta, Jutaspuszta, Kádárta és Gyulafirátót, valamint Csatár. 
-Több átalakításon is átesett, amíg elérte a mai napi formáját, amit a \ref{fig_2/veszprembuszhalozat}. ábra mutat.
+Több átalakításon is átesett, amíg elérte a mai napi formáját, amit \aref{fig_2/veszprembuszhalozat}.\ ábra mutat. %ide jo lenne nem rejtett alany
 \Picture{Veszprém tömegközlekedési hálózata}{2/veszprembuszhalozat}{width=10cm}
 
 A menetrend integrálása lehetséges a Google Maps rendszerébe, így az útvonaltervezés funkció Veszprém városában is használható lehetne. 
@@ -57,8 +57,9 @@ A busztársaság részéről, egy meghatározott formátumú adatbázis tovább�
 Veszprémben a tömegközlekedés támogatására jelenleg is létezik több megoldás. 
 A busztársaság is igyekszik minél kielégítőbb segítséget nyújtani az utazóközönségének, hiszen fontos számára, hogy minél többen vegyék igénybe a tömegközlekedést. 
 Továbbá léteznek olyan harmadik fél által készült eszközök is, amelyek szintén hozzájárulnak az információszerzéshez. 
-Ezen alkalmazásokat fejlesztőik nem profitszerzési céllal készítették el, hanem csupán önkéntes alapon, az emberek megsegítésének céljával, ezáltal funkcionalitásuk elmarad egy céges környezetben, nagyobb fejlesztőgárda által készített szolgáltatástól, melytől nyereséget várnak a tulajdonosok. 
-Ezek közül mutatok be pár ismertebb példát amik jelenleg elérhetőek a piacon. 
+Ezen alkalmazásokat fejlesztőik nem profitszerzési céllal készítették el, hanem csupán önkéntes alapon, az emberek megsegítésének céljával.
+Funkcionalitásuk ezáltal elmarad egy céges környezetben, nagyobb fejlesztőgárda által készített szolgáltatástól, melytől nyereséget várnak a tulajdonosok. 
+Ezek közül mutatok be pár ismertebb példát, amik jelenleg elérhetőek a piacon. 
 
 
 
@@ -67,26 +68,27 @@ Ezek közül mutatok be pár ismertebb példát amik jelenleg elérhetőek a pia
 
 Az ÉNYKK vagyis az Észak-nyugat-magyarországi Közlekedési Központ felel a tömegközlekedés üzemeltetéséért. 
 Weboldalukon található dokumentum magába foglalja az összes buszjáratot, és az azokhoz tartozó megállókat és indulási időket. 
-A \ref{fig_2/menetrend}. ábrán látható módon szerepel egy buszjárat a dokumentumban. 
+\Aref{fig_2/menetrend}.\ ábrán látható módon szerepel egy buszjárat a dokumentumban. 
 Ez a fajta statikus megoldás általános segítséget nyújt az utazni vágyóknak, ha már rendelkeznek információval a városról, például a megállók elhelyezkedését illetően. 
 
-%túl nagy
+%túl nagy es pixeles 
 \Picture{Az 1-es buszhoz tartozó menetrend táblázat}{2/menetrend}{width=10cm}
 
 A társaság igyekszik több segítséget nyújtani az utasoknak, emiatt új funkciókat készítettek a weboldalra az elmúlt időben. 
 Létrehoztak egy térképes funkciót, ahol a járatokat kiválasztva az alkalmazás felrajzolja ezen buszoknak az útvonalát a térképre. 
 Továbbá elkezdtek fejleszteni egy útvonaltervező funkciót is, viszont ezek jelenleg kezdetleges formában működnek csak. 
-A térképes szolgáltatásnál kiválaszthajtuk, hogy milyen buszjáratokra vagyunk kiváncsiak, és a program kirajzolja azokat a térképre, ahogy a \ref{fig_2/kirajzoltjarat}. ábra mutatja. 
+A térképes szolgáltatásnál kiválaszthajtuk, hogy milyen buszjáratokra vagyunk kiváncsiak, és a program kirajzolja azokat a térképre, ahogy \aref{fig_2/kirajzoltjarat}.\ ábra mutatja. 
 
 \Picture{Az 1-es és a 4-es járat útvonala}{2/kirajzoltjarat}{width=10cm}
 
+%Ez egyebkent nem valami javas ize, ami egy evig tart, mire elindul es rohadt lassu? NEkem valami ilyesmi remlik.
 
 \section*{BamBusz}
 \label{bambusz}
 
 Online felületen elérhető segítség, célközönsége főleg az egyetemisták. 
 Kedvezőbb megoldást nyújt, mint a busztársaság oldala abból a szempontból, hogy nem kell átböngésznünk az egész dokumentumot az indulási időkért, hanem beállíthatjuk az indulási és az érkezési megállónkat. 
-Ezt követően az oldal kilistázza nekünk azokat a buszokat és a hozzájuk tartozó indulási időket, amikkel eljuthatunk a célunkhoz a \ref{fig_2/bambusz}. ábrán látható módon. 
+Ezt követően az oldal kilistázza nekünk azokat a buszokat és a hozzájuk tartozó indulási időket, amikkel eljuthatunk a célunkhoz \aref{fig_2/bambusz}.\ ábrán látható módon. 
 Hátránya hasonlóan a hivatalos oldalhoz, hogy ismernünk kell a megállókat, ahhoz hogy használni tudjuk. 
 
 \Picture{A BamBusz webes felülete}{2/bambusz}{width=10cm}
@@ -94,12 +96,13 @@ Hátránya hasonlóan a hivatalos oldalhoz, hogy ismernünk kell a megállókat,
 \section*{Veszprémi buszmenetrend}
 \label{veszprbuszmen}
 
-Okostelefonra elérhető alkalmazás, ami letisztultan, egyszerűen és gyorsan jeleníti meg a buszjáratokat külön menüpontba szedve, ahogy a  \ref{fig_2/veszpremappmenu}. ábrán látható. 
+Okostelefonra elérhető alkalmazás, ami letisztultan, egyszerűen és gyorsan jeleníti meg a buszjáratokat külön menüpontba szedve, ahogy \aref{fig_2/veszpremappmenu}.\ ábrán látható. 
 Előnye, hogy akár útközben tudunk információt szerezni az autóbuszok közlekedési rendjéről. 
 Továbbá elérhető egy éves menetrendi naptár a főoldalon, ami segítségével megállapíthatjuk hogy milyen rend szerint közlekednek a buszok adott napokon. 
 Ugyanakkor az alkalmazás nem naprakész, a naptár a tavalyi évet reprezentálja, illetve ebből kifolyólag a buszjáratok menetrendje is az elmúlt évre érvényes indulásokat mutatja.
 
 %ezeket egymás mellé, még nem néztem utána hogy kell megoldani
+%A legegyszerubb, ha gimppel egymas melle masolod oket, egy abra lesz belole. Vagy nezd meg az sty-bol a Pictures makro kibontasat, es duplazd meg az includegraphics parancsot.
 \Picture{Az alkalmazás menüje}{2/veszpremappmenu}{width=10cm}
 \Picture{Az alkalmazás főoldala a menetrendi naptárral}{2/veszpremapp}{width=10cm}
 \newpage
