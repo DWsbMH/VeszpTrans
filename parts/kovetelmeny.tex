@@ -1,7 +1,7 @@
 %3. fejezet
 
 A fejezetben bemutatásra kerülnek a funkciókövetelmények, amelyeket a fejlesztés előtt és közben figyelembe kellett venni, hogy az utazóközönség számára egy mai igényeket kielégítő, modern alkalmazás készüljön el.  
-Cél volt továbbá, hogy a rendszer másik szereplői, az adminisztrátorok számára is könnyen kezelhető, felhasználóbarát felület valósuljon meg. %Szeretsz mondatokat Tovabba-val kezdeni :-) Annyira nem jo ;-)
+Cél volt továbbá, hogy a rendszer másik szereplői, az adminisztrátorok számára is könnyen kezelhető, felhasználóbarát felület valósuljon meg.
 \todo{ABRA}.\ képen láthatóak a rendszer szereplői és a hozzájuk tartozó használati esetek. 
 
 
@@ -52,7 +52,7 @@ A .ábrán láthatóak a felhasználóval és az adminisztrátorral kapcsolatos 
 	\\
 	A menetrend funkció akkor kap szerepet egy felhasználónál elsősorban, amikor nincs elérhető internetkapcsolat a mobilkészülékén. 
 	Ezen kívül azoknál, akik rendelkeznek a tömegközlekedésről legalább alapszintű ismerettel, így jártasak a menetrendben és az indulási időkről szeretnének informálódni. 
-	Megjelenésénél figyelni kellett arra, hogy felülete letisztult legyen, mégis a keresett információ könnyen megtalálható legyen. %legyen-legyen	
+	Megjelenésénél figyelni kellett arra, hogy felülete letisztult, könnyen kezelhető és informatív legyen.
 	\item \textbf{Megállók}
 	\\
 	Az alkalmazásban szükség volt egy olyan szolgálatásra is, ahol a felhasználók tájékozódni tudnak a városban a megállókról. 
@@ -92,17 +92,19 @@ Ezekből az adatokból következtetni tudtam arra, hogy a felhasználók széles
 Az Android platformon futó alkalmazások elsődleges programozási nyelve a Java.
 A Java platformfüggetlen és széles körben elterjedt, a Sun Microsystems által fejlesztett nyelvet az 1990-es évek óta folyamatosan fejlesztik.
 Az Android egy Linux alapú operációs rendszer, amely több pozitívummal is rendelkezik, ilyen például a hordozhatóság és a biztonság.
-Futtatási sebessége a Java-hoz képes javult, hiszen a kibővített Java programozási nyelvet Android esetén egy olyan virtuális gépen futtatják, amely szerves részét képezi az Android operációs rendszernek. % Ez az a resz, ahol hivatkozasokkal tele kell tomni a dolgozatot.
+Futtatási sebessége a Java-hoz képes javult, hiszen a kibővített Java programozási nyelvet Android esetén egy olyan virtuális gépen futtatják, amely szerves részét képezi az Android operációs rendszernek. 
+\todo{telenyomni hivatkozásokkal a részt}
 
 \section*{Symfony}
-A Symfony-val készült webes alkalmazások könnyen karbantarthatóak és jól skálázhatóak, mivel a keretrendszer az MVC tervezési mintára épül.
+A Symfony egy PHP alapú keretrendszer.
+A vele készült webes alkalmazások könnyen karbantarthatóak és jól skálázhatóak, mivel a keretrendszer az MVC tervezési mintára épül.
 A Symfony felépítése moduláris, ennek köszönhetően könnyen bővíthető.
 Továbbá a Symfony egy-egy komponensét más keretrendszerrel készült alkalmazásban külön is használhatjuk, amit szintén a moduláris szerkezet tesz lehetővé.
 Minden beérkező kérést a keretrendszer dolgoz fel, melyek az útvonalválasztás után meghívják a megfelelő kontrollerek metódusát.
 Továbbá a kontrollerek hozzáférnek a services.yml fájlban definiált szolgáltatásokhoz is.
 Az itt definiált szolgáltatások példányait, a Symfony dependency injection segítségével juttatja el a kontrollerekhez.
 A Symfony segítségével a dinamikus tartalom is könnyen átalakítható a benne található template nyelvek egyikének köszönhetően.
-Az általam választott nyelv a twig, amellyel a megjelenítés elválasztható az üzleti logikától. %Ez tok jo, de az nem lett leirva, hogy a Symfony egy php alapu backend engine :-D
+Az általam választott nyelv a twig, amellyel a megjelenítés elválasztható az üzleti logikától. 
 
 \section*{MySQL}
 A MySQL  egy SQL (Structured Query Language, vagyis struktúrált lekérdező nyelv) alapú relációs adatbázis-kezelő szerver.

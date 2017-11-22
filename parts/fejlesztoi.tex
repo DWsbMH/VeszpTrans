@@ -1,5 +1,5 @@
 ﻿Az elkészült rendszer szerver-kliens architekturára épül.
-Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
+Az architektúra modellje \aref{fig_5/architektura}.\ ábrán látható. 
 A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
 Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
 A rendszerben található a szerver, ami egy adminisztrációs feladatokat betöltő weboldal, és a kliens, egy Android alkalmazás, amely a felhasználók részére készült. 
@@ -12,7 +12,7 @@ A továbbiakban részletesen bemutatásra kerül a szerver és a kliens felépí
 \section{A szerver}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer ???-as verziójára épült. 
+A szerver a Symfony keretrendszer \todo{???}-as verziójára épült. 
 A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt. 
 Ha sikeres volt az autentikáció, a kérés a megfelelő kontroller osztályhoz kerül feldolgozás után. 
 
@@ -62,6 +62,7 @@ php bin/console security:encode-password
 A parancs futása közben bekéri, mi az a jelszó, amit titkosítani kell. 
 Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot. 
 Ezt a szót megadva a fájlban jelszóként, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
+\todo{hitvatkozás a hashre}
 
 \subsection*{Autorizáció}
 \label{authorization}
@@ -127,7 +128,7 @@ Az entitás segítségével meg tudjuk határozni, hogy az előző pontban vázo
 Továbbá tároljuk a köztes megálló útvonalon belüli sorszámát, melyből megállapítható az útvonalon található állomások helyes sorrendje. 
 Minden egyes objektum esetén tárolásra kerül még, hogy az előző megállóból milyen gyorsan tudunk eljutni. 
 Természetesen a busz indulópontjának ezen attribútuma nulla. 
-Az \ref{fig_5/linehasstations}. ábrán megtekinthető milyen kapcsolatokat tartalmaz az útvonal entitás. 
+\Aref{fig_5/linehasstations}.\ ábrán megtekinthető milyen kapcsolatokat tartalmaz az útvonal entitás. 
 \Picture{A járathoz kapcsolatai}{5/linehasstations}{width=14cm}
 \subsection*{Indulási idők, különleges időpontok}
 \label{starttimes}
@@ -170,7 +171,7 @@ Ezek következtében szükség volt arra, hogy az applikáció offline üzemmód
 Megvizsgáltam több Android platformhoz elérhető ORM (object-relational mapping vagyis objektum-relációs leképezés) keretrendszert, ezen belül is az ORMLite keretrendszert. 
 Az ORMLite akkor előnyös, ha nem létezik adatbázis séma, amihez alkalmazkodnia kell.
 Mivel az alkalmazás esetében már a szerver oldalon kialakításra került egy séma, emiatt a keretrendszer használata nehézkes volt.
-%MÁTÉ: azóta csinált az Android saját adatbázis absztrakciós framework-öt, ezt nem próbáltam semennyire, mennyire említsem meg a szakdogában?
+\todo{Androidos adatbázis absztrakciós framework, eddig nem volt azóta van már}
 Ebben a kontextusban szükséges volt, hogy manuálisan személyre szabhassam a helyi adatbázis sémáját, így végül a natív SQL utasítok használata mellett döntöttem.
 
 A helyi adatbázis-kezelő rendszer az SQLite, amely az Android operációs rendszerbe gyárilag beépített adatabázis-kezelő motor.
@@ -292,7 +293,11 @@ Az előbb bemutatott tervező felület \aref{fig_5/designer}.\ ábrán látható
 
 \subsection*{Google Maps integráció}
 \label{googlemaps}
-A Google Maps integrációja 
+A Google Maps alkalmazásba való integrációját több előkészületi lépés előzte meg.
+Első lépésként a Google Developer weboldalon egy projekt létrehozása szükséges.
+A projektben engedélyezésre kerültek azon szolgálatások, amelyek az alkalmazás funkcionalitásához elengedhetetlenek.
+Az engedélyezett szolgáltatások használatához az alkalmazásban egy hitelesító kulcsot kötelező megadni, amely a fent említett Google Developer oldalon generálódik. 
+Mindezek után minden lehetőség adott a térkép megjelenítésére az alkalmazásban.
 
 
 
