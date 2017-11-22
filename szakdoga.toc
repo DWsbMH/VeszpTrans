@@ -18,6 +18,6 @@
 \select@language {magyar} \contentsline {chapter}{\numberline {5}Fejleszt\IeC {\H o}i dokument\IeC {\'a}ci\IeC {\'o}}{26}{chapter.5}
 \select@language {magyar} \contentsline {section}{\numberline {5.1}A szerver}{26}{section.5.1}
 \select@language {magyar} \contentsline {section}{\numberline {5.2}Szerver feladatai}{29}{section.5.2}
-\select@language {magyar} \contentsline {section}{\numberline {5.3}Az Android kliens}{31}{section.5.3}
+\select@language {magyar} \contentsline {section}{\numberline {5.3}Az Android kliens}{30}{section.5.3}
 \select@language {magyar} \contentsline {chapter}{\numberline {6}Tov\IeC {\'a}bbfejleszt\IeC {\'e}si lehet\IeC {\H o}s\IeC {\'e}gek}{35}{chapter.6}
 \select@language {magyar} \vspace *{\baselineskip }

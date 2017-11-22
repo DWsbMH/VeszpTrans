@@ -1,36 +1,36 @@
-﻿Az elkészült rendszer szerver-kliens architekturára épül.
-Az architektúra modellje a \ref{fig_5/architektura}. ábrán látható. 
-A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
-Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
-A rendszerben található a szerver, ami egy adminisztrációs feladatokat betöltő weboldal, és a kliens, egy Android alkalmazás, amely a felhasználók részére készült. 
-Az adminisztrációs weboldalon az adatok a Twig sablonkezelő segítségével jelennek meg. 
-Az Android-os kliens a kért adatokat JSON formrmátumban kapja meg. 
-A továbbiakban részletesen bemutatásra kerül a szerver és a kliens felépítése, működése. 
+﻿Az elkészült rendszer szerver-kliens architektúrára épül.
+Az architektura modellje \aref{fig_5/architektura}.\ ábrán látható. 
+A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. % na jo, eddig ekezesitettem, innentol Te jossz :-D 
+Az adatokat a Doctrine keretrendszer segitsegevel eri el az adatbazisbol. 
+A rendszerben talalhato a szerver, ami egy adminisztracios feladatokat betolto weboldal, es a kliens, egy Android alkalmazas, amely a felhasznalok reszere keszult. 
+Az adminisztracios weboldalon az adatok a Twig sablonkezelo segitsegevel jelennek meg. 
+Az Android-os kliens a kert adatokat JSON formrmatumban kapja meg. 
+A tovabbiakban reszletesen bemutatasra kerul a szerver es a kliens felepitese, mukodese. 
 
-% kell architektúra kép meg megtalálni az authenticationprocess képet
+% kell architektura kep meg megtalalni az authenticationprocess kepet
 
 \section{A szerver}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer ???-as verziójára épült. 
-A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt. 
-Ha sikeres volt az autentikáció, a kérés a megfelelő kontroller osztályhoz kerül feldolgozás után. 
+A szerver a Symfony keretrendszer \todo{???}-as verziojara epult. 
+A beerkezo keres athalad a Symfony tuzfalan, ami elinditja az autentikaciot. 
+Ha sikeres volt az autentikacio, a keres a megfelelo kontroller osztalyhoz kerul feldolgozas utan. 
 
-\Picture{Az autentikáció folyamata}{5/authenticationprocess}{width=14cm}
-% tűzfal, autentikáció, ilyesmi...
+\Picture{Az autentikacio folyamata}{5/authenticationprocess}{width=14cm}
+% tuzfal, autentikacio, ilyesmi...
 
-A kontroller osztályban a beírt URL-hez tartozó metódus hívódik meg. 
-Alapesetben ezek az osztályok a \Highlight{AppBundle\textbackslash Controller} névtérben találhatóak. 
-Az URL-címek metódusokra való leképzése kétféleképp valósítható meg a Symfony keretrendszer használatával. 
+A kontroller osztalyban a beirt URL-hez tartozo metodus hivodik meg. 
+Alapesetben ezek az osztalyok a \Highlight{AppBundle\textbackslash Controller} nevterben talalhatoak. 
+Az URL-cimek metodusokra valo lekepzese ketfelekepp valosithato meg a Symfony keretrendszer hasznalataval. 
 
 \begin{itemize}
-	\item routing.yml fájlban való definiálás
-	\item kontroller osztályokban annotációként
+	\item routing.yml fajlban valo definialas
+	\item kontroller osztalyokban annotaciokent
 \end{itemize}
 
-Az első opció akkor előnyös, ha útvonal alapján akarjuk meghatározni, hogy mely kódrészlet fog végrehajtódni a kontrollerek megfelelő kialakításával és az annotációk jó elhelyezésével. 
-Másrészről a második megoldás itt előnyösebb lehet, mert ilyenkor a kódot látva a fájl elhagyása nélkül meg tudjuk állapítani, hogy milyen esetekben fog a kódrészlet meghívásra kerülni. 
-A metódusok annotációi között megszabhatunk különböző paramétereket is, melyet az alábbi kódrészlet demonstrál:
+Az elso opcio akkor elonyos, ha utvonal alapjan akarjuk meghatarozni, hogy mely kodreszlet fog vegrehajtodni a kontrollerek megfelelo kialakitasaval es az annotaciok jo elhelyezesevel. 
+Masreszrol a masodik megoldas itt elonyosebb lehet, mert ilyenkor a kodot latva a fajl elhagyasa nelkul meg tudjuk allapitani, hogy milyen esetekben fog a kodreszlet meghivasra kerulni. 
+A metodusok annotacioi kozott megszabhatunk kulonbozo parametereket is, melyet az alabbi kodreszlet demonstral:
 
 \begin{lstlisting}
     /**
@@ -43,141 +43,142 @@ A metódusok annotációi között megszabhatunk különböző paramétereket is
     }
 \end{lstlisting}
 
-\subsection*{Autentikáció}
+\subsection*{Autentikacio}
 \label{authentication}
 
-Az autentikáció a Symfony tűzfal moduljával történik. 
-Az ehhez szükséges beállítások a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfigurációs fájljában találhatóak. 
-A szerverhez jelenleg két fajta felhasználó van rendelve, melyek az előbbiekben említett fájlban vannak definiálva.
-A szerver feladatköréből kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, ezért nincs szükség újabb felhasználók hozzáadására. 
-Ez azt jelenti, hogy a felhasználókhoz tartozó jelszavakat is ebben a fájlban tároljuk. 
-Biztonsági szempontokból kritikus tényező, hogy ezek a jelszavak valamilyen módon titkosítva legyenek. 
-A titkosításhoz a bcrypt algoritmust használtam fel. 
-A Symfony segítségével parancssorból lehetséges bármilyen jelszót titkosítani a bcrypt algoritmussal. 
+Az autentikacio a Symfony tuzfal moduljaval tortenik. 
+Az ehhez szukseges beallitasok a \Highlight{app\textbackslash config} mappa \Highlight{security.yml} konfiguracios fajljaban talalhatoak. 
+A szerverhez jelenleg ket fajta felhasznalo van rendelve, melyek az elobbiekben emlitett fajlban vannak definialva.
+A szerver feladatkorebol kiindulva a jelenlegi igenyeket ez a ket felhasznalo kielegiti, ezert nincs szukseg ujabb felhasznalok hozzaadasara. 
+Ez azt jelenti, hogy a felhasznalokhoz tartozo jelszavakat is ebben a fajlban taroljuk. 
+Biztonsagi szempontokbol kritikus tenyezo, hogy ezek a jelszavak valamilyen modon titkositva legyenek. 
+A titkositashoz a bcrypt algoritmust hasznaltam fel. 
+A Symfony segitsegevel parancssorbol lehetseges barmilyen jelszot titkositani a bcrypt algoritmussal. 
 
 \begin{lstlisting}
 php bin/console security:encode-password
 \end{lstlisting}
 
-A parancs futása közben bekéri, mi az a jelszó, amit titkosítani kell. 
-Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot. 
-Ezt a szót megadva a fájlban jelszóként, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
+A parancs futasa kozben bekeri, mi az a jelszo, amit titkositani kell. 
+Miutan megadtuk a jelszot, a bemeneten lefuttatja az algoritmust es vegul kiirja a titkositott karaktersorozatot. 
+Ezt a szot megadva a fajlban jelszokent, tovabbra is a titkositatlan jelszoval be tud lepni a felhasznalo az oldalra, viszont nem all fent tovabb a veszely, hogy illetektelenek kezebe jutna a jelszo. %gondolom ez egy hash, ha igy van, illik ra igy hivatkozni :-)
 
-\subsection*{Autorizáció}
+\subsection*{Autorizacio}
 \label{authorization}
 
-Az autorizáció folyamata szintén a Symfony tűzfal moduljának segítségével valósult meg. 
-Ez a sikeres bejelentkezést követően hajtódik végre. 
-A folyamat célja, hogy a bejelentkezett felhasználó csak a számára kijelölt szolgáltatásokat, oldalakat érje el. 
-Az előző pontban említett két felhasználóhoz tehát az alábbi két szerepkör tartozik:
+Az autorizacio folyamata szinten a Symfony tuzfal moduljanak segitsegevel valosult meg. 
+Ez a sikeres bejelentkezest kovetoen hajtodik vegre. 
+A folyamat celja, hogy a bejelentkezett felhasznalo csak a szamara kijelolt szolgaltatasokat, oldalakat erje el. 
+Az elozo pontban emlitett ket felhasznalohoz tehat az alabbi ket szerepkor tartozik:
 
 \begin{itemize}
-	\item Látogató
-	\item Adminisztrátor
+	\item Latogato
+	\item Adminisztrator
 \end{itemize}
 
-A látogató szerepkörhöz tartozó felhasználónak csak az adatbázis-entitások lekérdezéséhez van jogosultsága. 
-Az adminisztrátori engedéllyel rendelkező viszont a weboldal minden szolgáltatásához hozzáfér. 
+A latogato szerepkorhoz tartozo felhasznalonak csak az adatbazis-entitasok lekerdezesehez van jogosultsaga. 
+Az adminisztratori engedellyel rendelkezo viszont a weboldal minden szolgaltatasahoz hozzafer. 
 
-A szerepkörökhöz hozzá lettek rendelve meghatározott formájú URL címek. 
+A szerepkorokhoz hozza lettek rendelve meghatarozott formaju URL cimek. 
 
 \begin{lstlisting}
 access_control:
     - { path: /json$, roles: ROLE_USER }
     - { path: ^/, roles: ROLE_ADMIN }
 \end{lstlisting}
-Az alábbi kódrészlet azt mutatja be, hogy a látogatói jogkör csak a \Highlight{\/json} végű URL-címekhez ad elérést, míg egy adminisztrátor minden címet elér. 
-Ugyanezt a funkcionalitást meg lehet valósítani szintén annotációkkal is, de a weboldal kialakítása miatt célszerűbb volt ezt a megoldást választani, hisz így egyetlen fájlban elegendő meghatározni a hozzáférési szabályokat, annotációk használatával viszont minden kontroller osztályban egyenként kellett volna meghatározni ugyanazokat a szabályokat.
-\subsection*{Adatbázis kapcsolat}
+Az alabbi kodreszlet azt mutatja be, hogy a latogatoi jogkor csak a \Highlight{\/json} vegu URL-cimekhez ad elerest, mig egy adminisztrator minden cimet eler. 
+Ugyanezt a funkcionalitast meg lehet valositani szinten annotaciokkal is, de a weboldal kialakitasa miatt celszerubb volt ezt a megoldast valasztani, hisz igy egyetlen fajlban elegendo meghatarozni a hozzaferesi szabalyokat, annotaciok hasznalataval viszont minden kontroller osztalyban egyenkent kellett volna meghatarozni ugyanazokat a szabalyokat.
+\subsection*{Adatbazis kapcsolat}
 \label{adatbazis}
-Az adatbázist a Doctrine keretrendszert használva éri el a szerver. 
-Az alkalmazáshoz tartozó entitások helye a \Highlight{AppBundle\textbackslash Entity} névtér. 
-Ezek mindegyike egyszerű PHP osztályok, a felhasznált keretrendszer alakítja ezeket az adatbázis tábláivá. 
-Az osztályban szereplő adatmezőkhöz meg kell adni az annotációkat, hogy az átalakítás milyen módon történjen meg. 
-Az entitások egymás közti kapcsolatait a következő annotációk jelzik:
+Az adatbazist a Doctrine keretrendszert hasznalva eri el a szerver. 
+Az alkalmazashoz tartozo entitasok helye a \Highlight{AppBundle\textbackslash Entity} nevter. 
+Ezek mindegyike egyszeru PHP osztalyok, a felhasznalt keretrendszer alakitja ezeket az adatbazis tablaiva. 
+Az osztalyban szereplo adatmezokhoz meg kell adni az annotaciokat, hogy az atalakitas milyen modon tortenjen meg. 
+Az entitasok egymas kozti kapcsolatait a kovetkezo annotaciok jelzik:
 \begin{itemize}
 	\item OneToOne
 	\item OneToMany
 	\item ManyToOne
 \end{itemize}
-Az adatbázisban található adatok lekérdezés és objektumba való alakítása a \Highlight{Repository} osztályok segítségével történik. 
-Ezek az osztályok a Doctrine \Highlight{EntityRepository} osztályából származnak, mely már rendelkezik a legalapvetőbb lekérdezésekkel, mint az azonosító vagy valamilyen tulajdonság alapján történő adatlekérés. 
-Az összetettebb lekérdezésekhez a DQL nyelvet használtam fel, mely az entitások kapcsolatait az entitáshoz tartozó osztályban megadott annotációk alapján kezeli. 
-Amennyiben az adatbázisból lekérdezett adatok módosultak, ahhoz, hogy ez a változás megmaradjon el kell menteni az adatbázisba. 
-A Doctrine keretrendszerben található automatikus megoldás, mégpedig az EntityManager osztály, amely érzékeli a változást és elmenti a \Highlight{flush()} metódus használatával. 
-Ha új adatot akarunk az adatbázishoz adni, azt is az EntitiyManager osztállyal tehetjük meg. 
-Az elkészült új objektumot paraméterként átadva az osztály \Highlight{persist()} metódusának, a Doctrine keretrendszer úgy kezeli a továbbiakban az objektumot, mintha az az adatbázisból lekérdezett lenne, és így a \Highlight{flush()} metódussal az adatbázisba tudja írni. 
+Az adatbazisban talalhato adatok lekerdezes es objektumba valo alakitasa a \Highlight{Repository} osztalyok segitsegevel tortenik. 
+Ezek az osztalyok a Doctrine \Highlight{EntityRepository} osztalyabol szarmaznak, mely mar rendelkezik a legalapvetobb lekerdezesekkel, mint az azonosito vagy valamilyen tulajdonsag alapjan torteno adatlekeres. 
+Az osszetettebb lekerdezesekhez a DQL nyelvet hasznaltam fel, mely az entitasok kapcsolatait az entitashoz tartozo osztalyban megadott annotaciok alapjan kezeli. 
+Amennyiben az adatbazisbol lekerdezett adatok modosultak, ahhoz, hogy ez a valtozas megmaradjon el kell menteni az adatbazisba. 
+A Doctrine keretrendszerben talalhato automatikus megoldas, megpedig az EntityManager osztaly, amely erzekeli a valtozast es elmenti a \Highlight{flush()} metodus hasznalataval. 
+Ha uj adatot akarunk az adatbazishoz adni, azt is az EntitiyManager osztallyal tehetjuk meg. 
+Az elkeszult uj objektumot parameterkent atadva az osztaly \Highlight{persist()} metodusanak, a Doctrine keretrendszer ugy kezeli a tovabbiakban az objektumot, mintha az az adatbazisbol lekerdezett lenne, es igy a \Highlight{flush()} metodussal az adatbazisba tudja irni. 
 \section{Szerver feladatai}
 \label{serverjob}
-Az alábbiakban bemutatásra kerülnek a szerver főbb feladatai.
-\subsection*{Járatok}
+Az alabbiakban bemutatasra kerulnek a szerver fobb feladatai.
+\subsection*{Jaratok}
 \label{lineinfodetails}
-A városban közlekedő buszok más-más végpontok között közlekednek. 
-Előfordulhat, hogy ugyanolyan számmal ellátott busz ugyanazon végpontok között közlekedik, de a köztes megállók eltérhetnek, vagy a köztes megállók ugyanazok, de a végpontok mások. 
-Ezeknek az információk összefogására létrehozott \Highlight{LineInfo} entitás felelős. 
-Ez az entitás tárolja a két végpontot, a közöttük közlekedő buszjáratot, és a járat típusát. 
-A végpont és a buszjáratok szintén entitások, az ezek között fennálló kapcsolat az \ref{fig_5/lineinfo}. ábrán látható. 
-\Picture{A járat entitás kapcsolatai}{5/lineinfo}{width=14cm}
-\subsection*{Útvonalak}
+A varosban kozlekedo buszok mas-mas vegpontok kozott kozlekednek. 
+Elofordulhat, hogy ugyanolyan szammal ellatott busz ugyanazon vegpontok kozott kozlekedik, de a koztes megallok elterhetnek, vagy a koztes megallok ugyanazok, de a vegpontok masok. 
+Ezeknek az informaciok osszefogasara letrehozott \Highlight{LineInfo} entitas felelos. 
+Ez az entitas tarolja a ket vegpontot, a kozottuk kozlekedo buszjaratot, es a jarat tipusat. 
+A vegpont es a buszjaratok szinten entitasok, az ezek kozott fennallo kapcsolat az \ref{fig_5/lineinfo}. abran lathato. 
+\Picture{A jarat entitas kapcsolatai}{5/lineinfo}{width=14cm}
+\subsection*{Utvonalak}
 \label{linehasstationsdetails}
-A buszjáratok útvonaluk bejárása során több, köztes megállót is érintenek. 
-Meg kell határoznunk, hogy egy adott busz milyen irányban haladva mely köztes megállókban áll meg. 
-Ezt a feladatot a \Highlight{LineHasStations} entitás végzi. 
-Az entitás segítségével meg tudjuk határozni, hogy az előző pontban vázolt járat egy példányának a végpontjain kívül milyen más állomásai vannak. 
-Továbbá tároljuk a köztes megálló útvonalon belüli sorszámát, melyből megállapítható az útvonalon található állomások helyes sorrendje. 
-Minden egyes objektum esetén tárolásra kerül még, hogy az előző megállóból milyen gyorsan tudunk eljutni. 
-Természetesen a busz indulópontjának ezen attribútuma nulla. 
-Az \ref{fig_5/linehasstations}. ábrán megtekinthető milyen kapcsolatokat tartalmaz az útvonal entitás. 
-\Picture{A járathoz kapcsolatai}{5/linehasstations}{width=14cm}
-\subsection*{Indulási idők, különleges időpontok}
+A buszjaratok utvonaluk bejarasa soran tobb, koztes megallot is erintenek. 
+Meg kell hataroznunk, hogy egy adott busz milyen iranyban haladva mely koztes megallokban all meg. 
+Ezt a feladatot a \Highlight{LineHasStations} entitas vegzi. 
+Az entitas segitsegevel meg tudjuk hatarozni, hogy az elozo pontban vazolt jarat egy peldanyanak a vegpontjain kivul milyen mas allomasai vannak. 
+Tovabba taroljuk a koztes megallo utvonalon beluli sorszamat, melybol megallapithato az utvonalon talalhato allomasok helyes sorrendje. 
+Minden egyes objektum eseten tarolasra kerul meg, hogy az elozo megallobol milyen gyorsan tudunk eljutni. 
+Termeszetesen a busz indulopontjanak ezen attributuma nulla. 
+Az \ref{fig_5/linehasstations}.\ abran megtekintheto milyen kapcsolatokat tartalmaz az utvonal entitas. 
+\Picture{A jarathoz kapcsolatai}{5/linehasstations}{width=14cm}
+\subsection*{Indulasi idok, kulonleges idopontok}
 \label{starttimes}
-Útvonaltervezés szempontjából fontos információ továbbá, hogy az adott járat az útvonalán található megállóiba milyen időpontban érkezik meg, továbbá különleges alkalmak esetén ezek hogyan változnak meg. 
-Az indulási időpontot egy Starttime nevű entitás tartalmazza, melyben tárolódik továbbá az is, hogy ez az indulás mely járatra vonatkozik, valamint milyen típusú dátum esetén értetendő. 
-A különböző típusú dátumokat külön entitás tartalmazza. 
-Az alkalmazáshoz tovább tartozik egy Holidays entitás is, melyben az olyan, előre nem tervezett időpontokat tartalmazza amelyek befolyásolják bizonyos járatok indulási rendjét és esetleges útvonalát is. 
-Az előbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/starttimes}. ábra mutatja be. 
-\Picture{Különleges és indulási időpontok közötti kapcsolat}{5/starttimes}{width=14cm}
+Utvonaltervezes szempontjabol fontos informacio tovabba, hogy az adott jarat az utvonalan talalhato megalloiba milyen idopontban erkezik meg, tovabba kulonleges alkalmak eseten ezek hogyan valtoznak meg. 
+Az indulasi idopontot egy Starttime nevu entitas tartalmazza, melyben tarolodik tovabba az is, hogy ez az indulas mely jaratra vonatkozik, valamint milyen tipusu datum eseten ertetendo. 
+A kulonbozo tipusu datumokat kulon entitas tartalmazza. 
+Az alkalmazashoz tovabb tartozik egy Holidays entitas is, melyben az olyan, elore nem tervezett idopontokat tartalmazza amelyek befolyasoljak bizonyos jaratok indulasi rendjet es esetleges utvonalat is. 
+Az elobbiekben bemutatott entitasok kozotti kapcsolatot a \ref{fig_5/starttimes}. abra mutatja be. 
+\Picture{Kulonleges es indulasi idopontok kozotti kapcsolat}{5/starttimes}{width=14cm}
 
 \section{Az Android kliens}
 \label{androidclient}
-Az alkalmazás fejlesztéséhez az Android Studio fejlesztői környezetet használtam.
-Az Android Studio a Gradle rendszerre épül, amelynek számos funkciója megkönnyíti az Androidos alkalmazások fordítását.
-A Gradle Androidos bővítményében található több Android specifikus parancs, amelyek közül az \Highlight{assemble} paranccsal készíthetjük el a futtatható és telepíthető állományt.
-A futtatható fájl elkészítéséhez szükséges információkat a build.gradle fájlban adhatjük meg.
-Ebben találhatóak a szükséges függőségek, amiket a Gradle bővítménye letölt, és belecsomagol az .apk-ba.
-Továbbá itt található az applikáció által támogatott Android verziók száma.
-Az általam készített alkalmazás futtatásához legalább a \Highlight{minSdkVersion 14} verzió szükséges, ami az Android operációs rendszer 4.0 verziójának felel meg.
-Az \Highlight{AndroidManifest.xml} fájl az alkalmazás alapvető jellemzőit tartalmazza.
-Ilyen jellemzők többek között a szükséges engedélyek és a Google Maps-hez tartozó metainformáció.
-Az alkalmazás telepítéséhez és futtatásához szükség van engedélyekre a felhasználó részéről.
-Ezek az engedélyek a következők:
+Az alkalmazas fejlesztesehez az Android Studio fejlesztoi kornyezetet hasznaltam.
+Az Android Studio a Gradle rendszerre epul, amelynek szamos funkcioja megkonnyiti az Androidos alkalmazasok forditasat.
+A Gradle Androidos bovitmenyeben talalhato tobb Android specifikus parancs, amelyek kozul az \Highlight{assemble} paranccsal keszithetjuk el a futtathato es telepitheto allomanyt.
+A futtathato fajl elkeszitesehez szukseges informaciokat a build.gradle fajlban adhatjuk meg.
+Ebben talalhatoak a szukseges fuggosegek, amiket a Gradle bovitmenye letolt, es belecsomagol az .apk-ba.
+Tovabba itt talalhato az applikacio altal tamogatott Android verziok szama.
+Az altalam keszitett alkalmazas futtatasahoz legalabb a \Highlight{minSdkVersion 14} verzio szukseges, ami az Android operacios rendszer 4.0 verziojanak felel meg.
+Az \Highlight{AndroidManifest.xml} fajl az alkalmazas alapveto jellemzoit tartalmazza.
+Ilyen jellemzok tobbek kozott a szukseges engedelyek es a Google Maps-hez tartozo metainformacio.
+Az alkalmazas telepitesehez es futtatasahoz szukseg van engedelyekre a felhasznalo reszerol.
+Ezek az engedelyek a kovetkezok:
 \begin{lstlisting}
 <uses-permission android:name="android.permission.INTERNET" /> 
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 \end{lstlisting}
 
-Az első hozzáférés az Internettel való kommunikációhoz szükséges.
-Szükségünk van továbbá olyan engedélyre amivel a Saját pozíció lekérhető és engedélyezhető a GPS a telefonon.
-Mivel az alkalmazásnak szüksége van Internet hozzáférésre az adatok letöltéséhez, ezért az alkalmazás engedélyt kér a telefon hálózati állapotának lekéréséhez is.
+Az elso hozzaferes az Internettel valo kommunikaciohoz szukseges.
+Szuksegunk van tovabba olyan engedelyre amivel a Sajat pozicio lekerheto es engedelyezheto a GPS a telefonon.
+Mivel az alkalmazasnak szuksege van Internet hozzaferesre az adatok letoltesehez, ezert az alkalmazas engedelyt ker a telefon halozati allapotanak lekeresehez is.
 
-\subsection*{Helyi adatbázis}
+\subsection*{Helyi adatbazis}
 \label{localdatabase}
-Fontos szempont volt helyi adatbázist létrehozni, mivel az alkalmazás és a szerver között folyamatosan felépülő kapcsolat sok erőforrást igényel.
-Továbbá az olyan eseteknél, amikor a készülék nincs hálózatra kapcsolva, akkor nem érné el a szervert, így nem töltődnének le a működéséhez szükséges adatok.
-Ezek következtében szükség volt arra, hogy az applikáció offline üzemmódban is képes legyen funkcionálisan működni.
+Fontos szempont volt helyi adatbazist letrehozni, mivel az alkalmazas es a szerver kozott folyamatosan felepulo kapcsolat sok eroforrast igenyel.
+Tovabba az olyan eseteknel, amikor a keszulek nincs halozatra kapcsolva, akkor nem erne el a szervert, igy nem toltodnenek le a mukodesehez szukseges adatok.
+Ezek kovetkezteben szukseg volt arra, hogy az applikacio offline uzemmodban is kepes legyen funkcionalisan mukodni.
 
-Megvizsgáltam több Android platformhoz elérhető ORM (object-relational mapping vagyis objektum-relációs leképezés) keretrendszert, ezen belül is az ORMLite keretrendszert. 
-Az ORMLite akkor előnyös, ha nem létezik adatbázis séma, amihez alkalmazkodnia kell.
-Mivel az alkalmazás esetében már a szerver oldalon kialakításra került egy séma, emiatt a keretrendszer használata nehézkes volt.
-%MÁTÉ: azóta csinált az Android saját adatbázis absztrakciós framework-öt, ezt nem próbáltam semennyire, mennyire említsem meg a szakdogában?
-Ebben a kontextusban szükséges volt, hogy manuálisan személyre szabhassam a helyi adatbázis sémáját, így végül a natív SQL utasítok használata mellett döntöttem.
+Megvizsgaltam tobb Android platformhoz elerheto ORM (object-relational mapping vagyis objektum-relacios lekepezes) keretrendszert, ezen belul is az ORMLite keretrendszert. 
+Az ORMLite akkor elonyos, ha nem letezik adatbazis sema, amihez alkalmazkodnia kell.
+Mivel az alkalmazas eseteben mar a szerver oldalon kialakitasra kerult egy sema, emiatt a keretrendszer hasznalata nehezkes volt.
+%MATE: azota csinalt az Android sajat adatbazis absztrakcios framework-ot, ezt nem probaltam semennyire, mennyire emlitsem meg a szakdogaban?
+% Nyugodtan megemlitheted, hogy a dolgozat irasakor meg nem volt, azota van, szoval ezt majd at lehet irni tovabbfejleszteskent. De ezeket amugy a felhasznalt technologiak reszhez is kiemelheted, de itt is elfer.
+Ebben a kontextusban szukseges volt, hogy manualisan szemelyre szabhassam a helyi adatbazis semajat, igy vegul a nativ SQL utasitok hasznalata mellett dontottem.
 
-A helyi adatbázis-kezelő rendszer az SQLite, amely az Android operációs rendszerbe gyárilag beépített adatabázis-kezelő motor.
-Mivel az SQLite relációs adatbázis, ezért a kommunikáció szimpla SQL utasításokkal történik.
-Az applikáció sikeres működéséhez szükséges egy \Highlight{SQLiteOpenHelper} osztályból örököltetett osztály, amelyben az adatbázis nevét, verzióját és az adatbázis létrejöttekor végrehajtandó utasításokat tároljuk.
-Az ősosztályból kettő metódust kötelező implementálni, az onCreate és az onUpgrade metódust.
-Az onCreate metódus segítségével van lehetőség táblákat létrehozni az éppen elkészült adatbázisba, amit az alábbi kódrészlet szemléltet.
+A helyi adatbazis-kezelo rendszer az SQLite, amely az Android operacios rendszerbe gyarilag beepitett adatabazis-kezelo motor.
+Mivel az SQLite relacios adatbazis, ezert a kommunikacio szimpla SQL utasitasokkal tortenik.
+Az applikacio sikeres mukodesehez szukseges egy \Highlight{SQLiteOpenHelper} osztalybol orokoltetett osztaly, amelyben az adatbazis nevet, verziojat es az adatbazis letrejottekor vegrehajtando utasitasokat taroljuk.
+Az ososztalybol ketto metodust kotelezo implementalni, az onCreate es az onUpgrade metodust.
+Az onCreate metodus segitsegevel van lehetoseg tablakat letrehozni az eppen elkeszult adatbazisba, amit az alabbi kodreszlet szemleltet.
 \begin{lstlisting}
 @Override
 public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -187,16 +188,16 @@ public void onCreate(SQLiteDatabase sqLiteDatabase) {
 	} catch (SQLiteException e) { /*...*/ }
 }
 \end{lstlisting}
-Ugyanakkor az onUpgrade metódus abban az esetben fut le, ha megnöveltük az adatbázis verzióját.
-Ez a verziószám növekedés azt jelzi, hogy olyan változás történt az adatbázisban, amely visszafele nem kompatibilis, és egy transzformáció szükséges a régi és az új séma között.
-Az \Highlight{SQLiteOpenHelper} osztály az SQL utasításokat tranzakcionálisan hatja végre.
-Egy tranzakció tartalmazhat több SQL utasítást is, amelyek végrehajtása egyszerre történik.
-Ha egy SQL utasítás sikertelen, akkor az összes utasítás visszavonásra kerül.
+Ugyanakkor az onUpgrade metodus abban az esetben fut le, ha megnoveltuk az adatbazis verziojat.
+Ez a verzioszam novekedes azt jelzi, hogy olyan valtozas tortent az adatbazisban, amely visszafele nem kompatibilis, es egy transzformacio szukseges a regi es az uj sema kozott.
+Az \Highlight{SQLiteOpenHelper} osztaly az SQL utasitasokat tranzakcionalisan hatja vegre.
+Egy tranzakcio tartalmazhat tobb SQL utasitast is, amelyek vegrehajtasa egyszerre tortenik.
+Ha egy SQL utasitas sikertelen, akkor az osszes utasitas visszavonasra kerul.
 
-Az adatbázis minden táblájához egy statikus osztály lett létrehozva, melyek egy DatabaseContract nevű osztályban tárolódnak.
-Minden belső osztály implementálja a BaseColumns osztályt, melynek köszönhetően megkapják az egyedi azonosításra használatos  \_id mezőt.
-Erre egy példa az alábbi kódrészletben látható.
-A további attribútumokat is implementálásra kerültek az adott osztályokban, majd a mezők alapján elkészült a tábla létrehozásához szükséges SQL parancs.
+Az adatbazis minden tablajahoz egy statikus osztaly lett letrehozva, melyek egy DatabaseContract nevu osztalyban tarolodnak.
+Minden belso osztaly implementalja a BaseColumns osztalyt, melynek koszonhetoen megkapjak az egyedi azonositasra hasznalatos  \_id mezot.
+Erre egy pelda az alabbi kodreszletben lathato.
+A tovabbi attributumokat is implementalasra kerultek az adott osztalyokban, majd a mezok alapjan elkeszult a tabla letrehozasahoz szukseges SQL parancs.
 \begin{lstlisting}
 static class DateTypeEntry implements BaseColumns{
 	static final String TABLE_NAME = "date_type";
@@ -206,12 +207,12 @@ static class DateTypeEntry implements BaseColumns{
 }
 \end{lstlisting}
 
-Az applikáció lokális adatbázisában lévő adatok POJO-ban tárolódnak, minden táblához külön POJO tartozik.
-A POJO egy olyan Java objektum, amely nem rendelkezik speciális tulajdonsággal.
+Az applikacio lokalis adatbazisaban levo adatok POJO-ban tarolodnak, minden tablahoz kulon POJO tartozik.
+A POJO egy olyan Java objektum, amely nem rendelkezik specialis tulajdonsaggal.
 
-Ahhoz, hogy az alacsonyabb szintű SQL utasítások elkülönüljenek az üzleti logikától, létrehoztam egy \Highlight{DataManager} nevű absztrakt osztályt, melynek típus paramétere egy POJO objektum. 
-Mivel az osztály absztrakt - így nem példányosítható - ezért ebben az osztályban kaptak helyet az olyan metódusok, melyek minden típusú POJO-ra általános érvényességűek. 
-Az alábbi kódrészletben a DataManager osztály implementációja látható, ahol a createOrUpdate és a queryForAll metódusok az adatbázis tábláinak kezeléséért felelősek.
+Ahhoz, hogy az alacsonyabb szintu SQL utasitasok elkulonuljenek az uzleti logikatol, letrehoztam egy \Highlight{DataManager} nevu absztrakt osztalyt, melynek tipus parametere egy POJO objektum. 
+Mivel az osztaly absztrakt - igy nem peldanyosithato - ezert ebben az osztalyban kaptak helyet az olyan metodusok, melyek minden tipusu POJO-ra altalanos ervenyesseguek. 
+Az alabbi kodreszletben a DataManager osztaly implementacioja lathato, ahol a createOrUpdate es a queryForAll metodusok az adatbazis tablainak kezeleseert felelosek.
 \begin{lstlisting}
 public abstract class DataManager<T> {	
     DatabaseHelper helper;
@@ -221,37 +222,37 @@ public abstract class DataManager<T> {
     public abstract List<T> queryForAll();
 }
 \end{lstlisting} 
-Ebből az osztályból származnak a specifikus osztályok, melyeken keresztül adott típusú POJO-k kerülnek lementésre vagy visszakérdezésre a helyi adatbázisból.
-Az ősosztályban található metódusokat mindenképp implementálnia kell minden származtatott osztálynak. 
-Az olyan funkcionalitások esetén - amelyek nem minden POJO esetén voltak értelmezhetőek - a specifikus osztályban kerültek definiálásra.
-Az alkalmazás mindenhol ezeket a manager osztályokat használja, ahol az adatbázissal való interakció szükséges.
+Ebbol az osztalybol szarmaznak a specifikus osztalyok, melyeken keresztul adott tipusu POJO-k kerulnek lementesre vagy visszakerdezesre a helyi adatbazisbol.
+Az ososztalyban talalhato metodusokat mindenkepp implementalnia kell minden szarmaztatott osztalynak. 
+Az olyan funkcionalitasok eseten - amelyek nem minden POJO eseten voltak ertelmezhetoek - a specifikus osztalyban kerultek definialasra.
+Az alkalmazas mindenhol ezeket a manager osztalyokat hasznalja, ahol az adatbazissal valo interakcio szukseges.
 
 \subsection*{Szerver-kliens kapcsolat}
 \label{serverclient}
-A helyi adatbázisban található adatok csak egy adott idő-intervallumban érvényesek, a menetrend változtatásával érvényüket vesztik. 
-Ezért bizonyos időközönként frissíteni kell a benne szereplő információkat. 
-Az adatok aktualizálása az alkalmazás indításakor történik, erre szolgál a korábban bemutatott szerver, ahonnan az alkalmazás az aktuális információkat kapja.
-A szerver REST üzenetekkel válaszol a beérkező kérésekre.
-A kommunikációt a Retrofit nevű REST klienssel oldottam meg, melynek segítségével könnyű a szervernek kéréseket küldeni.
-A \Highlight{NetworkManager} osztály képes lekérdezni, hogy az adott eszköz rendelkezik-e jelenleg bármilyen internet eléréssel. 
-Ha a készülék nem rendelkezik internet eléréssel, akkor csak a helyi adatbázist használja.
-Ellenkező esetben pedig elkezdődik az adatok frissítése az applikáció elindításával.
-A minél kisebb adathasználat érdekében a kliens tárolja, hogy mikor történt az utolsó frissítés. 
-Az applikáció indításkor elküldi a legutolsó frissítési dátumot a szervernek, a szerver pedig csak azokat az adatokat küldi vissza, amelyek újabbak, mint a kapott időpont.
-Miután az adatok aktualizálása sikeresen megtörtént, a frissítés időponja felülírásra kerül a helyi adatbázisban.
-Az IDownloader interfészt a A \Highlight{BaseDownloader} absztrakt osztály implementálja, melynek konstruktorában kerülnek inicializálásra a Retrofit számára szükséges osztályok.
-Lehetőségünk van minden kérést személyre szabni. 
-Ezt felhasználva juttatjuk el a szerver számára a felhasználó azonosítására szolgáló adatokat és a legutolsó frissítési időpontot.
-Az IDownloader interfész egyetlen metódus-definíciót tartalmaz:
+A helyi adatbazisban talalhato adatok csak egy adott ido-intervallumban ervenyesek, a menetrend valtoztatasaval ervenyuket vesztik. 
+Ezert bizonyos idokozonkent frissiteni kell a benne szereplo informaciokat. 
+Az adatok aktualizalasa az alkalmazas inditasakor tortenik, erre szolgal a korabban bemutatott szerver, ahonnan az alkalmazas az aktualis informaciokat kapja.
+A szerver REST uzenetekkel valaszol a beerkezo keresekre.
+A kommunikaciot a Retrofit nevu REST klienssel oldottam meg, melynek segitsegevel konnyu a szervernek kereseket kuldeni.
+A \Highlight{NetworkManager} osztaly kepes lekerdezni, hogy az adott eszkoz rendelkezik-e jelenleg barmilyen internet eleressel. 
+Ha a keszulek nem rendelkezik internet eleressel, akkor csak a helyi adatbazist hasznalja.
+Ellenkezo esetben pedig elkezdodik az adatok frissitese az applikacio elinditasaval.
+A minel kisebb adathasznalat erdekeben a kliens tarolja, hogy mikor tortent az utolso frissites. 
+Az applikacio inditaskor elkuldi a legutolso frissitesi datumot a szervernek, a szerver pedig csak azokat az adatokat kuldi vissza, amelyek ujabbak, mint a kapott idopont.
+Miutan az adatok aktualizalasa sikeresen megtortent, a frissites idoponja felulirasra kerul a helyi adatbazisban.
+Az IDownloader interfeszt a A \Highlight{BaseDownloader} absztrakt osztaly implementalja, melynek konstruktoraban kerulnek inicializalasra a Retrofit szamara szukseges osztalyok.
+Lehetosegunk van minden kerest szemelyre szabni. 
+Ezt felhasznalva juttatjuk el a szerver szamara a felhasznalo azonositasara szolgalo adatokat es a legutolso frissitesi idopontot.
+Az IDownloader interfesz egyetlen metodus-definiciot tartalmaz:
 \begin{lstlisting}
 public interface IDownloader {
     void download();
 }
 \end{lstlisting}
-A \Highlight{BaseDownloader} osztály tartalmaz még egy saveToDatabase metódust, amely az adatok helyi adatbázisba történő lementésére alkalmas.
-A \Highlight{BaseDownloader} osztályból származtatott gyerekosztályok implementálják az előzőekben említett két metódust.
+A \Highlight{BaseDownloader} osztaly tartalmaz meg egy saveToDatabase metodust, amely az adatok helyi adatbazisba torteno lementesere alkalmas.
+A \Highlight{BaseDownloader} osztalybol szarmaztatott gyerekosztalyok implementaljak az elozoekben emlitett ket metodust.
 
-A Retrofit konfigurálása során egy interfész került megvalósításra, amelyben metódus-definíció formájában felsorolásra kerülnek azok a hívások, amelyeket a Retrofit képes végrehajtani.
+A Retrofit konfiguralasa soran egy interfesz kerult megvalositasra, amelyben metodus-definicio formajaban felsorolasra kerulnek azok a hivasok, amelyeket a Retrofit kepes vegrehajtani.
 \begin{lstlisting}
 public interface MyApiEndpointInterface {
 	/* ... */
@@ -259,10 +260,10 @@ public interface MyApiEndpointInterface {
     Call<List<Stations>> getStations();
 }
 \end{lstlisting}
-A fenti példán látható, hogy a megállók eléréséhez annotáció formájában megadásra került az elérési útvonal.
-Ennek visszatérési értéke egy olyan lista lesz, amely megállókat tartalmaz.
-A listában található megállókat a Retrofit automatikusan szerializálta ki a szervertől kapott JSON válaszból.
-A szerializáláshoz az alábbi entitásban található annotációs konfigurációt veszi alapul.
+A fenti peldan lathato, hogy a megallok eleresehez annotacio formajaban megadasra kerult az eleresi utvonal.
+Ennek visszateresi erteke egy olyan lista lesz, amely megallokat tartalmaz.
+A listaban talalhato megallokat a Retrofit automatikusan szerializalta ki a szervertol kapott JSON valaszbol.
+A szerializalashoz az alabbi entitasban talalhato annotacios konfiguraciot veszi alapul.
 \begin{lstlisting}
 public class Stations {
 	/* ... */
@@ -272,12 +273,12 @@ public class Stations {
 }
 \end{lstlisting}
 
-\subsection*{A felhasználó felület kialakítása}
+\subsection*{A felhasznalo felulet kialakitasa}
 \label{layout}
-A kód karbantarthatóságának érdekében a felhasználó felület kialakítása az MVP (Modell-View-Presenter) szoftvertervezési mintára épül.
-Előnye, hogy az üzleti logika elhatárolódik a felhasználó felülettől, melynek köszönhetően a kezelőfelület módosítható a logika megváltoztatása nélkül.
-Az alkalmazás minden képernyő-nézetéhez tartozik egy úgynevezett activity.
-Az activity a felhasználók és az applikáció közötti legfőbb alapelem.
+A kod karbantarthatosaganak erdekeben a felhasznalo felulet kialakitasa az MVP (Modell-View-Presenter) szoftvertervezesi mintara epul.
+Elonye, hogy az uzleti logika elhatarolodik a felhasznalo felulettol, melynek koszonhetoen a kezelofelulet modosithato a logika megvaltoztatasa nelkul.
+Az alkalmazas minden kepernyo-nezetehez tartozik egy ugynevezett activity.
+Az activity a felhasznalok es az applikacio kozotti legfobb alapelem.
 
 
 
