@@ -1,6 +1,6 @@
-﻿Az elkeszult rendszer szerver-kliens architekturara epul.
-Az architektura modellje a \ref{fig_5/architektura}. abran lathato. 
-A szerver felelos az adatok kezeleseert, mely a Symfony keretrendszerrel lett megvalositva. 
+﻿Az elkészült rendszer szerver-kliens architektúrára épül.
+Az architektura modellje \aref{fig_5/architektura}.\ ábrán látható. 
+A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. % na jo, eddig ekezesitettem, innentol Te jossz :-D 
 Az adatokat a Doctrine keretrendszer segitsegevel eri el az adatbazisbol. 
 A rendszerben talalhato a szerver, ami egy adminisztracios feladatokat betolto weboldal, es a kliens, egy Android alkalmazas, amely a felhasznalok reszere keszult. 
 Az adminisztracios weboldalon az adatok a Twig sablonkezelo segitsegevel jelennek meg. 
@@ -12,7 +12,7 @@ A tovabbiakban reszletesen bemutatasra kerul a szerver es a kliens felepitese, m
 \section{A szerver}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer ???-as verziojara epult. 
+A szerver a Symfony keretrendszer \todo{???}-as verziojara epult. 
 A beerkezo keres athalad a Symfony tuzfalan, ami elinditja az autentikaciot. 
 Ha sikeres volt az autentikacio, a keres a megfelelo kontroller osztalyhoz kerul feldolgozas utan. 
 
@@ -61,7 +61,7 @@ php bin/console security:encode-password
 
 A parancs futasa kozben bekeri, mi az a jelszo, amit titkositani kell. 
 Miutan megadtuk a jelszot, a bemeneten lefuttatja az algoritmust es vegul kiirja a titkositott karaktersorozatot. 
-Ezt a szot megadva a fajlban jelszokent, tovabbra is a titkositatlan jelszoval be tud lepni a felhasznalo az oldalra, viszont nem all fent tovabb a veszely, hogy illetektelenek kezebe jutna a jelszo. 
+Ezt a szot megadva a fajlban jelszokent, tovabbra is a titkositatlan jelszoval be tud lepni a felhasznalo az oldalra, viszont nem all fent tovabb a veszely, hogy illetektelenek kezebe jutna a jelszo. %gondolom ez egy hash, ha igy van, illik ra igy hivatkozni :-)
 
 \subsection*{Autorizacio}
 \label{authorization}
@@ -127,7 +127,7 @@ Az entitas segitsegevel meg tudjuk hatarozni, hogy az elozo pontban vazolt jarat
 Tovabba taroljuk a koztes megallo utvonalon beluli sorszamat, melybol megallapithato az utvonalon talalhato allomasok helyes sorrendje. 
 Minden egyes objektum eseten tarolasra kerul meg, hogy az elozo megallobol milyen gyorsan tudunk eljutni. 
 Termeszetesen a busz indulopontjanak ezen attributuma nulla. 
-Az \ref{fig_5/linehasstations}. abran megtekintheto milyen kapcsolatokat tartalmaz az utvonal entitas. 
+Az \ref{fig_5/linehasstations}.\ abran megtekintheto milyen kapcsolatokat tartalmaz az utvonal entitas. 
 \Picture{A jarathoz kapcsolatai}{5/linehasstations}{width=14cm}
 \subsection*{Indulasi idok, kulonleges idopontok}
 \label{starttimes}
@@ -171,6 +171,7 @@ Megvizsgaltam tobb Android platformhoz elerheto ORM (object-relational mapping v
 Az ORMLite akkor elonyos, ha nem letezik adatbazis sema, amihez alkalmazkodnia kell.
 Mivel az alkalmazas eseteben mar a szerver oldalon kialakitasra kerult egy sema, emiatt a keretrendszer hasznalata nehezkes volt.
 %MATE: azota csinalt az Android sajat adatbazis absztrakcios framework-ot, ezt nem probaltam semennyire, mennyire emlitsem meg a szakdogaban?
+% Nyugodtan megemlitheted, hogy a dolgozat irasakor meg nem volt, azota van, szoval ezt majd at lehet irni tovabbfejleszteskent. De ezeket amugy a felhasznalt technologiak reszhez is kiemelheted, de itt is elfer.
 Ebben a kontextusban szukseges volt, hogy manualisan szemelyre szabhassam a helyi adatbazis semajat, igy vegul a nativ SQL utasitok hasznalata mellett dontottem.
 
 A helyi adatbazis-kezelo rendszer az SQLite, amely az Android operacios rendszerbe gyarilag beepitett adatabazis-kezelo motor.
