@@ -1,4 +1,4 @@
-﻿Az elkészült rendszer szerver-kliens architekturára épül.
+Az elkészült rendszer szerver-kliens architekturára épül.
 Az architektúra modellje \aref{fig_5/architektura}.\ ábrán látható. 
 A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
 Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
@@ -12,7 +12,7 @@ A továbbiakban részletesen bemutatásra kerül a szerver és a kliens felépí
 \section{A szerver}
 \label{szerverfelepites}
 
-A szerver a Symfony keretrendszer \todo{???}-as verziójára épült. 
+A szerver a Symfony keretrendszer 2.8-as verziójára épült. 
 A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt. 
 Ha sikeres volt az autentikáció, a kérés a megfelelő kontroller osztályhoz kerül feldolgozás után. 
 
@@ -171,7 +171,6 @@ Ezek következtében szükség volt arra, hogy az applikáció offline üzemmód
 Megvizsgáltam több Android platformhoz elérhető ORM (object-relational mapping vagyis objektum-relációs leképezés) keretrendszert, ezen belül is az ORMLite keretrendszert. 
 Az ORMLite akkor előnyös, ha nem létezik adatbázis séma, amihez alkalmazkodnia kell.
 Mivel az alkalmazás esetében már a szerver oldalon kialakításra került egy séma, emiatt a keretrendszer használata nehézkes volt.
-\todo{Androidos adatbázis absztrakciós framework, eddig nem volt azóta van már}
 Ebben a kontextusban szükséges volt, hogy manuálisan személyre szabhassam a helyi adatbázis sémáját, így végül a natív SQL utasítok használata mellett döntöttem.
 
 A helyi adatbázis-kezelő rendszer az SQLite, amely az Android operációs rendszerbe gyárilag beépített adatabázis-kezelő motor.

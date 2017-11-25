@@ -6,27 +6,40 @@ Teszteléskor olyan hibák is jelentkezhetnek, amelyek a felhasználók által h
 Ennél a szakasznál lényeges lehet egy külső személy bevonása az ellenőrzésbe, ezáltal lecsökkentve az alkalmazás nem megfelelő használatából eredő hibák számát.
 Mindemellett fontos, hogy az applikáció minél magasabb szinten elégítse ki a felhasználói igényeket, így továbbfejlesztésre és új funkciók bevezetésére is szükség lehet.
 
-\subsection{Android Door framework}
-\label{androiddoor}
+\section*{Android Room framework}
+\label{androidroom}
+Az alkalmazás egyszerűsége és fenntarthatóságának érdekében érdemes lenne az előző fejezetben ismertetett Room adatbázis absztrakciós könyvtárat használni.
+Segítségével egyszerűbbé és átláthatóbbá válna a kódbázis.
 
-\subsection{További városok hozzáadása}
+\section*{További városok hozzáadása}
 \label{morecity}
+Veszprém megyében több kisváros is rendelkezik helyi tömegközlekedéssel, ami egy-kettő járattól akár húsz járatot is jelenthet.
+Ebből kifolyólag a továbbiakban fontos lehet a környező városok tömegközlekedésének integrálása.
+Ehhez az adatbázis átalakítása, továbbfejlesztése szükséges, hogy az általános érvényű legyen minden városra.
+Ez a funkció segítséget nyújtana a kisebb városokban élőknek, illetve azoknak a turistáknak akik a megye több városát felkeresve nyaralnak.
 
-\subsection{Útvonaltervezés továbbfejlesztése}
+\section*{Többnyelvűség}
+\label{internationalization}
+Külföldről érkező turisták esetében megfontolandó a többnyelvűség támogatása.
+Ebben az esetben lényeges lehet egy nyelvválasztó funkció implementálása az alkalmazásba.
+Első sorban az angol és német nyelvek megvalósítása, de a későbbiekben akár még több nyelv bevonásával.
+
+\section*{Útvonaltervezés továbbfejlesztése}
 \label{routeplan}
+Az alkalmazás optimálisabb működése érdekében fontos tényező lehet az útvonaltervezés továbbfejlesztése.
+A felhasználói élmény növekedése érdekében a tervező algoritmus pontosabbá, gyorsabbá tétele.
+Ehhez a jelenlegi megoldást le lehetne cserélni okosabb, heurisztikus algoritmusra.
+Az útvonaltervező mellett a felhasználói felületet is tovább lehet fejleszteni, ilyen feladat lehet többek közt a járatok megjelenítésének pontosítása. 
 
-\subsection{Mobil értesítések}
+\section*{Mobil értesítések}
 \label{pushnot}
+További ötletként felmerült, hogy a felhasználók számára értesítéseket küldjön ki az alkalmazás.
+A felhasználó beállíthatná a tartózkodási helyét, illetve egy járat indulási időpontját, az alkalmazás pedig jelezné egy értesítés formájában, ha a felhasználónak indulnia kell a megadott helyről, hogy elérje a korábban beállított járatot.
+Olyan esetben is hasznos lenne ez a funkció, ha útvonalváltozás történik egy buszjáratnál, így a felhasználó időben értesítve lenne a módusításról.
 
-\subsection{Widget}
+\section*{Widget}
 \label{widget}
-
-
-
-
-
-
-
-
-
-
+Érdemes lenne megvalósítani egy olyan modult, amely kitehető a telefon főképernyőjére.
+Az alkalmazásban, a Kedvencek menüpont alatt beállított járatok táblázatai között válthatna a felhasználó, így az alkalmazás elindítása nélkül, hamar megtekinthető lenne az egyes járatok menetrendje.
+Mindemellett fontos, hogy ez a modul is folyamatosan friss információkat jelenítsen meg, ha elérhető frissebb adat, az legyen jelezve a felhasználó felé is.
+\newpage
