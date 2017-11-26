@@ -173,6 +173,11 @@ Az ORMLite akkor előnyös, ha nem létezik adatbázis séma, amihez alkalmazkod
 Mivel az alkalmazás esetében már a szerver oldalon kialakításra került egy séma, emiatt a keretrendszer használata nehézkes volt.
 Ebben a kontextusban szükséges volt, hogy manuálisan személyre szabhassam a helyi adatbázis sémáját, így végül a natív SQL utasítok használata mellett döntöttem.
 
+Az androidos kliens implementálását követően kiadásra került több architekturális felépítést segítő könyvtár.
+Ezek közül a \Highlight{Room} nevű könyvtár az adatok tárolásáért felel.
+A \Highlight{Room} egy adatbázis absztrakciós könyvtár, amely elrejti az alatta található adattárolós részleteit.
+Fordítási időben validálja az SQL lekérdezéseket, így ha ezek között található olyan, amely nem felel meg az adatbázis sémának, fordítási hibaként jeleníti meg futás idejű hiba helyett.
+
 A helyi adatbázis-kezelő rendszer az SQLite, amely az Android operációs rendszerbe gyárilag beépített adatabázis-kezelő motor.
 Mivel az SQLite relációs adatbázis, ezért a kommunikáció szimpla SQL utasításokkal történik.
 Az applikáció sikeres működéséhez szükséges egy \Highlight{SQLiteOpenHelper} osztályból örököltetett osztály, amelyben az adatbázis nevét, verzióját és az adatbázis létrejöttekor végrehajtandó utasításokat tároljuk.
@@ -297,35 +302,62 @@ Első lépésként a Google Developer weboldalon egy projekt létrehozása szük
 A projektben engedélyezésre kerültek azon szolgálatások, amelyek az alkalmazás funkcionalitásához elengedhetetlenek.
 Az engedélyezett szolgáltatások használatához az alkalmazásban egy hitelesító kulcsot kötelező megadni, amely a fent említett Google Developer oldalon generálódik. 
 Mindezek után minden lehetőség adott a térkép megjelenítésére az alkalmazásban.
+Ennek legegyszerűbb módja, ha a \Highlight{SupportMapFragment} osztályt használjuk.
+%https://developers.google.com/android/reference/com/google/android/gms/maps/SupportMapFragment
+Ez az osztály körülfog egy térképet és automatikusan kezeli annak életciklusát.
+Egyszerűen megjeleníthető a kívánt activity-ben, az XML fájlhoz az alábbiakban bemutatott módon kell hozzáadni:
+\begin{lstlisting}
+<fragment
+	android:id="@+id/map"
+	android:name="com.google.android.gms.maps.SupportMapFragment"
+	android:layout_width="match_parent>
+	android:layout_height="match_parent"
+/>
+\end{lstlisting}
 
+Ahhoz, hogy a térkép dinamikusan módosítható legyen, egy \Highlight{GoogleMap} példányra van szükség.
+A \Highlight{SupportMapFragment} osztályon a \Highlight{getMapAsync(OnMapReadyCallback)} metódust meghívva az osztály inicializálja a térképet.
+Miután ez megtörtént, a metódus paramétereként átadott \Highlight{OnMapReadyCallback} felületen meghívódik az \Highlight{onMapReady} metódust, ami egy \Highlight{GoogleMap} példányt biztosít.
+A \Highlight{OnMapReadyCallback} felület lehet külön osztály, de akár egy activity is implementálhatja azt, így amikor a példány elérhető, azonnal interakcióba léphetünk vele az activity-ben.
+A \Highlight{GoogleMap} példány segítségével a térképhez adhatjuk a saját pozíciót lekérő gombot vagy megadhatjuk a térkép nézetének típusát.
 
+\subsection*{Útvonaltervező}
+\label{planner}
+A felhasználó az Útvonaltervezés menüpontot kiválasztva Veszprém városán belül két tetszőleges hely között tervezhet közlekedési járatokat is alapul véve.
+Ehhez meg kell adnia a kiindulási és érkezési pontokat.
+Ezt megteheti úgy, hogy a saját pozícióját megadva automatikusan kitöltődik az indulási pont és már csak az érkezési helyet kell megadni, vagy mindkettőt manuálisan kell felvinnie.
+A felvitelt \Highlight{SupportPlaceAutocompleteFragment}-en keresztül teheti meg a felhasználó.
+Ahogy a felhasználó elkezdi beírni a helyszínt az \Highlight{SupportPlaceAutocompleteFragment} automatikus kiegészíti és javaslatokat tesz.
+Annak érdekében, hogy a kevésbé releváns helyeket ne ajánlja fel, meg lehet adni egy területet, melyben található helyneveket előnyben részesítse a kiegészítés alkalmával.
+Az előnyben részesítendő területet a \Highlight{setBoundsBias} metódus segítségével jelölhetjük ki.
 
+Ahhoz, hogy a két kijelölt hely között megkapjuk a lehetséges útvonalakat, le kell futtatnunk valamilyen útvonaltervező algoritmust.
+A későbbi továbbfejlesztést elősegítendő létrehoztam egy \Highlight{IPlanner} nevű felületet, melynek egyetlen metódusa a \Highlight{calculate}.
+A felület mellé elkészült még egy BasePlanner nevű absztrakt osztály is, amely megvalósítja a felületet.
+A tényleges útvonaltervezést implementáló osztályoknak ebből kell leszármazniuk.
+Az ősosztály rendelkezik minden olyan fontos információval, amire az útvonaltervezés közben szüksége lehet az algoritmusnak, például az indulási és érkezési pontok. 
+Rendelkezik továbbá egy \Highlight{OnPlannerListener} nevű callback felülettel, melynek \Highlight{onPlannerFinished} metódusát akkor kell meghívni, amikor az algoritmus végzett a tervezéssel.
 
+Elkészült egy \Highlight{AdvancePlanner} nevű útvonaltervező osztály, mely képes a két pont között útvonalat tervezni.
+Tervezés közben számításba veszi a lehetséges útvonalak között, hogy mennyit kell a felhasználónak sétálni, mennyit kell utazni időben és távolságban, valamint hogy hányszor kell átszállnia.
+Az algoritmus menete a következő:
+\begin{enumerate}
+	\item A két megadott helyhez megkeressük a hozzájuk közel található buszmegállókat.
+	\item Ezután leellenőrizzük, hogy a két listában található-e olyan eset, amikor közvetlenül eljuthatunk a két ponthoz közeli megállókba egy járattal. 
+	Amennyiben igen, ezeket a lehetőségeket hozzáadjuk a lehetséges útvonalakhoz.
+	\item Ha nem található közvetlen járat, az átszállásos járatok vizsgálata történik meg.
+\end{enumerate}
 
+Az algoritmus eredményül egy olyan listát ad át a \Highlight{onPlannerFinished} metódusnak, melynek minden eleme több utasítást tartalmaz.
+Négy fajta utasítást különböztet meg az alkalmazás: sétálás indulási ponttól megállóig, sétálás megállótól érkezési pontig, buszutazás és amennyiben szükséges átszállás esetén séta két megálló között.
+Az algoritmus befejezése után egy új képernyő jelenik meg.
+Itt megtekinthetőek az eredményül kapott javaslatok csoportokra bontva.
+Jelenleg három csoport szerint vannak rendezve az útvonalak:
+\begin{itemize}
+	\item Legkevesebb utazási idő
+	\item Legkevesebb gyaloglás
+	\item Legkevesebb átszállás
+\end{itemize}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Amint a felhasználó kiválasztja a számára optimális megoldást, visszatér az előző képernyőre, ahol már a kiválasztott útvonal vizuálisan is megjelenik, a térképen jelölve a gyaloglási útvonalat és a járat(ok) által érintett megállókat.
 \newpage
