@@ -1,4 +1,4 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
 \ifx \showCODEN  \undefined \def \showCODEN #1{CODEN #1}  \fi
 \ifx \showISBN   \undefined \def \showISBN  #1{ISBN #1}   \fi
 \ifx \showISSN   \undefined \def \showISSN  #1{ISSN #1}   \fi
@@ -10,5 +10,9 @@
      \newif \ifshowURL
      \showURLtrue
 \fi
+
+\bibitem{maps}
+Google maps.
+\newblock \ifshowURL {\showURL \path|https://www.google.hu/maps|}\fi.
 
 \end{thebibliography}

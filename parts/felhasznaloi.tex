@@ -7,12 +7,12 @@ Továbbá ismertetem az adatok menedzselésére szolgáló weboldal felületét 
 %4.1
 \section{Android alkalmazás}
 \label{androidapp}
-%képek: applogo, főmenü
-Az applikáció ikonja egy Veszprém járműparkjában is szereplő autóbusz, az Ikarus 280.
+Ahogy \aref{fig_4/icon}.\ ábrán is látszik, az applikáció ikonja egy Veszprém járműparkjában is szereplő autóbusz, az Ikarus 280.
+\Picture{Az alkalmazás ikonja}{4/icon}{width=2cm}
 Az alkalmazás indítása után az alkalmazás lekéri az adatbázisból azokat az adatokat, amik módosítási dátuma későbbi, mint az utolsó letöltés ideje.
 Ezt a felhasználó egy felugró ablak képében látja, amelyen az alkalmazás közli, hogy frissítés van folyamatban, és kéri a felhasználók türelmét.
-Amint az adatok aktualizálása befejeződött, a felugró ablak eltűnik, átadva helyét a főmenü menüpontjainak.
-
+Ezt \aref{fig_4/fomenu}.\ ábra a) képén tekinthető meg.
+Amint az adatok aktualizálása befejeződött, a felugró ablak eltűnik, átadva helyét a főmenü menüpontjainak, melyet a \aref{fig_4/fomenu}.\ ábra b) része mutat.
 \subsection{Főmenü}
 \label{fomenu}
 A főmenü az alkalmazás nevét és négy almenüt foglal magába:
@@ -23,34 +23,35 @@ A főmenü az alkalmazás nevét és négy almenüt foglal magába:
 	\item Kedvencek
 \end{itemize}
 
-A \todo{ABRA}. ábrán látható az alkalmazás főmenüjének kiosztása. 
 Az applikáció témája a lila szín és annak árnyalatai, amely lehetővé teszi a felhasználók figyelmének felkeltését, mégis letisztult külsőt kölcsönöz.
+\Picture{Főmenü}{4/fomenu}{width=10cm}
 
 \subsection {Útvonaltervezés}
 \label {utvonalterv}
 Az Útvonaltervezés menüpontot kiválasztva egy Google Maps térkép jelenik meg Veszprém városára fókuszálva.
 A képernyőn ezen kívül egy beviteli mező és három gomb található.
 A beviteli mezőt a felhasználók a térképen való keresésre használhatják.
-A keresés fő fókusza Veszprémre irányul, a mező automatikusan próbálja kiegészíteni a begépelt helyszínt, Veszprém környékére összpontosítva, ahogy az a \todo{ABRA} ábrán is látható.
+A keresés fő fókusza Veszprémre irányul, a mező automatikusan próbálja kiegészíteni a begépelt helyszínt, Veszprém környékére összpontosítva, ahogy az a \aref{fig_4/autocomplete}.\ ábra a) képén is látható.
 Az alkalmazás képes más földrajzi helyre irányuló kereséseket is kiegészíteni, viszont ez a funkció - az alkalmazás minél effektívebb működése érdekében - le van korlátozva.
-%kép: Autocomplete, találat markeres
-Ahogy a \todo{ABRA} ábrán is látszik, a találatot az alkalmazás egy úgynevezett 'marker' lerakásával jelöli a térképen.
+\Picture{Helység keresése az applikációban}{4/autocomplete}{width=10cm}
+Ahogy a \aref{fig_4/autocomplete}.\ ábra b) képén is látszik, a találatot az alkalmazás egy úgynevezett 'marker' lerakásával jelöli a térképen.
 A bal oldalon található gombbal a felhasználó képes a térkép nézetének megváltoztatására.
 Az alapérmezett mód a domborzati megjelenés, a gomb megnyomávásával átválthatunk műholdas nézetre.
 A jobb oldalon két gomb helyezkedik el: a Saját pozíció, illetve az Útvonaltervezés.
 A Saját pozíció gomb használhatához szükség van GPS funkcióra a telefonban.
 Ha ez nincs engedélyezve, az alkalmazás egy felugró ablak segítségével átirányítja a felhasználót a GPS funkció bekapcsolására alkalmas képernyőre.
+\Picture{Útvonaltervezés saját pozícióval}{4/sajatpozUtvonalterv}{width=10cm}
 Visszatérve az alkalmazásba, a térképen megjelenik a felhasználó feltételezhető helyzete egy kék ponttal jelölve.
 Továbbá a térképen megjelenik egy világoskék kör az előbb említett kék pont körül.
+Ezt \aref{fig_4/sajatpozUtvonalterv}.\ ábra a) képén láthatjuk.
 A világosabb színezetű kör területén valamelyik pont a felhasználó biztos pozícióját jelöli, a kör nagysága az internet elérési módjától (mobilnet vagy Wifi) függ.
 Ez a funkció azoknak a felhasználóknak nyújt segítséget, akik számára Veszprém városa ismeretlen terület.
-%kép: Saját pozíció, dupla mezős útvonaltervezés
-A jobb alsó gombra kattintva a felhasználó átkerül az Útvonaltervezés oldalra, ahol a felső beviteli mező mellé egy újabb mező kerül.
+A jobb alsó gombra kattintva a felhasználó átkerül az Útvonaltervezés oldalra, ahol a felső beviteli mező mellé egy újabb mező kerül, ahogy az \aref{fig_4/sajatpozUtvonalterv}.\ ábra b) részén is látszik. 
 Ha az előző oldalon a mezőbe került már földrajzi hely, az alkalmazás automatikusan az alsó mezőt, az Utazás célját tölti fel vele.
 Az új képernyőn megjelenő ablakban is lehetőség van a saját pozíció lekérésére, ebben az esetben az alkalmazás a paramétereket a Kiindulási pont mezőbe tölti be.
 Abban az esetben, ha mind a kettő mezőt kitöltötte a felhasználó, akkor az Útvonaltervezés gomb ismételt megnyomásával átkerül a találati listára.
-%találati képernyő, kiválasztás utáni térkép
-Az alkalmazás az . ábrán látható módon jeleníti meg a találatokat.
+Az alkalmazás \aref{fig_4/uttervtalalat}.\ ábra a) részén látható módon jeleníti meg a találatokat.
+\Picture{A találati képernyő és az térképes útvonalterv}{4/uttervtalalat}{width=10cm}
 A képernyő felső részén a beállított indulási és érkezési helyszín van feltüntetve, alul pedig három féle szempont alapján a megoldás:
 \begin{itemize}
 	\item Legkevesebb utazási idő
@@ -61,31 +62,33 @@ A képernyő felső részén a beállított indulási és érkezési helyszín v
 	\\Az utolsó alternatíva a jeggyel utazóknak kínál utazási megoldást, hiszen a legkevesebb átszállással járó utazást jeleníti meg.
 \end{itemize}
 A felhasználó az egyik megoldásra kattintva választhatja ki a számára optimális útvonalat.
-Az alkalmazás a következő képernyőn az útvonalat térképen jeleníti meg, ahogy az a  \todo{ABRA} ábrán is látszik.
+Az alkalmazás a következő képernyőn az útvonalat térképen jeleníti meg, ahogy az \aref{fig_4/uttervtalalat}.\ ábra b) képén is látszik.
 A kezdő és a végpont jelölője piros színű, a busz útvonalát az eltérő színnel (jelen esetben lilával) jelölt megállók mutatják.
 Ha az útvonalban több busz is szerepel, akkor azok útvonalát egy harmadik színnel jelöli az alkalmazás.
 A gyalogos útvonalat az applikáció színes vonallal jelöli a térképen a piros jelölők és az első/utolsó buszmegállók között.
 Ha a választott megoldás mégsem felel meg a felhasználó igényeinek, a képernyő felső részén elhelyezkedő Útvonaltervezés gomb ismételt megnyomásával visszajut az utazási lehetőséget listázó oldalra.
 \subsection {Menetrendek}
 \label {menetrendek}
+\Picture{Menetrendek}{4/menetrend}{width=10cm}
 A Menetrendek a főmenü második menüpontja.
 Ez az opció azokat a felhasználókat segíti, akik már ismerik Veszprém városát, illetve tömegközlekedését legalább alap szinten.
-A menüpontra kattintva az alkalmazás kilistázza a buszjáratok számait.
-Amint kiválasztott a megtekinteni kívánt járatot, az applikáció bekéri a járat irányát is, majd kilistázza az indulási időket az \todo{ABRA} ábrán látható módon.
+A menüpontra kattintva az alkalmazás kilistázza a buszjáratok számait, mely \aref{fig_4/menetrend}.\ ábra  a) képén tekinthető meg.
+Amint kiválasztott a megtekinteni kívánt járatot, az applikáció bekéri a járat irányát is, majd kilistázza az indulási időket \aref{fig_4/menetrend}.\ ábra b) részén látható módon.
 Az megnyíló ablak fejléce tartalmazza az előbbi felhasználói akciók során bekért adatokat, illetve a Kedvencekhez adás funkciót egy szív ikon formájában.
 A képernyő bal oldalán a járat megállói láthatóak, a választott iránytól függő sorrendben.
 Az időpontok jobb oldalon, munkanapokra és szabadnapokra felosztva láthatóak.
 
 \subsection {Megállók}
 \label {megallok}
-A Megallók menüpont alatt egy Google Maps térkép jelenik meg rajta Veszprém város buszmegállóival.
+A Megállók menüpont alatt egy Google Maps térkép jelenik meg rajta Veszprém város buszmegállóival.
 A megállók pontos helyét piros színű jelölők jelzik a térképen, amely a közelítés mértékével arányosan csoportosítja a jelölőket.
-A felhasználó megkeresi a térképen azt a megállót amelyikre kíváncsi, az alkalmazás pedig kilistázza az ott megálló járatok számát, ahogy az \todo{ABRA} ábrán is látszik.
+A felhasználó megkeresi a térképen azt a megállót amelyikre kíváncsi, az alkalmazás pedig kilistázza az ott megálló járatok számát, ahogy \aref{fig_4/megallokedvenc}.\ ábra a) képén is látszik.
+\Picture{Megállók és Kedvencek}{4/megallokedvenc}{width=10cm}
 
 \subsection {Kedvencek}
 \label {kedvencek}
 A menüpontban a Menetrendek alatt Kedvencnek jelölt járatokat lehet elérni.
-Az alkalmazás kilistázza azokat az adott menetirányhoz tartozó járatokat, amelyeket a felhasználó kedvencnek jelölt.
+Az alkalmazás kilistázza azokat az adott menetirányhoz tartozó járatokat, amelyeket a felhasználó kedvencnek jelölt \aref{fig_4/megallokedvenc}.\ ábra b) ábráján látható módon.
 A funkció egy szív ikon formájában jelenik minden menetrend adatlapján.
 Alapérmezetten a szív üres, rájuk kattintva tudja a felhasználó a Kedvencek menüpont alá rakni, ekkor a szív pirosra színeződik.
 A listából eltávolítani hasonló módszerrel lehet, a telt szívre rákattintva kikerül a Kedvencekből.
