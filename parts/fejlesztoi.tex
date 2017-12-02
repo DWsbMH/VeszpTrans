@@ -1,23 +1,21 @@
 Az elkészült rendszer szerver-kliens architekturára épül.
 Az architektúra modellje \aref{fig_5/architektura}.\ ábrán látható. 
 A szerver felelős az adatok kezeléséért, mely a Symfony keretrendszerrel lett megvalósítva. 
+\Picture{A program architektúrája}{5/architektura}{width=12cm}
 Az adatokat a Doctrine keretrendszer segítségével éri el az adatbázisból. 
 A rendszerben található a szerver, ami egy adminisztrációs feladatokat betöltő weboldal, és a kliens, egy Android alkalmazás, amely a felhasználók részére készült. 
 Az adminisztrációs weboldalon az adatok a Twig sablonkezelő segítségével jelennek meg. 
 Az Android-os kliens a kért adatokat JSON formrmátumban kapja meg. 
 A továbbiakban részletesen bemutatásra kerül a szerver és a kliens felépítése, működése. 
 
-% kell architektúra kép meg megtalálni az authenticationprocess képet
 
 \section{A szerver}
 \label{szerverfelepites}
-
-A szerver a Symfony keretrendszer 2.8-as verziójára épült. 
-A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt. 
+A szerver a Symfony\cite{symfonyframework} keretrendszer 2.8-as verziójára épült. 
+A beérkező kérés áthalad a Symfony tűzfalán, ami elindítja az autentikációt, melynek folyamata \aref{fig_5/authenticationprocess}.\ ábrán látható. 
 Ha sikeres volt az autentikáció, a kérés a megfelelő kontroller osztályhoz kerül feldolgozás után. 
 
-\Picture{Az autentikáció folyamata}{5/authenticationprocess}{width=14cm}
-% tűzfal, autentikáció, ilyesmi...
+\Picture{Az autentikáció folyamata}{5/authenticationprocess}{width=12cm}
 
 A kontroller osztályban a beírt URL-hez tartozó metódus hívódik meg. 
 Alapesetben ezek az osztályok a \Highlight{AppBundle\textbackslash Controller} névtérben találhatóak. 
@@ -303,7 +301,6 @@ A projektben engedélyezésre kerültek azon szolgálatások, amelyek az alkalma
 Az engedélyezett szolgáltatások használatához az alkalmazásban egy hitelesító kulcsot kötelező megadni, amely a fent említett Google Developer oldalon generálódik. 
 Mindezek után minden lehetőség adott a térkép megjelenítésére az alkalmazásban.
 Ennek legegyszerűbb módja, ha a \Highlight{SupportMapFragment} osztályt használjuk.
-%https://developers.google.com/android/reference/com/google/android/gms/maps/SupportMapFragment
 Ez az osztály körülfog egy térképet és automatikusan kezeli annak életciklusát.
 Egyszerűen megjeleníthető a kívánt activity-ben, az XML fájlhoz az alábbiakban bemutatott módon kell hozzáadni:
 \begin{lstlisting}

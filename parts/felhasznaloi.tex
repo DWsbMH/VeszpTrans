@@ -98,22 +98,27 @@ A listából eltávolítani hasonló módszerrel lehet, a telt szívre rákattin
 \label{admin}
 Az alkalmazás létrehozásakor szükség volt egy olyan kezelőfelület létrehozására is, amelyen keresztül könnyen kezelhetőek az adatbázisba feltöltött adatok.
 Mivel az adatok közérdekűek és sok embert érintenek, fontos szempont volt, hogy csak azok férhessenek hozzá akiknek van jogosultságuk.
-Az oldal eléréséhez a felhasználónak igazolnia kell magát egy felhasználónév-jelszó párossal, ahogy az a \todo{ABRA} ábrán is látszik.
-Az \todo{ABRA} ábrán látható admin oldal jelenik meg a sikeres bejelentkezés után.
-%admin bejelentkezés, főoldal
+\Picture{Autentikáció}{4/adminSignIn}{width=6cm}
+Az oldal eléréséhez a felhasználónak igazolnia kell magát egy felhasználónév-jelszó párossal, ahogy az \aref{fig_4/adminSignIn}.\ ábrán is látszik.
+\Aref{fig_4/adminStations}.\ ábrán látható admin oldal jelenik meg a sikeres bejelentkezés után.
 Bal oldalon található a menü, amiből a felhasználó kiválaszthatja azt az elemet, amit menedzselni szeretne.
 Alapértelmezetten a Járat menüpont jelenik meg, ez az adatbázis architektúrájának alapja.
 A másik alapvető entitás a Megállók, amelyek a buszmegállók pontos földrajzi helyzetét tárolják.
+\Picture{Adminisztrációs főoldal}{4/adminStations}{width=10cm}
 Egy megálló felviteléhez hosszúsági és szélességi koordinátákra van szükség, amelynek felvitelét egy beágyazott Google Maps térkép segíti a weboldalon.
+Ezt láthatjuk \aref{fig_4/adminStationAdd}.\ ábrán.
 A felhasználó kijelöli a térképen a megálló pontos helyét, aminek a koordinátái megjelennek a térkép mellett és az adminisztrátornak már csak nevet kell hozzárendelnie az új rekordhoz.
 Hasonló kezelőfelület található a megállók útvonalakhoz való rendelését kezelő menüpontban.
+\Picture{Új megálló hozzáadása}{4/adminStationAdd}{width=10cm}
 Egy új útvonal létrehozása esetén az adminisztrátor a Google Maps-en elhelyezkedő jelölők közül kiválasztja a megfelelőt.
-Ezek a jelölők az adatbázisban található megállókat jelölik a térképen elhelyezve a könnyebb kezelés érdekében.
+Ezek a jelölők az adatbázisban található megállókat jelölik a térképen elhelyezve a könnyebb kezelés érdekében, ahogyan \aref{fig_4/adminLineHasStationAdd}.\ ábrán is látható.
 Ha egy útvonal módosul (például egy felújítás miatt), akkor az egy új útvonalként felvezetésre kerül, az alapvető útvonal állapota pedig inaktívvá válik.
 Amint az adminisztrátor sikeresen az adatbázishoz adott egy buszjáratot, a megfelelő útvonalhoz és járathoz indulási időket rendel.
 Ezeket az időket előre definiált kategóriákba menthetjük el, ilyen kategória például a szabadnap, a munkanap vagy a tanszüneti munkanap.
 Mindemellett előfordulhatnak olyan időpontok a naptárban, amikor nem az alapértelmezett közlekedési rend a mérvadó, például hétköznapra eső ünnepnapokon.
+\Picture{Új útvonal hozzáadása}{4/adminLineHasStationAdd}{width=10cm}
 Mivel ezek évről évre változnak, így az adminisztrátor feladata, hogy megfelelően felvezesse ezeket a napokat az adatbázisba.
+
 Erre szolgál az Eltérő közlekedési rendek menüpont, ahol a megadott időintervallumra vonatkozóan felülírhatjuk az alapértelmezett rendet.
 
 Az adatok átláthatóságának érdekében táblázatban jelennek meg az adatbázisból lekért rekordok.

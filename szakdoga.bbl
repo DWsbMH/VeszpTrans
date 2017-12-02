@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}
+\ifx \showCODEN  \undefined \def \showCODEN #1{CODEN #1}  \fi
+\ifx \showISBN   \undefined \def \showISBN  #1{ISBN #1}   \fi
+\ifx \showISSN   \undefined \def \showISSN  #1{ISSN #1}   \fi
+\ifx \showLCCN   \undefined \def \showLCCN  #1{LCCN #1}   \fi
+\ifx \showPRICE  \undefined \def \showPRICE #1{#1}        \fi
+\ifx \showURL    \undefined \def \showURL {URL }          \fi
+\ifx \path       \undefined \input path.sty               \fi
+\ifx \ifshowURL \undefined
+     \newif \ifshowURL
+     \showURLtrue
+\fi
+
+\bibitem{maps}
+Google maps.
+\newblock \ifshowURL {\showURL \path|https://www.google.hu/maps|}\fi.
+
+\bibitem{kozlekedesihalozat}
+Veszprém közlekedési hálózata.
+\newblock \ifshowURL {\showURL
+  \path|http://veszpreminfo.hu/record/hasznos-informaciok-parkolas|}\fi.
+
+\bibitem{bambusz}
+Bambusz online tömegközlekedési segítség.
+\newblock \ifshowURL {\showURL \path|https://pandabufe.hu/bambusz/|}\fi.
+
+\bibitem{veszprembusz}
+Veszprémi buszmenetrend alkalmazás.
+\newblock \ifshowURL {\showURL
+  \path|https://play.google.com/store/apps/details?id=com.mapsforge.weiniapps.veszprem_helyijarat_menetrend|}\fi.
+
+\bibitem{androidprogramming}
+Jerome~F. DiMarzio.
+\newblock {\em Beginning Android Programming with Android Studio, Fourth
+  Edition}.
+\newblock John Wiley \& Sons, 2016.
+\newblock \showISBN{9781118705599}.
+
+\bibitem{symfony}
+Wojciech Bancer.
+\newblock {\em Symfony2 Essentials}.
+\newblock Packt Publishing, 2015.
+\newblock \showISBN{9781784398767}.
+
+\bibitem{mysql}
+Timothy Boronczyk.
+\newblock {\em Jump Start MySQL}.
+\newblock SitePoint, 2015.
+\newblock \showISBN{9780992461287}.
+
+\bibitem{symfonyframework}
+Symfony framework.
+\newblock \ifshowURL {\showURL
+  \path|http://symfony.com/app.php/doc/2.8/index.html|}\fi.
+
+\end{thebibliography}
