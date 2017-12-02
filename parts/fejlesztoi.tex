@@ -50,17 +50,16 @@ A szerverhez jelenleg két fajta felhasználó van rendelve, melyek az előbbiek
 A szerver feladatköréből kiindulva a jelenlegi igényeket ez a két felhasználó kielégíti, ezért nincs szükség újabb felhasználók hozzáadására. 
 Ez azt jelenti, hogy a felhasználókhoz tartozó jelszavakat is ebben a fájlban tároljuk. 
 Biztonsági szempontokból kritikus tényező, hogy ezek a jelszavak valamilyen módon titkosítva legyenek. 
-A titkosításhoz a bcrypt algoritmust használtam fel. 
-A Symfony segítségével parancssorból lehetséges bármilyen jelszót titkosítani a bcrypt algoritmussal. 
+A titkosításhoz a \Highlight{bcrypt} algoritmust használtam fel. 
+A Symfony segítségével parancssorból lehetséges bármilyen jelszót titkosítani a \Highlight{bcrypt} algoritmussal. 
 
 \begin{lstlisting}
 php bin/console security:encode-password
 \end{lstlisting}
 
 A parancs futása közben bekéri, mi az a jelszó, amit titkosítani kell. 
-Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot. 
-Ezt a szót megadva a fájlban jelszóként, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
-\todo{hitvatkozás a hashre}
+Miután megadtuk a jelszót, a bemeneten lefuttatja az algoritmust és végül kiírja a titkosított karaktersorozatot, azaz a jelszóhoz tartozó hash-t.
+Ezt a hash-t megadva a fájlban, továbbra is a titkosítatlan jelszóval be tud lépni a felhasználó az oldalra, viszont nem áll fent tovább a veszély, hogy illetéktelenek kezébe jutna a jelszó. 
 
 \subsection*{Autorizáció}
 \label{authorization}
@@ -131,16 +130,16 @@ Természetesen a busz indulópontjának ezen attribútuma nulla.
 \subsection*{Indulási idők, különleges időpontok}
 \label{starttimes}
 Útvonaltervezés szempontjából fontos információ továbbá, hogy az adott járat az útvonalán található megállóiba milyen időpontban érkezik meg, továbbá különleges alkalmak esetén ezek hogyan változnak meg. 
-Az indulási időpontot egy Starttime nevű entitás tartalmazza, melyben tárolódik továbbá az is, hogy ez az indulás mely járatra vonatkozik, valamint milyen típusú dátum esetén értetendő. 
+Az indulási időpontot egy \Highlight{Starttime} nevű entitás tartalmazza, melyben tárolódik továbbá az is, hogy ez az indulás mely járatra vonatkozik, valamint milyen típusú dátum esetén értetendő. 
 A különböző típusú dátumokat külön entitás tartalmazza. 
-Az alkalmazáshoz tovább tartozik egy Holidays entitás is, melyben az olyan, előre nem tervezett időpontokat tartalmazza amelyek befolyásolják bizonyos járatok indulási rendjét és esetleges útvonalát is. 
+Az alkalmazáshoz tovább tartozik egy \Highlight{Holidays} entitás is, melyben az olyan, előre nem tervezett időpontokat tartalmazza amelyek befolyásolják bizonyos járatok indulási rendjét és esetleges útvonalát is. 
 Az előbbiekben bemutatott entitások közötti kapcsolatot a \ref{fig_5/starttimes}. ábra mutatja be. 
 \Picture{Különleges és indulási időpontok közötti kapcsolat}{5/starttimes}{width=14cm}
 
 \section{Az Android kliens}
 \label{androidclient}
 Az alkalmazás fejlesztéséhez az Android Studio fejlesztői környezetet használtam.
-Az Android Studio a Gradle rendszerre épül, amelynek számos funkciója megkönnyíti az Androidos alkalmazások fordítását.
+Az Android Studio a Gradle automatikus projektépítő rendszert használja alapértelmezettként, amelynek számos funkciója megkönnyíti az Androidos alkalmazások fordítását.
 A Gradle Androidos bővítményében található több Android specifikus parancs, amelyek közül az \Highlight{assemble} paranccsal készíthetjük el a futtatható és telepíthető állományt.
 A futtatható fájl elkészítéséhez szükséges információkat a build.gradle fájlban adhatjük meg.
 Ebben találhatóak a szükséges függőségek, amiket a Gradle bővítménye letölt, és belecsomagol az .apk-ba.
@@ -316,6 +315,22 @@ Ahhoz, hogy a térkép dinamikusan módosítható legyen, egy \Highlight{GoogleM
 A \Highlight{SupportMapFragment} osztályon a \Highlight{getMapAsync(OnMapReadyCallback)} metódust meghívva az osztály inicializálja a térképet.
 Miután ez megtörtént, a metódus paramétereként átadott \Highlight{OnMapReadyCallback} felületen meghívódik az \Highlight{onMapReady} metódust, ami egy \Highlight{GoogleMap} példányt biztosít.
 A \Highlight{OnMapReadyCallback} felület lehet külön osztály, de akár egy activity is implementálhatja azt, így amikor a példány elérhető, azonnal interakcióba léphetünk vele az activity-ben.
+Az előzőekben bemutatott folyamat implementációja az alábbiakban látható:
+\begin{lstlisting}
+abstract class BaseMapActivity<V extends MvpView, P extends BaseMapPresenter<V>> extends MvpActivity<V, P> implements OnMapReadyCallback {
+
+    void getMapFragment() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        presenter.onMapReady(googleMap);
+    }
+
+}
+\end{lstlisting}
 A \Highlight{GoogleMap} példány segítségével a térképhez adhatjuk a saját pozíciót lekérő gombot vagy megadhatjuk a térkép nézetének típusát.
 
 \subsection*{Útvonaltervező}
