@@ -263,7 +263,7 @@ public interface MyApiEndpointInterface {
 \end{lstlisting}
 A fenti példán látható, hogy a megállók eléréséhez annotáció formájában megadásra került az elérési útvonal.
 Ennek visszatérési értéke egy olyan lista lesz, amely megállókat tartalmaz.
-A listában található megállókat a Retrofit automatikusan szerializálta ki a szervertől kapott JSON válaszból.
+A listában található megállókat a Retrofit automatikusan szerializálja ki a szervertől kapott JSON válaszból.
 A szerializáláshoz az alábbi entitásban található annotációs konfigurációt veszi alapul.
 \begin{lstlisting}
 public class Stations {
@@ -274,7 +274,7 @@ public class Stations {
 }
 \end{lstlisting}
 
-\subsection*{A felhasználó felület kialakítása}
+\subsection*{A felhasználói felület kialakítása}
 \label{layout}
 A kód karbantarthatóságának érdekében a felhasználói felület kialakítása az MVP (Modell-View-Presenter) szoftvertervezési mintára épül.
 Implementálása a \Highlight{Mosby} könyvtár segítségével történt.
@@ -287,6 +287,7 @@ Az üzleti logika tényleges megvalósítása a presenter osztályban történik
 A presenter osztályok típusparaméterként megkapják az előzőekben említett felületet.
 A létrehozott felületet implementálnia kell az activity-nek, és típusparaméterként meg kell adni mind a felületet, mind a presenter osztályt.
 A felület, presenter és activity osztályok mind a könyvtárban található alaposztályok leszármazottjai.
+
 Minden activity-hez tartozik egy .xml kiterjesztésű fájl, mely a felhasználói felület építő elemeit tartalmazza.
 A tervezésre lehetőség van az XML fájlban történő szöveges kifejtésre, illetve grafikus felületen keresztül, amelyre drag-and-drop módszerrel helyezhetjük rá az elemeket.
 Az előbb bemutatott tervező felület \aref{fig_5/designer}.\ ábrán látható.
@@ -297,7 +298,7 @@ Az előbb bemutatott tervező felület \aref{fig_5/designer}.\ ábrán látható
 A Google Maps alkalmazásba való integrációját több előkészületi lépés előzte meg.
 Első lépésként a Google Developer weboldalon egy projekt létrehozása szükséges.
 A projektben engedélyezésre kerültek azon szolgálatások, amelyek az alkalmazás funkcionalitásához elengedhetetlenek.
-Az engedélyezett szolgáltatások használatához az alkalmazásban egy hitelesító kulcsot kötelező megadni, amely a fent említett Google Developer oldalon generálódik. 
+Az engedélyezett szolgáltatások használatához az alkalmazásban egy hitelesítő kulcsot kötelező megadni, amely a fent említett Google Developer oldalon generálódik. 
 Mindezek után minden lehetőség adott a térkép megjelenítésére az alkalmazásban.
 Ennek legegyszerűbb módja, ha a \Highlight{SupportMapFragment} osztályt használjuk.
 Ez az osztály körülfog egy térképet és automatikusan kezeli annak életciklusát.

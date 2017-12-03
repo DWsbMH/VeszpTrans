@@ -12,7 +12,7 @@ Ahogy \aref{fig_4/icon}.\ ábrán is látszik, az applikáció ikonja egy Veszpr
 Az alkalmazás indítása után az alkalmazás lekéri az adatbázisból azokat az adatokat, amik módosítási dátuma későbbi, mint az utolsó letöltés ideje.
 Ezt a felhasználó egy felugró ablak képében látja, amelyen az alkalmazás közli, hogy frissítés van folyamatban, és kéri a felhasználók türelmét.
 Ezt \aref{fig_4/fomenu}.\ ábra a) képén tekinthető meg.
-Amint az adatok aktualizálása befejeződött, a felugró ablak eltűnik, átadva helyét a főmenü menüpontjainak, melyet a \aref{fig_4/fomenu}.\ ábra b) része mutat.
+Amint az adatok aktualizálása befejeződött, a felugró ablak eltűnik, átadva helyét a főmenü menüpontjainak, melyet \aref{fig_4/fomenu}.\ ábra b) része mutat.
 \subsection{Főmenü}
 \label{fomenu}
 A főmenü az alkalmazás nevét és négy almenüt foglal magába:
@@ -31,14 +31,14 @@ Az applikáció témája a lila szín és annak árnyalatai, amely lehetővé te
 Az Útvonaltervezés menüpontot kiválasztva egy Google Maps térkép jelenik meg Veszprém városára fókuszálva.
 A képernyőn ezen kívül egy beviteli mező és három gomb található.
 A beviteli mezőt a felhasználók a térképen való keresésre használhatják.
-A keresés fő fókusza Veszprémre irányul, a mező automatikusan próbálja kiegészíteni a begépelt helyszínt, Veszprém környékére összpontosítva, ahogy az a \aref{fig_4/autocomplete}.\ ábra a) képén is látható.
+A keresés fő fókusza Veszprémre irányul, a mező automatikusan próbálja kiegészíteni a begépelt helyszínt, Veszprém környékére összpontosítva, ahogy az \aref{fig_4/autocomplete}.\ ábra a) képén is látható.
 Az alkalmazás képes más földrajzi helyre irányuló kereséseket is kiegészíteni, viszont ez a funkció - az alkalmazás minél effektívebb működése érdekében - le van korlátozva.
 \Picture{Helység keresése az applikációban}{4/autocomplete}{width=10cm}
-Ahogy a \aref{fig_4/autocomplete}.\ ábra b) képén is látszik, a találatot az alkalmazás egy úgynevezett 'marker' lerakásával jelöli a térképen.
+Ahogy \aref{fig_4/autocomplete}.\ ábra b) képén is látszik, a találatot az alkalmazás egy úgynevezett 'marker' lerakásával jelöli a térképen.
 A bal oldalon található gombbal a felhasználó képes a térkép nézetének megváltoztatására.
-Az alapérmezett mód a domborzati megjelenés, a gomb megnyomávásával átválthatunk műholdas nézetre.
+Az alapérmezett mód a domborzati megjelenés, a gomb megnyomásával átválthatunk műholdas nézetre.
 A jobb oldalon két gomb helyezkedik el: a Saját pozíció, illetve az Útvonaltervezés.
-A Saját pozíció gomb használhatához szükség van GPS funkcióra a telefonban.
+A Saját pozíció gomb használatához szükség van GPS funkcióra a telefonban.
 Ha ez nincs engedélyezve, az alkalmazás egy felugró ablak segítségével átirányítja a felhasználót a GPS funkció bekapcsolására alkalmas képernyőre.
 \Picture{Útvonaltervezés saját pozícióval}{4/sajatpozUtvonalterv}{width=10cm}
 Visszatérve az alkalmazásba, a térképen megjelenik a felhasználó feltételezhető helyzete egy kék ponttal jelölve.
@@ -74,30 +74,31 @@ A Menetrendek a főmenü második menüpontja.
 Ez az opció azokat a felhasználókat segíti, akik már ismerik Veszprém városát, illetve tömegközlekedését legalább alap szinten.
 A menüpontra kattintva az alkalmazás kilistázza a buszjáratok számait, mely \aref{fig_4/menetrend}.\ ábra  a) képén tekinthető meg.
 Amint kiválasztott a megtekinteni kívánt járatot, az applikáció bekéri a járat irányát is, majd kilistázza az indulási időket \aref{fig_4/menetrend}.\ ábra b) részén látható módon.
-Az megnyíló ablak fejléce tartalmazza az előbbi felhasználói akciók során bekért adatokat, illetve a Kedvencekhez adás funkciót egy szív ikon formájában.
+A megnyíló ablak fejléce tartalmazza az előbbi felhasználói akciók során bekért adatokat, illetve a Kedvencekhez adás funkciót egy szív ikon formájában.
 A képernyő bal oldalán a járat megállói láthatóak, a választott iránytól függő sorrendben.
 Az időpontok jobb oldalon, munkanapokra és szabadnapokra felosztva láthatóak.
 
 \subsection {Megállók}
 \label {megallok}
-A Megállók menüpont alatt egy Google Maps térkép jelenik meg rajta Veszprém város buszmegállóival.
+A Megállók menüpont alatt egy Google Maps térkép jelenik meg, rajta Veszprém város buszmegállóival.
 A megállók pontos helyét piros színű jelölők jelzik a térképen, amely a közelítés mértékével arányosan csoportosítja a jelölőket.
-A felhasználó megkeresi a térképen azt a megállót amelyikre kíváncsi, az alkalmazás pedig kilistázza az ott megálló járatok számát, ahogy \aref{fig_4/megallokedvenc}.\ ábra a) képén is látszik.
+A felhasználó megkeresi a térképen azt a megállót, amelyikre kíváncsi, az alkalmazás pedig kilistázza az ott megálló járatok számát, ahogy \aref{fig_4/megallokedvenc}.\ ábra a) képén is látszik.
 \Picture{Megállók és Kedvencek}{4/megallokedvenc}{width=10cm}
 
 \subsection {Kedvencek}
 \label {kedvencek}
-A menüpontban a Menetrendek alatt Kedvencnek jelölt járatokat lehet elérni.
+A menüpontban a Menetrendek opció alatt kedvencnek jelölt járatokat lehet elérni.
 Az alkalmazás kilistázza azokat az adott menetirányhoz tartozó járatokat, amelyeket a felhasználó kedvencnek jelölt \aref{fig_4/megallokedvenc}.\ ábra b) ábráján látható módon.
 A funkció egy szív ikon formájában jelenik minden menetrend adatlapján.
-Alapérmezetten a szív üres, rájuk kattintva tudja a felhasználó a Kedvencek menüpont alá rakni, ekkor a szív pirosra színeződik.
+Alapértelmezetten a szív üres, rájuk kattintva tudja a felhasználó a Kedvencek menüpont alá rakni, ekkor a szív pirosra színeződik.
 A listából eltávolítani hasonló módszerrel lehet, a telt szívre rákattintva kikerül a Kedvencekből.
+A funkció gyors elérést biztosít így az adott járatok időpontjaihoz, ezzel meggyorsítva a tájékozódást.
 
 %4.2
 \section{Admin oldal}
 \label{admin}
 Az alkalmazás létrehozásakor szükség volt egy olyan kezelőfelület létrehozására is, amelyen keresztül könnyen kezelhetőek az adatbázisba feltöltött adatok.
-Mivel az adatok közérdekűek és sok embert érintenek, fontos szempont volt, hogy csak azok férhessenek hozzá akiknek van jogosultságuk.
+Mivel az adatok közérdekűek és sok embert érintenek, fontos szempont volt, hogy csak azok férhessenek hozzá, akiknek van jogosultságuk.
 \Picture{Autentikáció}{4/adminSignIn}{width=6cm}
 Az oldal eléréséhez a felhasználónak igazolnia kell magát egy felhasználónév-jelszó párossal, ahogy az \aref{fig_4/adminSignIn}.\ ábrán is látszik.
 \Aref{fig_4/adminStations}.\ ábrán látható admin oldal jelenik meg a sikeres bejelentkezés után.
